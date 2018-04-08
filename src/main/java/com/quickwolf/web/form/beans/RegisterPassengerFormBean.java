@@ -22,7 +22,7 @@ public class RegisterPassengerFormBean {
     private String lastName;
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "^[_A-Za-z0-9-\\\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Something is wrong with your email")
-    private String passengerEmail;
+    private String email;
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", message = "Password should contain upperCase, lowerCase, number/special char and min 8 characters")
     private String passengerPassword;
@@ -48,12 +48,12 @@ public class RegisterPassengerFormBean {
         this.lastName = lastName;
     }
 
-    public String getPassengerEmail() {
-        return passengerEmail;
+    public String getemail() {
+        return email;
     }
 
-    public void setPassengerEmail(String passengerEmail) {
-        this.passengerEmail = passengerEmail;
+    public void setemail(String email) {
+        this.email = email;
     }
 
     public String getPassengerPassword() {

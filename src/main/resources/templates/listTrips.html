@@ -38,8 +38,8 @@
 
 
     <!--[if lt IE 9]>
-    <script th:src="@{/js/html5shiv.min.js"></script>
-    <script th:src="@{/js/respond.min.js"></script>
+    <script th:src="@{/js/html5shiv.min.js}"></script>
+    <script th:src="@{/js/respond.min.js}"></script>
     <![endif]-->
 
 </head>
@@ -215,11 +215,11 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <h4>Transport</h4>
                                         <strong>Name : </strong><span
-                                            th:text="${trip.driver.registeredTransport.color + ' ' + trip.driver.registeredTransport.name + ' ' + trip.driver.registeredTransport.modelName}"></span><br>
+                                            th:text="${trip.driver.transport.color + ' ' + trip.driver.transport.name + ' ' + trip.driver.transport.modelName}"></span><br>
                                         <strong>Number : </strong><span
-                                            th:text="${trip.driver.registeredTransport.registrationNumber}"></span><br>
+                                            th:text="${trip.driver.transport.registrationNumber}"></span><br>
                                         <strong>Total seats : </strong><span
-                                            th:text="${trip.driver.registeredTransport.numberOfSeats}"></span><br>
+                                            th:text="${trip.driver.transport.numberOfSeats}"></span><br>
                                         <strong>Available seats : </strong><span
                                             th:text="${trip.availableSeats}"></span><br>
                                     </div>
@@ -246,8 +246,8 @@
                                     <br>
                                     <form method="post" th:action="@{/confirmTripBooking}">
                                         <input type="hidden" th:value="${trip.id}" name="tripId" id="tripId"/>
-                                        <input type="hidden" th:value="${#authentication.name}" name="passengerEmail"
-                                               id="passengerEmail"/>
+                                        <input type="hidden" th:value="${#authentication.name}" name="email"
+                                               id="email"/>
                                         <input type="submit" class="btn_1" value="Book"
                                                th:if="${(trip.availableSeats gt 0) and (trip.tripTime.after(#dates.createNow()))}"/>
                                         <input type="submit" class="btn_1" value="Book" disabled

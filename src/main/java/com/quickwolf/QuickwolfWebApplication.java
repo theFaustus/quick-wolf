@@ -6,7 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 import com.quickwolf.config.QuickWolfConfiguration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@EnableTransactionManagement
 @SpringBootApplication
 @ComponentScan(basePackages = "com.quickwolf.web")
 @Import({ QuickWolfConfiguration.class })

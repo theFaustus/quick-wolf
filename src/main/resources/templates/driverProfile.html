@@ -34,8 +34,8 @@
 
 
     <!--[if lt IE 9]>
-    <script th:src="@{/js/html5shiv.min.js"></script>
-    <script th:src="@{/js/respond.min.js"></script>
+    <script th:src="@{/js/html5shiv.min.js}"></script>
+    <script th:src="@{/js/respond.min.js}"></script>
     <![endif]-->
 
 </head>
@@ -218,7 +218,7 @@
                                 <div class="booking_buttons">
                                     <strong>Seats booked</strong><br>
                                     <strong><span style="font-size: 2em; margin-bottom: 10px;"
-                                                  th:text="${(driver.registeredTransport.numberOfSeats - trip.availableSeats) + ' out of ' + trip.driver.registeredTransport.numberOfSeats}"></span></strong>
+                                                  th:text="${(driver.transport.numberOfSeats - trip.availableSeats) + ' out of ' + trip.driver.transport.numberOfSeats}"></span></strong>
                                 </div>
                             </div>
                         </div><!-- End row -->
@@ -275,22 +275,22 @@
                     <div class="col-md-6 col-sm-6">
                         <h4>Your profile</h4>
                         <ul id="profile_summary">
-                            <li>Username <span th:text="${driver.driverEmail}"></span></li>
+                            <li>Username <span th:text="${driver.email}"></span></li>
                             <li>First name <span th:text="${driver.firstName}">Clara</span></li>
                             <li>Last name <span th:text="${driver.lastName}">Tomson</span></li>
                             <li>Phone number <span th:text="${driver.telephoneNumber}">+00 032 42366</span></li>
                         </ul>
                         <h4>Your transport</h4>
                         <ul id="profile_summary">
-                            <li>Name <span th:text="${driver.registeredTransport.name}">Clara</span></li>
-                            <li>Model <span th:text="${driver.registeredTransport.modelName}">Tomson</span></li>
-                            <li>Transport type <span th:text="${driver.registeredTransport.transportType}">Tomson</span>
+                            <li>Name <span th:text="${driver.transport.name}">Clara</span></li>
+                            <li>Model <span th:text="${driver.transport.modelName}">Tomson</span></li>
+                            <li>Transport type <span th:text="${driver.transport.transportType}">Tomson</span>
                             </li>
-                            <li>Body type <span th:text="${driver.registeredTransport.bodyType}">Tomson</span></li>
-                            <li>Date of registration <span th:text="${driver.registeredTransport.dateOfRegistration}">+00 032 42366</span>
+                            <li>Body type <span th:text="${driver.transport.bodyType}">Tomson</span></li>
+                            <li>Date of registration <span th:text="${driver.transport.dateOfRegistration}">+00 032 42366</span>
                             </li>
-                            <li>Color <span th:text="${driver.registeredTransport.color}">+00 032 42366</span></li>
-                            <li>Engine ID <span th:text="${driver.registeredTransport.engineId}">+00 032 42366</span>
+                            <li>Color <span th:text="${driver.transport.color}">+00 032 42366</span></li>
+                            <li>Engine ID <span th:text="${driver.transport.engineId}">+00 032 42366</span>
                             </li>
                         </ul>
                         <h4>Your current credit card</h4>

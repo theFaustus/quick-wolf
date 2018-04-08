@@ -173,24 +173,24 @@
                             <label>First name</label>
                             <input type="text" class="form-control" th:field="*{firstName}"
                                    placeholder="Type in your first name">
-                            <p class="alert alert-danger" class="alert alert-danger"
+                            <p class="alert alert-danger"
                                th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Last name</label>
                             <input type="text" class="form-control" th:field="*{lastName}"
                                    placeholder="Type in your last name">
-                            <p class="alert alert-danger" class="alert alert-danger"
+                            <p class="alert alert-danger"
                                th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label>Email</label>
-                            <input type="text" class=" form-control" th:field="*{driverEmail}"
-                                   placeholder="Type in your passengerEmail">
-                            <p class="alert alert-danger" th:if="${#fields.hasErrors('driverEmail')}"
-                               th:errors="*{driverEmail}"></p>
+                            <input type="text" class=" form-control" th:field="*{email}"
+                                   placeholder="Type in your email">
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}"
+                               th:errors="*{email}"></p>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Telephone number</label>
@@ -222,7 +222,7 @@
                             <input type="text" class=" form-control" th:field="*{driverPassword}" id="password1"
                                    placeholder="Password">
                             <div id="pass-info" class="clearfix" style="width: 100%;"></div>
-                            <p class="alert alert-danger" class="alert alert-danger"
+                            <p class="alert alert-danger"
                                th:if="${#fields.hasErrors('driverPassword')}" th:errors="*{driverPassword}"></p>
                         </div>
                     </div>
@@ -289,84 +289,84 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label>Transport type</label>
-                            <input type="text" class="form-control" th:field="*{registeredTransport.transportType}"
+                            <input type="text" class="form-control" th:field="*{transport.transportType}"
                                    placeholder="bus or car">
                             <p class="alert alert-danger"
-                               th:if="${#fields.hasErrors('registeredTransport.transportType')}"
-                               th:errors="*{registeredTransport.transportType}"></p>
+                               th:if="${#fields.hasErrors('transport.transportType')}"
+                               th:errors="*{transport.transportType}"></p>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Body type</label>
-                            <input type="text" class="form-control" th:field="*{registeredTransport.bodyType}"
+                            <input type="text" class="form-control" th:field="*{transport.bodyType}"
                                    placeholder="bus - microbus, autobus, car - sedan, hatchback...">
-                            <p class="alert alert-danger" th:if="${#fields.hasErrors('registeredTransport.bodyType')}"
-                               th:errors="*{registeredTransport.bodyType}"></p>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('transport.bodyType')}"
+                               th:errors="*{transport.bodyType}"></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label>Name</label>
-                            <input type="text" class=" form-control" th:field="*{registeredTransport.name}"
+                            <input type="text" class=" form-control" th:field="*{transport.name}"
                                    placeholder="Type in your transport`s name">
-                            <p class="alert alert-danger" th:if="${#fields.hasErrors('registeredTransport.name')}"
-                               th:errors="*{registeredTransport.name}"></p>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('transport.name')}"
+                               th:errors="*{transport.name}"></p>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Model</label>
-                            <input type="text" class=" form-control" th:field="*{registeredTransport.modelName}"
+                            <input type="text" class=" form-control" th:field="*{transport.modelName}"
                                    placeholder="Type in your transport`s model">
-                            <p class="alert alert-danger" th:if="${#fields.hasErrors('registeredTransport.modelName')}"
-                               th:errors="*{registeredTransport.modelName}"></p>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('transport.modelName')}"
+                               th:errors="*{transport.modelName}"></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-2">
                             <label>Number of seats</label>
-                            <input type="text" class=" form-control" th:field="*{registeredTransport.numberOfSeats}"
+                            <input type="text" class=" form-control" th:field="*{transport.numberOfSeats}"
                                    placeholder="4, 5, 6...">
                             <p class="alert alert-danger"
-                               th:if="${#fields.hasErrors('registeredTransport.numberOfSeats')}"
-                               th:errors="*{registeredTransport.numberOfSeats}"></p>
+                               th:if="${#fields.hasErrors('transport.numberOfSeats')}"
+                               th:errors="*{transport.numberOfSeats}"></p>
                         </div>
                         <div class="form-group col-md-2">
                             <label>Year</label>
-                            <input type="text" class=" form-control" th:field="*{registeredTransport.year}"
+                            <input type="text" class=" form-control" th:field="*{transport.year}"
                                    placeholder="yyyy">
-                            <p class="alert alert-danger" th:if="${#fields.hasErrors('registeredTransport.year')}"
-                               th:errors="*{registeredTransport.year}"></p>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('transport.year')}"
+                               th:errors="*{transport.year}"></p>
                         </div>
                         <div class="form-group col-md-2">
                             <label>Color</label>
-                            <input type="text" class=" form-control" th:field="*{registeredTransport.color}"
+                            <input type="text" class=" form-control" th:field="*{transport.color}"
                                    placeholder="white, gray...">
-                            <p class="alert alert-danger" th:if="${#fields.hasErrors('registeredTransport.color')}"
-                               th:errors="*{registeredTransport.color}"></p>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('transport.color')}"
+                               th:errors="*{transport.color}"></p>
                         </div>
                         <div class="form-group col-md-6">
                             <label><i class="icon-calendar-7"></i> Date of registration</label>
-                            <input class="date-pick form-control" th:field="*{registeredTransport.dateOfRegistration}"
+                            <input class="date-pick form-control" th:field="*{transport.dateOfRegistration}"
                                    data-date-format="yyyy-m-d" type="text">
                             <p class="alert alert-danger"
-                               th:if="${#fields.hasErrors('registeredTransport.dateOfRegistration')}"
-                               th:errors="*{registeredTransport.dateOfRegistration}"></p>
+                               th:if="${#fields.hasErrors('transport.dateOfRegistration')}"
+                               th:errors="*{transport.dateOfRegistration}"></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label>Registration number</label>
                             <input type="text" class=" form-control"
-                                   th:field="*{registeredTransport.registrationNumber}"
+                                   th:field="*{transport.registrationNumber}"
                                    placeholder="Type in the registration number">
                             <p class="alert alert-danger"
-                               th:if="${#fields.hasErrors('registeredTransport.registrationNumber')}"
-                               th:errors="*{registeredTransport.registrationNumber}"></p>
+                               th:if="${#fields.hasErrors('transport.registrationNumber')}"
+                               th:errors="*{transport.registrationNumber}"></p>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Engine ID</label>
-                            <input type="text" class=" form-control" th:field="*{registeredTransport.engineId}"
+                            <input type="text" class=" form-control" th:field="*{transport.engineId}"
                                    placeholder="Type in the engine id">
-                            <p class="alert alert-danger" th:if="${#fields.hasErrors('registeredTransport.engineId')}"
-                               th:errors="*{registeredTransport.engineId}"></p>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('transport.engineId')}"
+                               th:errors="*{transport.engineId}"></p>
                         </div>
                     </div>
                     <button type="submit" class="btn_full">Create an account</button>

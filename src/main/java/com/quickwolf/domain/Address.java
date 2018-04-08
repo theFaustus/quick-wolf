@@ -1,23 +1,20 @@
 package com.quickwolf.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Address {
-	private Long id;
 	private String country;
 	private String state;
 	private String city;
 	private String street;
+
+	@Column(name = "zip_code")
 	private String zipCode;
 
 	public Address() {
 		super();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getCountry() {

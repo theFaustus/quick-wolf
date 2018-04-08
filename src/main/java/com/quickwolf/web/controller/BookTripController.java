@@ -2,8 +2,8 @@ package com.quickwolf.web.controller;
 
 import com.quickwolf.domain.MailSender;
 import com.quickwolf.domain.Passenger;
-import com.quickwolf.web.repository.PassengerRepository;
-import com.quickwolf.web.repository.TripRepository;
+import com.quickwolf.web.service.PassengerService;
+import com.quickwolf.web.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +25,10 @@ import com.quickwolf.web.form.beans.BookTripFormBean;
 public class BookTripController {
 
     @Autowired
-    private TripRepository tripRepository;
+    private TripService tripService;
+
     @Autowired
-    private PassengerRepository passengerRepository;
+    private PassengerService passengerService;
 
     @RequestMapping(value = "/bookingConfirmed", method = RequestMethod.GET)
     public String bookConfirmed(@ModelAttribute("tripId") long tripId) {
@@ -40,10 +41,10 @@ public class BookTripController {
     @RequestMapping(value = "/bookTrip", method = RequestMethod.POST)
     public String bookConfirmed(Model model, @ModelAttribute("bookedTrip") BookTripFormBean bookTripFormBean, RedirectAttributes flashAttributes) {
         try {
-            Trip t = tripRepository.findTripBy(bookTripFormBean.getTripId());
-            Passenger p = passengerRepository.findPassengerBy(bookTripFormBean.getPassengerEmail());
-            passengerRepository.bookTrip(bookTripFormBean.getPassengerEmail(), bookTripFormBean.getTripId());
-            MailSender mailSender = new MailSender(bookTripFormBean.getPassengerEmail());
+            Trip t = tripService.findById(bookTripFormBean.getTripId());
+            Passenger p = passengerService.findPassengerBy(bookTripFormBean.getemail());
+            tripService.bookTrip(bookTripFormBean.getemail(), bookTripFormBean.getTripId());
+            MailSender mailSender = new MailSender(bookTripFormBean.getemail());
             mailSender.sendInvoice(p, t);
         } catch (Exception e) {
             return "redirect:/error";
@@ -54,8 +55,8 @@ public class BookTripController {
     }
 
     @RequestMapping(value = "/cancelTrip", method = RequestMethod.POST)
-    public String cancelTrip(@RequestParam long tripId, @RequestParam String passengerEmail) {
-        passengerRepository.cancelTrip(passengerEmail, tripId);
+    public String cancelTrip(@RequestParam long tripId, @RequestParam String email) {
+        tripService.cancelTrip(email, tripId);
         System.out.println("good");
         return "redirect:/passengerProfile";
     }
@@ -63,17 +64,17 @@ public class BookTripController {
     @RequestMapping(value = "/confirmTripBooking", method = RequestMethod.GET)
     public String book(Model model,
                        @ModelAttribute("bookedTrip") BookTripFormBean bookTripFormBean) {
-        Trip t = tripRepository.findTripBy(bookTripFormBean.getTripId());
-        Passenger p = passengerRepository.findPassengerBy(bookTripFormBean.getPassengerEmail());
+        Trip t = tripService.findById(bookTripFormBean.getTripId());
+        Passenger p = passengerService.findPassengerBy(bookTripFormBean.getemail());
         model.addAttribute("trip", t);
         model.addAttribute("passenger", p);
         return "confirmTripBooking";
     }
 
     @RequestMapping(value = "/confirmTripBooking", method = RequestMethod.POST)
-    public String bookTrip(@RequestParam long tripId, @RequestParam String passengerEmail,
+    public String bookTrip(@RequestParam long tripId, @RequestParam String email,
                            RedirectAttributes flashAttributes) {
-        flashAttributes.addFlashAttribute("bookedTrip", new BookTripFormBean(passengerEmail, tripId));
+        flashAttributes.addFlashAttribute("bookedTrip", new BookTripFormBean(email, tripId));
         return "redirect:/confirmTripBooking";
 
     }

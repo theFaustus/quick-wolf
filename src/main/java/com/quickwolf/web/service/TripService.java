@@ -8,6 +8,11 @@ import com.quickwolf.web.form.beans.TripFormBean;
 
 public interface TripService {
 	List<Trip> findTripsBy(TripFormBean trip);
-	Trip createTrip(AddTripFormBean trip);
+	Trip createTrip(AddTripFormBean trip, String driverName);
 
+    Trip findById(long tripId);
+
+	void bookTrip(String email, long tripId);
+
+	void cancelTrip(String email, long tripId);
 }

@@ -1,45 +1,62 @@
 package com.quickwolf.domain;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class Trip {
-    private Long id;
+@Entity
+@Table(name = "_trip", schema = "wolf")
+public class Trip extends AbstractEntity {
+
+    @AttributeOverrides({
+            @AttributeOverride(name = "country", column = @Column(name = "from_country")),
+            @AttributeOverride(name = "state", column = @Column(name = "from_state")),
+            @AttributeOverride(name = "city", column = @Column(name = "from_city")),
+            @AttributeOverride(name = "street", column = @Column(name = "from_street")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "from_zip_code")),
+    })
     private Address fromAddress;
+
+    @AttributeOverrides({
+            @AttributeOverride(name = "country", column = @Column(name = "destination_country")),
+            @AttributeOverride(name = "state", column = @Column(name = "destination_state")),
+            @AttributeOverride(name = "city", column = @Column(name = "destination_city")),
+            @AttributeOverride(name = "street", column = @Column(name = "destination_street")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "destination_zip_code"))
+    })
     private Address destinationAddress;
+
+    @Column(name = "trip_time")
+    @Temporal(TemporalType.TIME)
     private Date tripTime;
+
+    @Column(name = "arrive_time")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date arriveTime;
+
+    @Column(name = "depart_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date departTime;
+
+    @Column(name = "trip_price")
     private BigDecimal price = BigDecimal.ZERO;
+
+    @OneToOne(mappedBy = "trip", cascade = CascadeType.ALL)
     private Itinerary itinerary;
+
+    @ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE })
     private Driver driver;
+
+    @Column(name = "available_seats")
     private int availableSeats;
 
+    @ManyToMany
+    private List<Passenger> passengers = new ArrayList<>();
+
     public Trip() {
-    }
-
-    public int getAvailableSeats() {
-        return availableSeats;
-    }
-
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
-    }
-
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Address getFromAddress() {
@@ -90,78 +107,137 @@ public class Trip {
         this.itinerary = itinerary;
     }
 
-    public Duration getTripDuration() {
-        return Duration.between(arriveTime.toInstant(), tripTime.toInstant());
+    public Driver getDriver() {
+        return driver;
     }
 
-    public static TripBuilder newTrip() {
-        return new TripBuilder();
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
+    public int getAvailableSeats() {
+        return availableSeats;
+    }
+
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+
+    public Date getDepartTime() {
+        return departTime;
+    }
+
+    public void setDepartTime(Date departTime) {
+        this.departTime = departTime;
+    }
+
+    public List<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(List<Passenger> passengers) {
+        this.passengers = passengers;
+    }
+
+    public Duration getTripDuration() {
+        return Duration.between(departTime.toInstant(), arriveTime.toInstant());
     }
 
     @Override
     public String toString() {
         return "Trip{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", fromAddress=" + fromAddress +
                 ", destinationAddress=" + destinationAddress +
                 ", tripTime=" + tripTime +
                 ", arriveTime=" + arriveTime +
                 ", price=" + price +
-                ", itinerary=" + itinerary +
-                ", driver=" + driver +
-                ", availableSeats=" + availableSeats +
                 '}';
     }
 
-    public static class TripBuilder {
-        private Trip trip = new Trip();
+    public static TripBuilder newBuilder() {
+        return new TripBuilder();
+    }
+
+    public static final class TripBuilder {
+
+        private Long id;
+        private Address fromAddress;
+        private Address destinationAddress;
+        private Date tripTime;
+        private Date arriveTime;
+        private Date departTime;
+        private BigDecimal price = BigDecimal.ZERO;
+        private Itinerary itinerary;
+        private Driver driver;
+
+        private int availableSeats;
+
+        private TripBuilder() {
+        }
+
+        public TripBuilder setId(Long id) {
+            this.id = id;
+            return this;
+        }
 
         public TripBuilder setFromAddress(Address fromAddress) {
-            trip.fromAddress = fromAddress;
+            this.fromAddress = fromAddress;
             return this;
         }
 
         public TripBuilder setDestinationAddress(Address destinationAddress) {
-            trip.destinationAddress = destinationAddress;
+            this.destinationAddress = destinationAddress;
             return this;
         }
 
         public TripBuilder setTripTime(Date tripTime) {
-            trip.tripTime = tripTime;
+            this.tripTime = tripTime;
             return this;
         }
 
         public TripBuilder setArriveTime(Date arriveTime) {
-            trip.arriveTime = arriveTime;
+            this.arriveTime = arriveTime;
+            return this;
+        }
+
+        public TripBuilder setDepartTime(Date departTime) {
+            this.departTime = departTime;
             return this;
         }
 
         public TripBuilder setPrice(BigDecimal price) {
-            trip.price = price;
+            this.price = price;
             return this;
         }
 
         public TripBuilder setItinerary(Itinerary itinerary) {
-            trip.itinerary = itinerary;
+            this.itinerary = itinerary;
             return this;
         }
 
-        public TripBuilder setId(long id) {
-            trip.id = id;
+        public TripBuilder setDriver(Driver driver) {
+            this.driver = driver;
             return this;
         }
 
         public TripBuilder setAvailableSeats(int availableSeats) {
-            trip.availableSeats = availableSeats;
-            return this;
-        }
-
-        public TripBuilder setDriver(Driver d) {
-            trip.driver = d;
+            this.availableSeats = availableSeats;
             return this;
         }
 
         public Trip build() {
+            Trip trip = new Trip();
+            trip.setId(id);
+            trip.setFromAddress(fromAddress);
+            trip.setDestinationAddress(destinationAddress);
+            trip.setTripTime(tripTime);
+            trip.setArriveTime(arriveTime);
+            trip.setDepartTime(departTime);
+            trip.setPrice(price);
+            trip.setItinerary(itinerary);
+            trip.setDriver(driver);
+            trip.setAvailableSeats(availableSeats);
             return trip;
         }
     }

@@ -1,25 +1,38 @@
 package com.quickwolf.domain;
 
+import javax.persistence.*;
 import java.util.Date;
 
-public class ItineraryStep {
-	private Long id;
+@Entity
+@Table(name = "_itinerary_step", schema = "wolf")
+public class ItineraryStep extends AbstractEntity {
+
+	@Column(name = "step_name")
 	private String name;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "arrive_time")
 	private Date arrive;
+
+	@Column(name = "depart_time")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date depart;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "country", column = @Column(name = "istep_country")),
+			@AttributeOverride(name = "state", column = @Column(name = "istep_state")),
+			@AttributeOverride(name = "city", column = @Column(name = "istep_city")),
+			@AttributeOverride(name = "street", column = @Column(name = "istep_street")),
+			@AttributeOverride(name = "zipCode", column = @Column(name = "istep_zip_code"))
+	})
 	private Address address;
+
+	@ManyToOne
 	private Itinerary itinerary;
 
 	public ItineraryStep() {
 		super();
-	}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {

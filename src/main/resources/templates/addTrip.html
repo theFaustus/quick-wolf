@@ -34,8 +34,8 @@
 
 
   <!--[if lt IE 9]>
-      <script th:src="@{/js/html5shiv.min.js"></script>
-      <script th:src="@{/js/respond.min.js"></script>
+      <script th:src="@{/js/html5shiv.min.js}"></script>
+      <script th:src="@{/js/respond.min.js}"></script>
     <![endif]-->
 
 </head>
@@ -245,7 +245,7 @@
             <div class="row" id="itineraryStepsContainer">
             </div>
             <button class="btn_full" id="itineraryStepButton">Add itinerary step</button><br/>
-            <input type="hidden" th:value="${#authentication.name}" name="driverEmail" id="driverEmail" /><br/>
+            <input type="hidden" th:value="${#authentication.name}" name="email" id="email" /><br/>
             <input class="btn_full blue" type="submit" value="Add trip">
           </form>
         </div>

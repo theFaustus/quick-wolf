@@ -1,5 +1,6 @@
 package com.quickwolf.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -9,18 +10,32 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class QuickWolfConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Bean
+    public static NoOpPasswordEncoder passwordEncoder() {
+        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource())
-                .usersByUsernameQuery("select email, password, enabled from users where email = ?")
-                .authoritiesByUsernameQuery("select email, role from users where email = ?");
+                .usersByUsernameQuery("select email, password, enabled from wolf.users where email = ?")
+                .authoritiesByUsernameQuery("select email, role from wolf.users where email = ?");
     }
 
     @Override
@@ -63,10 +78,10 @@ public class QuickWolfConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/quickwolf");
-        dataSource.setUsername("root");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/quick-wolf");
+        dataSource.setUsername("postgres");
         dataSource.setPassword("");
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setDriverClassName("org.postgresql.Driver");
         return dataSource;
     }
 }

@@ -1,5 +1,7 @@
 package com.quickwolf.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -7,26 +9,41 @@ import javax.validation.constraints.Size;
 /**
  * Created by Faust on 4/19/2017.
  */
+@Embeddable
 public class CreditCard {
-    private long creditCardId;
+    @Column(name = "cc_first_name")
     @NotNull(message = "You have to fill this element")
     @Size(min = 2, max = 30, message = "First name should be between 2 - 30 characters long")
     private String firstName;
+
+    @Column(name = "cc_last_name")
     @NotNull(message = "You have to fill this element")
     @Size(min = 2, max = 30, message = "Last name should be between 2 - 30 characters long")
     private String lastName;
+
+    @Column(name = "cc_number")
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\\d{3})\\d{11}",message = "Enter please a valid credit card, e support : Visa, Mastercard, Amex, Discover.")
     private String cardNumber;
+
+    @Column(name = "cc_expiration_month")
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "(0[1-9]|1[0-2])",message = "Enter please a valid expiration month.")
     private String expirationMonth;
+
+    @Column(name = "cc_expiration_year")
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "[0-9]{2}",message = "Enter please a valid expiration year.")
     private String expirationYear;
+
+    @Column(name = "cc_security_code")
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "[0-9]{3,4}",message = "Enter please a valid cvv.")
     private String securityCode;
+
+
+    public CreditCard() {
+    }
 
     private CreditCard(Builder builder) {
         this.firstName = builder.firstName;
@@ -35,7 +52,6 @@ public class CreditCard {
         this.expirationMonth = builder.expirationMonth;
         this.expirationYear = builder.expirationYear;
         this.securityCode = builder.securityCode;
-        this.creditCardId = builder.creditCardId;
     }
 
     public static Builder newCreditCard() {
@@ -143,13 +159,6 @@ public class CreditCard {
         this.securityCode = securityCode;
     }
 
-    public long getCreditCardId() {
-        return creditCardId;
-    }
-
-    public void setCreditCardId(long creditCardId) {
-        this.creditCardId = creditCardId;
-    }
 
     @Override
     public String toString() {

@@ -28,7 +28,7 @@ public class AddTripFormBean {
 	private String toCity;
 	private String toStreet;
 	private long driverId;
-	private String driverEmail;
+	private String email;
 	private int availableSeats;
 	private List<ItineraryStepFormBean> itinerarySteps = new ArrayList<>();
 	private BigDecimal price = BigDecimal.TEN;
@@ -49,12 +49,12 @@ public class AddTripFormBean {
 		this.arriveTime = arriveTime;
 	}
 
-	public String getDriverEmail() {
-		return driverEmail;
+	public String getemail() {
+		return email;
 	}
 
-	public void setDriverEmail(String driverEmail) {
-		this.driverEmail = driverEmail;
+	public void setemail(String email) {
+		this.email = email;
 	}
 
 	public long getDriverId() {
@@ -163,8 +163,8 @@ public class AddTripFormBean {
 
 	private Trip tryConvertToTrip() throws ParseException {
 		System.out.println("yay");
-		Trip trip = Trip.newTrip()
-				.setTripTime(dateFormat.get().parse(depart + " " + departTime))
+		Trip trip = Trip.newBuilder()
+				.setDepartTime(dateFormat.get().parse(depart + " " + departTime))
 				.setArriveTime(dateFormat.get().parse(arrive + " " + arriveTime))
 				.setFromAddress(Address.newBuilder()
 						.setCountry(fromCountry)
@@ -180,7 +180,7 @@ public class AddTripFormBean {
 				.setItinerary(getItinerary())
 				.setPrice(price)
 				.setAvailableSeats(availableSeats)
-				.setDriver(Driver.newDriver().email(driverEmail).build())
+				.setDriver(Driver.newBuilder().setEmail(email).build())
 				.build();
 		trip.getItinerary().setTrip(trip);
 		return trip;

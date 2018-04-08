@@ -4,22 +4,22 @@ import java.io.Serializable;
 
 public class BookTripFormBean implements Serializable {
 	private long tripId;
-	private String passengerEmail;
+	private String email;
 
-	public BookTripFormBean(String passengerEmail, long tripId) {
+	public BookTripFormBean(String email, long tripId) {
 		this.tripId = tripId;
-		this.passengerEmail = passengerEmail;
+		this.email = email;
 	}
 	
 	public BookTripFormBean() {
 	}
 
-	public String getPassengerEmail() {
-		return passengerEmail;
+	public String getemail() {
+		return email;
 	}
 
-	public void setPassengerEmail(String passengerEmail) {
-		this.passengerEmail = passengerEmail;
+	public void setemail(String email) {
+		this.email = email;
 	}
 
 	public long getTripId() {

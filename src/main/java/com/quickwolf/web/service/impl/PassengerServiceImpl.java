@@ -1,6 +1,7 @@
 package com.quickwolf.web.service.impl;
 
 import com.quickwolf.domain.Passenger;
+import com.quickwolf.domain.Trip;
 import com.quickwolf.web.form.beans.RegisterPassengerFormBean;
 import com.quickwolf.web.repository.PassengerRepository;
 import com.quickwolf.web.service.PassengerService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -17,21 +19,39 @@ import java.util.Random;
 public class PassengerServiceImpl implements PassengerService {
 
     @Autowired
-    PassengerRepository passengerRepository;
+    private PassengerRepository passengerRepository;
 
     @Override
     public Passenger savePassenger(RegisterPassengerFormBean registerPassengerFormBean) {
-        Passenger passenger = Passenger.newPassenger()
-                .passengerId(new Random().nextInt(1000))
-                .firstName(registerPassengerFormBean.getFirstName())
-                .lastName(registerPassengerFormBean.getLastName())
-                .email(registerPassengerFormBean.getPassengerEmail())
-                .password(registerPassengerFormBean.getPassengerPassword())
-                .telephoneNumber(registerPassengerFormBean.getTelephoneNumber())
-                .creditCard(registerPassengerFormBean.getCreditCard())
-                .bookedTrips(new ArrayList<>())
+        Passenger passenger = Passenger.newBuilder()
+                .setFirstName(registerPassengerFormBean.getFirstName())
+                .setLastName(registerPassengerFormBean.getLastName())
+                .setEmail(registerPassengerFormBean.getemail())
+                .setPassword(registerPassengerFormBean.getPassengerPassword())
+                .setTelephoneNumber(registerPassengerFormBean.getTelephoneNumber())
+                .setCreditCard(registerPassengerFormBean.getCreditCard())
                 .build();
-        passengerRepository.savePassenger(passenger);
+        passengerRepository.save(passenger);
         return passenger;
+    }
+
+    @Override
+    public Passenger findPassengerBy(String email) {
+        return passengerRepository.findPassengerBy(email);
+    }
+
+    @Override
+    public List<Trip> findBookedTrips(String email) {
+        return passengerRepository.findBookedTrips(email);
+    }
+
+    @Override
+    public List<Passenger> findAllPassengers() {
+        return passengerRepository.findAll();
+    }
+
+    @Override
+    public void updateEnabledValue(String email, int enabledPassenger) {
+        passengerRepository.updateEnabledValue(email, enabledPassenger);
     }
 }

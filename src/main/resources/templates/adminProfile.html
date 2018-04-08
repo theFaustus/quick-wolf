@@ -34,8 +34,8 @@
 
 
     <!--[if lt IE 9]>
-    <script th:src="@{/js/html5shiv.min.js"></script>
-    <script th:src="@{/js/respond.min.js"></script>
+    <script th:src="@{/js/html5shiv.min.js}"></script>
+    <script th:src="@{/js/respond.min.js}"></script>
     <![endif]-->
 
 </head>
@@ -192,7 +192,7 @@
                             <div class="col-md-4 col-sm-3">
                                 <h3 style="padding-left: 0px;"
                                     th:text="${p.firstName + ', ' + p.lastName}"></h3>
-                                <span th:text="${p.passengerEmail + ' / ' + p.telephoneNumber}"></span>
+                                <span th:text="${p.email + ' / ' + p.telephoneNumber}"></span>
                             </div>
                             <div class="col-md-2 col-sm-3">
                                 <ul class="info_booking">
@@ -214,15 +214,15 @@
                             <div class="col-md-2 col-sm-2">
                                 <div class="booking_buttons">
                                     <form th:if="${p.enabled == 1}" method="post" th:action="@{/disablePassenger}">
-                                        <input type="hidden" th:value="${p.passengerEmail}" name="passengerEmail"
-                                               id="passengerEmail"/>
+                                        <input type="hidden" th:value="${p.email}" name="email"
+                                               id="email"/>
                                         <input type="hidden" th:value="${0}" name="enabledPassenger"
                                                id="enabledPassenger"/>
                                         <input type="submit" class="btn_2" value="Block user"/>
                                     </form>
                                     <form th:if="${p.enabled == 0}" method="post" th:action="@{/enablePassenger}">
-                                        <input type="hidden" th:value="${p.passengerEmail}" name="passengerEmail"
-                                               id="passengerEmail"/>
+                                        <input type="hidden" th:value="${p.email}" name="email"
+                                               id="email"/>
                                         <input type="hidden" th:value="${1}" name="enabledPassenger"
                                                id="enabledPassenger"/>
                                         <input type="submit" class="btn_2" value="Unblock user"/>
@@ -252,7 +252,7 @@
                             <div class="col-md-4 col-sm-3">
                                 <h3 style="padding-left: 0px;"
                                     th:text="${p.firstName + ', ' + p.lastName}"></h3>
-                                <span th:text="${p.driverEmail + ' / ' + p.telephoneNumber}"></span><br>
+                                <span th:text="${p.email + ' / ' + p.telephoneNumber}"></span><br>
                                 <span th:text="${'ID:' + p.humanId + ' / Birth:' + p.dateOfBirth}"></span>
                             </div>
                             <div class="col-md-2 col-sm-3">
@@ -275,15 +275,15 @@
                             <div class="col-md-2 col-sm-2">
                                 <div class="booking_buttons">
                                     <form th:if="${p.enabled == 1}" method="post" th:action="@{/disableDriver}">
-                                        <input type="hidden" th:value="${p.driverEmail}" name="driverEmail"
-                                               id="driverEmail"/>
+                                        <input type="hidden" th:value="${p.email}" name="email"
+                                               id="email"/>
                                         <input type="hidden" th:value="${0}" name="enabledDriver"
                                                id="enabledDriver"/>
                                         <input type="submit" class="btn_2" value="Block user"/>
                                     </form>
                                     <form th:if="${p.enabled == 0}" method="post" th:action="@{/enableDriver}">
-                                        <input type="hidden" th:value="${p.driverEmail}" name="driverEmail"
-                                               id="driverEmail"/>
+                                        <input type="hidden" th:value="${p.email}" name="email"
+                                               id="email"/>
                                         <input type="hidden" th:value="${1}" name="enabledDriver"
                                                id="enabledDriver"/>
                                         <input type="submit" class="btn_2" value="Unblock user"/>

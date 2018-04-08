@@ -1,19 +1,20 @@
 package com.quickwolf.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Itinerary {
-	private Long id;
+@Entity
+@Table(name = "_itinerary", schema = "wolf")
+public class Itinerary extends AbstractEntity {
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "itinerary")
 	private List<ItineraryStep> steps = new ArrayList<>();
+
+	@OneToOne
 	private Trip trip;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public Itinerary() {
 	}
 
 	public List<ItineraryStep> getSteps() {

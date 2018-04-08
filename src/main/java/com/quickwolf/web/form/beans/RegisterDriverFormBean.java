@@ -20,8 +20,8 @@ public class RegisterDriverFormBean {
     @Size(min = 2, max = 30, message = "Last name should be between 2 - 30 characters long")
     private String lastName;
     @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "^[_A-Za-z0-9-\\\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Something is wrong with your driverEmail")
-    private String driverEmail;
+    @Pattern(regexp = "^[_A-Za-z0-9-\\\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Something is wrong with your email")
+    private String email;
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", message = "Password should contain upperCase, lowerCase, number/special char and min 8 characters")
     private String driverPassword;
@@ -37,7 +37,7 @@ public class RegisterDriverFormBean {
     @Valid
     private CreditCard creditCard = CreditCard.newCreditCard().build();
     @Valid
-    private Transport registeredTransport = Transport.newTransport().build();
+    private Transport transport = Transport.newBuilder().build();
 
     public String getFirstName() {
         return firstName;
@@ -55,12 +55,12 @@ public class RegisterDriverFormBean {
         this.lastName = lastName;
     }
 
-    public String getDriverEmail() {
-        return driverEmail;
+    public String getemail() {
+        return email;
     }
 
-    public void setDriverEmail(String driverEmail) {
-        this.driverEmail = driverEmail;
+    public void setemail(String email) {
+        this.email = email;
     }
 
     public String getDriverPassword() {
@@ -107,11 +107,11 @@ public class RegisterDriverFormBean {
         this.creditCard = creditCard;
     }
 
-    public Transport getRegisteredTransport() {
-        return registeredTransport;
+    public Transport gettransport() {
+        return transport;
     }
 
-    public void setRegisteredTransport(Transport registeredTransport) {
-        this.registeredTransport = registeredTransport;
+    public void settransport(Transport transport) {
+        this.transport = transport;
     }
 }

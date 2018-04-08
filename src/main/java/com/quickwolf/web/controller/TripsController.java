@@ -3,6 +3,8 @@ package com.quickwolf.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,7 +37,9 @@ public class TripsController {
 	
 	@RequestMapping(value = "/addTrip", method = RequestMethod.POST)
 	public String createNewTrip(@ModelAttribute("tripBean") AddTripFormBean trip, Model model) {
-		service.createTrip(trip);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String driverName = auth.getName();
+		service.createTrip(trip, driverName);
 		return "redirect:/";
 	}
 }

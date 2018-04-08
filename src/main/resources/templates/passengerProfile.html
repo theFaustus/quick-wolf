@@ -34,8 +34,8 @@
 
 
     <!--[if lt IE 9]>
-    <script th:src="@{/js/html5shiv.min.js"></script>
-    <script th:src="@{/js/respond.min.js"></script>
+    <script th:src="@{/js/html5shiv.min.js}"></script>
+    <script th:src="@{/js/respond.min.js}"></script>
     <![endif]-->
 
 </head>
@@ -215,8 +215,8 @@
                                 <div class="booking_buttons">
                                     <form method="post" th:action="@{/cancelTrip}">
                                         <input type="hidden" th:value="${trip.id}" name="tripId" id="tripId"/>
-                                        <input type="hidden" th:value="${#authentication.name}" name="passengerEmail"
-                                               id="passengerEmail"/>
+                                        <input type="hidden" th:value="${#authentication.name}" name="email"
+                                               id="email"/>
                                         <input type="submit" class="btn_2" value="Cancel"/>
                                     </form>
                                 </div>
@@ -270,7 +270,7 @@
                     <div class="col-md-6 col-sm-6">
                         <h4>Your profile</h4>
                         <ul id="profile_summary">
-                            <li>Username <span th:text="${passenger.passengerEmail}"></span></li>
+                            <li>Username <span th:text="${passenger.email}"></span></li>
                             <li>First name <span th:text="${passenger.firstName}">Clara</span></li>
                             <li>Last name <span th:text="${passenger.lastName}">Tomson</span></li>
                             <li>Phone number <span th:text="${passenger.telephoneNumber}">+00 032 42366</span></li>

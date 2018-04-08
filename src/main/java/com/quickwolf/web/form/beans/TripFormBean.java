@@ -1,7 +1,5 @@
 package com.quickwolf.web.form.beans;
 
-import com.quickwolf.domain.Driver;
-
 import java.util.Date;
 
 public class TripFormBean {
@@ -10,7 +8,7 @@ public class TripFormBean {
 	private String fromCity;
 	private String toCountry;
 	private String toCity;
-	private Date depart;
+	private Date departTime;
 	private String driverId;
 
 	public String getDriverId() {
@@ -53,11 +51,11 @@ public class TripFormBean {
 		this.toCity = toCity;
 	}
 
-	public Date getDepart() {
-		return depart;
+	public Date getDepartTime() {
+		return departTime;
 	}
 
-	public void setDepart(Date depart) {
-		this.depart = depart;
+	public void setDepartTime(Date departTime) {
+		this.departTime = departTime;
 	}
 }

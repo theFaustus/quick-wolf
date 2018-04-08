@@ -11,9 +11,9 @@ create table itinerary_steps (id bigint auto_increment primary key, name varchar
     country varchar(255), city varchar(255), street varchar(255),
     itinerary_id bigint references itinerary(id));
 	
-create table passenger (id bigint primary key auto_increment, first_name varchar(30), last_name varchar(30), passengerEmail varchar(30), passengerPassword varchar(30), telephone_number varchar(30));
+create table passenger (id bigint primary key auto_increment, first_name varchar(30), last_name varchar(30), email varchar(30), passengerPassword varchar(30), telephone_number varchar(30));
 
-create table driver(id bigint primary key auto_increment, first_name varchar(30), last_name varchar(30), date_of_birth date, human_id varchar(30), passengerEmail varchar(30), passengerPassword varchar(30), telephone_number varchar(30));
+create table driver(id bigint primary key auto_increment, first_name varchar(30), last_name varchar(30), date_of_birth date, human_id varchar(30), email varchar(30), passengerPassword varchar(30), telephone_number varchar(30));
 
 create table passenger_credit_card(id bigint primary key auto_increment, first_name varchar(30), last_name varchar(30), card_number varchar(30), expiration_month varchar(30), expiration_year varchar(30), security_code varchar(30), user_id bigint unique references passenger(id));
 

@@ -5,8 +5,9 @@ import com.quickwolf.domain.MailSender;
 import com.quickwolf.domain.Passenger;
 import com.quickwolf.domain.Trip;
 import com.quickwolf.web.repository.DriverRepository;
-import com.quickwolf.web.repository.PassengerRepository;
-import com.quickwolf.web.repository.TripRepository;
+import com.quickwolf.web.service.DriverService;
+import com.quickwolf.web.service.PassengerService;
+import com.quickwolf.web.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,17 +26,19 @@ import java.util.List;
 public class ProfileController {
 
     @Autowired
-    PassengerRepository passengerRepository;
+    private PassengerService passengerService;
+
     @Autowired
-    TripRepository tripRepository;
+    private TripService tripService;
+
     @Autowired
-    DriverRepository driverRepository;
+    private DriverService driverService;
 
     @RequestMapping(value = "/passengerProfile")
     public String profilePage(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Passenger p = passengerRepository.findPassengerBy(auth.getName());
-        List<Trip> bookedTrips = tripRepository.findBookedTrips(auth.getName());
+        Passenger p = passengerService.findPassengerBy(auth.getName());
+        List<Trip> bookedTrips = passengerService.findBookedTrips(auth.getName());
         System.out.println(bookedTrips);
         p.setBookedTrips(bookedTrips);
         model.addAttribute("passenger", p);
@@ -45,8 +48,8 @@ public class ProfileController {
     @RequestMapping(value = "/driverProfile")
     public String driverPage(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Driver d = tripRepository.findDriverBy(auth.getName());
-        List<Trip> addedTrips = tripRepository.findAddedTrips(auth.getName());
+        Driver d = driverService.findDriverBy(auth.getName());
+        List<Trip> addedTrips = driverService.findAddedTrips(auth.getName());
         System.out.println(addedTrips);
         d.setAddedTrips(addedTrips);
         model.addAttribute("driver", d);
@@ -56,13 +59,13 @@ public class ProfileController {
     @RequestMapping(value = "/adminProfile")
     public String adminPage(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<Passenger> listOfPassengers = passengerRepository.findAllPassengers();
+        List<Passenger> listOfPassengers = passengerService.findAllPassengers();
         for(Passenger p : listOfPassengers){
-            p.setBookedTrips(tripRepository.findBookedTrips(p.getPassengerEmail()));
+            p.setBookedTrips(passengerService.findBookedTrips(p.getEmail()));
         }
-        List<Driver> listOfDrivers = tripRepository.findAllDrivers();
+        List<Driver> listOfDrivers = driverService.findAll();
         for(Driver d : listOfDrivers){
-            d.setAddedTrips(tripRepository.findAddedTrips(d.getDriverEmail()));
+            d.setAddedTrips(driverService.findAddedTrips(d.getEmail()));
         }
         model.addAttribute("passengers", listOfPassengers);
         model.addAttribute("drivers", listOfDrivers);
@@ -70,34 +73,34 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/disableDriver", method = RequestMethod.POST)
-    public String disableDriver(@RequestParam int enabledDriver, @RequestParam String driverEmail) {
-        driverRepository.updateEnabledValue(driverEmail, enabledDriver);
-        MailSender mailSender = new MailSender(driverEmail);
-        mailSender.sendBlockingWarning(driverEmail);
+    public String disableDriver(@RequestParam int enabledDriver, @RequestParam String email) {
+        driverService.updateEnabledValue(email, enabledDriver);
+        MailSender mailSender = new MailSender(email);
+        mailSender.sendBlockingWarning(email);
         return "redirect:/adminProfile";
     }
 
     @RequestMapping(value = "/disablePassenger", method = RequestMethod.POST)
-    public String disablePassenger(@RequestParam int enabledPassenger, @RequestParam String passengerEmail) {
-        passengerRepository.updateEnabledValue(passengerEmail, enabledPassenger);
-        MailSender mailSender = new MailSender(passengerEmail);
-        mailSender.sendBlockingWarning(passengerEmail);
+    public String disablePassenger(@RequestParam int enabledPassenger, @RequestParam String email) {
+        passengerService.updateEnabledValue(email, enabledPassenger);
+        MailSender mailSender = new MailSender(email);
+        mailSender.sendBlockingWarning(email);
         return "redirect:/adminProfile";
     }
 
     @RequestMapping(value = "/enableDriver", method = RequestMethod.POST)
-    public String enableDriver(@RequestParam int enabledDriver, @RequestParam String driverEmail) {
-        driverRepository.updateEnabledValue(driverEmail, enabledDriver);
-        MailSender mailSender = new MailSender(driverEmail);
-        mailSender.sendUnblockingWarning(driverEmail);
+    public String enableDriver(@RequestParam int enabledDriver, @RequestParam String email) {
+        driverService.updateEnabledValue(email, enabledDriver);
+        MailSender mailSender = new MailSender(email);
+        mailSender.sendUnblockingWarning(email);
         return "redirect:/adminProfile";
     }
 
     @RequestMapping(value = "/enablePassenger", method = RequestMethod.POST)
-    public String enablePassenger(@RequestParam int enabledPassenger, @RequestParam String passengerEmail) {
-        passengerRepository.updateEnabledValue(passengerEmail, enabledPassenger);
-        MailSender mailSender = new MailSender(passengerEmail);
-        mailSender.sendUnblockingWarning(passengerEmail);
+    public String enablePassenger(@RequestParam int enabledPassenger, @RequestParam String email) {
+        passengerService.updateEnabledValue(email, enabledPassenger);
+        MailSender mailSender = new MailSender(email);
+        mailSender.sendUnblockingWarning(email);
         return "redirect:/adminProfile";
     }
 }

@@ -1,148 +1,43 @@
 package com.quickwolf.domain;
 
+import com.quickwolf.util.Constants;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Faust on 4/20/2017.
  */
-public class Driver {
-    private long driverId;
+@Entity
+@Table(name = "_driver", schema = "wolf")
+public class Driver extends User {
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "date_of_birth")
     private String dateOfBirth;
-    private String humanId;
-    private String driverEmail;
-    private String driverPassword;
+
+    @Column(name = "driver_idnp")
+    private String idnp;
+
+    @Column(name = "telephone_number")
     private String telephoneNumber;
+
+    @Embedded
     private CreditCard creditCard;
-    private Transport registeredTransport;
-    private List<Trip> addedTrips;
-    private int enabled = 1;
 
-    private Driver(Builder builder) {
-        this.driverId = builder.driverId;
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.dateOfBirth = builder.dateOfBirth;
-        this.humanId = builder.humanId;
-        this.driverEmail = builder.email;
-        this.driverPassword = builder.password;
-        this.telephoneNumber = builder.telephoneNumber;
-        this.creditCard = builder.creditCard;
-        this.registeredTransport = builder.registeredTransport;
-        this.addedTrips = builder.addedTrips;
-        this.enabled = builder.enabled;
-    }
+    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
+    private Transport transport;
 
-    public static Builder newDriver() {
-        return new Builder();
-    }
+    @OneToMany(mappedBy = "driver")
+    private List<Trip> addedTrips = new ArrayList<>();
 
-
-    public static final class Builder {
-        private long driverId;
-        private String firstName;
-        private String lastName;
-        private String dateOfBirth;
-        private String humanId;
-        private String email;
-        private String password;
-        private String telephoneNumber;
-        private CreditCard creditCard;
-        private Transport registeredTransport;
-        private int enabled;
-        private List<Trip> addedTrips;
-
-        private Builder() {
-        }
-
-        public Driver build() {
-            return new Driver(this);
-        }
-
-        public Builder driverId(long driverId) {
-            this.driverId = driverId;
-            return this;
-        }
-
-        public Builder firstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Builder lastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public Builder dateOfBirth(String dateOfBirth) {
-            this.dateOfBirth = dateOfBirth;
-            return this;
-        }
-
-        public Builder humanId(String humanId) {
-            this.humanId = humanId;
-            return this;
-        }
-
-        public Builder email(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public Builder password(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public Builder telephoneNumber(String telephoneNumber) {
-            this.telephoneNumber = telephoneNumber;
-            return this;
-        }
-
-        public Builder creditCards(CreditCard creditCard) {
-            this.creditCard = creditCard;
-            return this;
-        }
-
-        public Builder registeredTransport(Transport registeredTransport) {
-            this.registeredTransport = registeredTransport;
-            return this;
-        }
-
-        public Builder addedTrips(List<Trip> addedTrips) {
-            this.addedTrips = addedTrips;
-            return this;
-        }
-
-        public Builder enabled(int enabled) {
-            this.enabled = enabled;
-            return this;
-        }
-    }
-
-    public List<Trip> getAddedTrips() {
-        return addedTrips;
-    }
-
-    public void setAddedTrips(List<Trip> addedTrips) {
-        this.addedTrips = addedTrips;
-    }
-
-    public int getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(int enabled) {
-        this.enabled = enabled;
-    }
-
-    public long getDriverId() {
-        return driverId;
-    }
-
-    public void setDriverId(long driverId) {
-        this.driverId = driverId;
+    public Driver() {
     }
 
     public String getFirstName() {
@@ -169,28 +64,12 @@ public class Driver {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getHumanId() {
-        return humanId;
+    public String getIdnp() {
+        return idnp;
     }
 
-    public void setHumanId(String humanId) {
-        this.humanId = humanId;
-    }
-
-    public String getDriverEmail() {
-        return driverEmail;
-    }
-
-    public void setDriverEmail(String driverEmail) {
-        this.driverEmail = driverEmail;
-    }
-
-    public String getDriverPassword() {
-        return driverPassword;
-    }
-
-    public void setDriverPassword(String driverPassword) {
-        this.driverPassword = driverPassword;
+    public void setIdnp(String idnp) {
+        this.idnp = idnp;
     }
 
     public String getTelephoneNumber() {
@@ -209,29 +88,136 @@ public class Driver {
         this.creditCard = creditCard;
     }
 
-    public Transport getRegisteredTransport() {
-        return registeredTransport;
+    public Transport getTransport() {
+        return transport;
     }
 
-    public void setRegisteredTransport(Transport registeredTransport) {
-        this.registeredTransport = registeredTransport;
+    public void setTransport(Transport transport) {
+        this.transport = transport;
+    }
+
+    public List<Trip> getAddedTrips() {
+        return addedTrips;
+    }
+
+    public void setAddedTrips(List<Trip> addedTrips) {
+        this.addedTrips = addedTrips;
     }
 
     @Override
     public String toString() {
         return "Driver{" +
-                "driverId=" + driverId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", humanId='" + humanId + '\'' +
-                ", driverEmail='" + driverEmail + '\'' +
-                ", driverPassword='" + driverPassword + '\'' +
-                ", telephoneNumber='" + telephoneNumber + '\'' +
-                ", creditCard=" + creditCard +
-                ", registeredTransport=" + registeredTransport +
-                ", addedTrips=" + addedTrips +
-                ", enabled=" + enabled +
                 '}';
+    }
+
+    public static DriverBuilder newBuilder() {
+        return new DriverBuilder();
+    }
+
+    public static final class DriverBuilder {
+        private String email;
+        private String password;
+        private String role;
+        private String firstName;
+        private int enabled = 1;
+        private Long id;
+        private String lastName;
+        private String dateOfBirth;
+        private String idnp;
+        private String telephoneNumber;
+        private CreditCard creditCard;
+        private Transport transport;
+
+        private List<Trip> addedTrips = new ArrayList<>();
+
+        private DriverBuilder() {
+        }
+
+        public DriverBuilder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public DriverBuilder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public DriverBuilder setRole(String role) {
+            this.role = role;
+            return this;
+        }
+
+        public DriverBuilder setFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public DriverBuilder setEnabled(int enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public DriverBuilder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public DriverBuilder setLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public DriverBuilder setDateOfBirth(String dateOfBirth) {
+            this.dateOfBirth = dateOfBirth;
+            return this;
+        }
+
+        public DriverBuilder setIdnp(String idnp) {
+            this.idnp = idnp;
+            return this;
+        }
+
+        public DriverBuilder setTelephoneNumber(String telephoneNumber) {
+            this.telephoneNumber = telephoneNumber;
+            return this;
+        }
+
+        public DriverBuilder setCreditCard(CreditCard creditCard) {
+            this.creditCard = creditCard;
+            return this;
+        }
+
+        public DriverBuilder setTransport(Transport transport) {
+            this.transport = transport;
+            return this;
+        }
+
+        public DriverBuilder setAddedTrips(List<Trip> addedTrips) {
+            this.addedTrips = addedTrips;
+            return this;
+        }
+
+        public Driver build() {
+            Driver driver = new Driver();
+            driver.setEmail(email);
+            driver.setPassword(password);
+            driver.setRole(role);
+            driver.setFirstName(firstName);
+            driver.setEnabled(enabled);
+            driver.setId(id);
+            driver.setLastName(lastName);
+            driver.setDateOfBirth(dateOfBirth);
+            driver.setIdnp(idnp);
+            driver.setTelephoneNumber(telephoneNumber);
+            driver.setCreditCard(creditCard);
+            driver.setTransport(transport);
+            driver.setAddedTrips(addedTrips);
+            driver.setRole(Constants.DEFAULT_DRIVER_ROLE);
+            return driver;
+        }
     }
 }

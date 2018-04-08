@@ -1,5 +1,9 @@
 package com.quickwolf.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -7,132 +11,64 @@ import javax.validation.constraints.Size;
 /**
  * Created by Faust on 4/20/2017.
  */
-public class Transport {
-    private long transportId;
+@Entity
+@Table(name = "_transport", schema = "wolf")
+public class Transport extends AbstractEntity {
+
+    @Column(name = "transport_name")
     @NotNull(message = "You have to fill this element")
     @Size(min = 2, max = 30, message = "Name of your car should be between 2 - 30 characters long")
     private String name;
+
+    @Column(name = "model_name")
     @NotNull(message = "You have to fill this element")
     @Size(min = 2, max = 30, message = "Model of your car should be between 2 - 30 characters long")
     private String modelName;
+
+    @Column(name = "transport_type")
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "(car|bus)", message = "You`re allowed to use a bus or a car")
     private String transportType;
+
+    @Column(name = "body_type")
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "(suv|truck|sedan|van|coupe|wagon|convertible|sports|diesel|crossover|luxury|hybrid|hatchback|microbus|autobus|bus)", message = "Allowed types for car : suv, truck, sedan, van, coupe, wagon, convertible, sports, diesel, crossover, luxury, hybrid, hatchback and for bus : microbus, autobus, bus")
     private String bodyType;
+
+    @Column(name = "number_of_seats")
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "\\d{1,3}", message = "Use a valid number of seats")
-    private String numberOfSeats;
+    private int numberOfSeats;
+
+    @Column(name = "registration_number")
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "\\w{1,3}\\d{1,3}", message = "Use a valid registration number")
     private String registrationNumber;
+
+    @Column(name = "date_of_registration")
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "^([0-9]{4})-([1-9]|1[0-2])-([0-9]|1[0-9]|2[0-9]|3[0-1])$", message = "Enter the date of birth in form yyyy-mm-dd.")
     private String dateOfRegistration;
+
+    @Column(name = "transport_year")
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "\\d{4}", message = "Use a valid year of car")
     private String year;
+
+    @Column(name = "transport_color")
     @NotNull(message = "You have to fill this element")
     @Size(min = 3, max = 30, message = "Color should be 3 - 30 characters long")
     private String color;
+
+    @Column(name = "engine_id")
     @NotNull(message = "You have to fill this element")
     @Size(min = 14, max = 14, message = "Engine id should be 14 characters long according to your registration certificate")
     private String engineId;
 
-    private Transport(Builder builder) {
-        this.transportId = builder.transportId;
-        this.name = builder.name;
-        this.modelName = builder.modelName;
-        this.transportType = builder.transportType;
-        this.bodyType = builder.bodyType;
-        this.numberOfSeats = builder.numberOfSeats;
-        this.registrationNumber = builder.registrationNumber;
-        this.dateOfRegistration = builder.dateOfRegistration;
-        this.year = builder.year;
-        this.color = builder.color;
-        this.engineId = builder.engineId;
-    }
+    @OneToOne
+    private Driver driver;
 
-    public static Builder newTransport() {
-        return new Builder();
-    }
-
-
-    public static final class Builder {
-        private long transportId;
-        private String name;
-        private String modelName;
-        private String transportType;
-        private String bodyType;
-        private String numberOfSeats;
-        private String registrationNumber;
-        private String dateOfRegistration;
-        private String year;
-        private String color;
-        private String engineId;
-
-        private Builder() {
-        }
-
-        public Transport build() {
-            return new Transport(this);
-        }
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder modelName(String modelName) {
-            this.modelName = modelName;
-            return this;
-        }
-
-        public Builder transportType(String carType) {
-            this.transportType = carType;
-            return this;
-        }
-
-        public Builder bodyType(String bodyType) {
-            this.bodyType = bodyType;
-            return this;
-        }
-
-        public Builder numberOfSeats(String numberOfSeats) {
-            this.numberOfSeats = numberOfSeats;
-            return this;
-        }
-
-        public Builder registrationNumber(String registrationNumber) {
-            this.registrationNumber = registrationNumber;
-            return this;
-        }
-
-        public Builder dateOfRegistration(String dateOfRegistration) {
-            this.dateOfRegistration = dateOfRegistration;
-            return this;
-        }
-
-        public Builder year(String year) {
-            this.year = year;
-            return this;
-        }
-
-        public Builder color(String color) {
-            this.color = color;
-            return this;
-        }
-
-        public Builder engineId(String engineId) {
-            this.engineId = engineId;
-            return this;
-        }
-
-        public Builder transportId(long transportId) {
-            this.transportId = transportId;
-            return this;
-        }
+    public Transport() {
     }
 
     public String getName() {
@@ -167,11 +103,11 @@ public class Transport {
         this.bodyType = bodyType;
     }
 
-    public String getNumberOfSeats() {
+    public int getNumberOfSeats() {
         return numberOfSeats;
     }
 
-    public void setNumberOfSeats(String numberOfSeats) {
+    public void setNumberOfSeats(int numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
     }
 
@@ -215,27 +151,104 @@ public class Transport {
         this.engineId = engineId;
     }
 
-    public long getTransportId() {
-        return transportId;
+    public Driver getDriver() {
+        return driver;
     }
 
-    public void setTransportId(long transportId) {
-        this.transportId = transportId;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
-    @Override
-    public String toString() {
-        return "Transport{" +
-                "name='" + name + '\'' +
-                ", modelName='" + modelName + '\'' +
-                ", transportType='" + transportType + '\'' +
-                ", bodyType='" + bodyType + '\'' +
-                ", numberOfSeats='" + numberOfSeats + '\'' +
-                ", registrationNumber='" + registrationNumber + '\'' +
-                ", dateOfRegistration='" + dateOfRegistration + '\'' +
-                ", year='" + year + '\'' +
-                ", color='" + color + '\'' +
-                ", engineId='" + engineId + '\'' +
-                '}';
+    public static TransportBuilder newBuilder() {
+        return new TransportBuilder();
+    }
+
+    public static final class TransportBuilder {
+        private Long id;
+        private String name;
+        private String modelName;
+        private String transportType;
+        private String bodyType;
+        private int numberOfSeats;
+        private String registrationNumber;
+        private String dateOfRegistration;
+        private String year;
+        private String color;
+
+        private String engineId;
+
+        private TransportBuilder() {
+        }
+
+        public TransportBuilder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public TransportBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public TransportBuilder setModelName(String modelName) {
+            this.modelName = modelName;
+            return this;
+        }
+
+        public TransportBuilder setTransportType(String transportType) {
+            this.transportType = transportType;
+            return this;
+        }
+
+        public TransportBuilder setBodyType(String bodyType) {
+            this.bodyType = bodyType;
+            return this;
+        }
+
+        public TransportBuilder setNumberOfSeats(int numberOfSeats) {
+            this.numberOfSeats = numberOfSeats;
+            return this;
+        }
+
+        public TransportBuilder setRegistrationNumber(String registrationNumber) {
+            this.registrationNumber = registrationNumber;
+            return this;
+        }
+
+        public TransportBuilder setDateOfRegistration(String dateOfRegistration) {
+            this.dateOfRegistration = dateOfRegistration;
+            return this;
+        }
+
+        public TransportBuilder setYear(String year) {
+            this.year = year;
+            return this;
+        }
+
+        public TransportBuilder setColor(String color) {
+            this.color = color;
+            return this;
+        }
+
+        public TransportBuilder setEngineId(String engineId) {
+            this.engineId = engineId;
+            return this;
+        }
+
+        public Transport build() {
+            Transport transport = new Transport();
+            transport.setId(id);
+            transport.setName(name);
+            transport.setModelName(modelName);
+            transport.setTransportType(transportType);
+            transport.setBodyType(bodyType);
+            transport.setNumberOfSeats(numberOfSeats);
+            transport.setRegistrationNumber(registrationNumber);
+            transport.setDateOfRegistration(dateOfRegistration);
+            transport.setYear(year);
+            transport.setColor(color);
+            transport.setEngineId(engineId);
+            return transport;
+        }
     }
 }

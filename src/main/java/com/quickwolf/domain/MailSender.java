@@ -141,7 +141,7 @@ public class MailSender {
                     "                            <address>\n" +
                     "    \t\t\t\t<strong>Billed To:</strong><br>\n" +
                     "    \t\t\t\t\t" + p.getFirstName() + " " + p.getLastName() + "<br>\n" +
-                    "    \t\t\t\t\t" + p.getPassengerEmail() + "<br>\n" +
+                    "    \t\t\t\t\t" + p.getEmail() + "<br>\n" +
                     "    \t\t\t\t\t" + p.getTelephoneNumber() + "\n" +
                     "    \t\t\t\t</address>\n" +
                     "            </td>\n" +
@@ -149,7 +149,7 @@ public class MailSender {
                     "                <address>\n" +
                     "    \t\t\t\t\t<strong>Payment Method:</strong><br>\n" +
                     "    \t\t\t\t\tCard ending " + p.getCreditCard().getCardNumber().substring(p.getCreditCard().getCardNumber().length() - 4, p.getCreditCard().getCardNumber().length()) + "<br>\n" +
-                    "    \t\t\t\t\t" + p.getPassengerEmail() + "\n" +
+                    "    \t\t\t\t\t" + p.getEmail() + "\n" +
                     "    \t\t\t\t</address>\n" +
                     "\n" +
                     "            </td>\n" +
