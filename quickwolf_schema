@@ -1,0 +1,39 @@
+create database quickwolf;
+use quickwolf;
+
+create table trip (id bigint auto_increment primary key, from_country varchar(255), from_city varchar(255), from_street varchar(255), 
+    destination_country varchar(255), destination_city varchar(255), destination_street varchar(255),
+    depart_time timestamp default now(), arrive_time timestamp default now(), price double default 0.0);    
+
+create table itinerary (id bigint auto_increment primary key, trip_id bigint references trip(id));
+
+create table itinerary_steps (id bigint auto_increment primary key, name varchar(255), arrive timestamp default now(), depart timestamp default now(), 
+    country varchar(255), city varchar(255), street varchar(255),
+    itinerary_id bigint references itinerary(id));
+	
+create table passenger (id bigint primary key auto_increment, first_name varchar(30), last_name varchar(30), passengerEmail varchar(30), passengerPassword varchar(30), telephone_number varchar(30));
+
+create table driver(id bigint primary key auto_increment, first_name varchar(30), last_name varchar(30), date_of_birth date, human_id varchar(30), passengerEmail varchar(30), passengerPassword varchar(30), telephone_number varchar(30));
+
+create table passenger_credit_card(id bigint primary key auto_increment, first_name varchar(30), last_name varchar(30), card_number varchar(30), expiration_month varchar(30), expiration_year varchar(30), security_code varchar(30), user_id bigint unique references passenger(id));
+
+create table driver_credit_card(id bigint primary key auto_increment, first_name varchar(30), last_name varchar(30), card_number varchar(30), expiration_month varchar(30), expiration_year varchar(30), security_code varchar(30), user_id bigint unique references driver(id));
+
+create table transport(id bigint primary key auto_increment, name varchar(30), model_name varchar(30), transport_type varchar(30), body_type varchar(30), number_of_seats varchar(30), registration_number varchar(30), date_of_registration date, year varchar(30), color varchar(30), engine_id varchar(30), driver_id bigint unique references driver(id));
+
+        
+    insert into trip (from_country, from_city, from_street, destination_country, destination_city, destination_street, depart_time, arrive_time, price) values 
+        ('Moldova', 'Chisinau', 'Poker street', 'Moldova', 'Soroca', 'Liberty street 2/1', timestamp('2016/4/19 8:30:00'), timestamp('2016/4/19 11:45:00'), 67.0),
+        ('Moldova', 'Chisinau', 'Whiskey bar 2/1', 'Moldova', 'Balti', 'Entry street 2/1', timestamp('2016/4/19 9:30:00'), timestamp('2016/4/19 14:45:00'), 45.0),
+        ('Moldova', 'Chisinau', 'Poker street', 'Moldova', 'Soroca', 'Liberty street 2/1', timestamp('2016/4/21 8:30:00'), timestamp('2016/4/21 11:45:00'), 90.3);
+
+        
+    insert into itinerary (trip_id) values (1), (2), (3);
+    insert into itinerary_steps (name, arrive, depart, country, city, street, itinerary_id) values
+        ('Lunch stop #1', timestamp('2016/4/19 9:30:00'), timestamp('2016/4/19 10:00:00'), 'Nevada', 'Las Vegas', 'Poker street', 1),
+        ('Lunch stop #2', timestamp('2016/4/19 10:30:00'), timestamp('2016/4/19 11:00:00'), 'State', 'City', 'Trololo str. 2/1', 1),
+        ('Lunch stop #1', timestamp('2016/4/19 10:30:00'), timestamp('2016/4/19 11:00:00'), 'Nevada', 'Las Vegas', 'Entry street 2/1', 2),
+        ('Lunch stop #1', timestamp('2016/4/19 10:30:00'), timestamp('2016/4/19 11:00:00'), 'Moldova', 'Soroca', 'Gypsy str', 3);
+        
+        
+        

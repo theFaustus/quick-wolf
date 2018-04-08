@@ -1,0 +1,15 @@
+body {
+	background-color: #eaeaea;
+}
+
+table, tr, td, th {
+	border: 1px solid black;
+}
+
+#tripStats {
+	padding: 5px;
+}
+
+#itineraryContainer {
+	display: none;
+}

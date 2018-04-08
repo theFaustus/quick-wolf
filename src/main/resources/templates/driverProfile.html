@@ -1,0 +1,432 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="QuickWolf - A quick`n`easy way to travel.">
+    <meta name="author" content="Faust">
+    <title>QuickWolf - Driver profile</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" th:href="@{/img/apple-touch-icon-57x57-precomposed.png}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72"
+          th:href="@{/img/apple-touch-icon-72x72-precomposed.png}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114"
+          th:href="@{/img/apple-touch-icon-114x114-precomposed.png}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144"
+          th:href="@{/img/apple-touch-icon-144x144-precomposed.png}">
+
+    <!-- CSS -->
+    <link th:href="@{css/base.css}" rel="stylesheet">
+
+    <!-- SPECIFIC CSS -->
+    <link th:href="@{css/admin.css}" rel="stylesheet">
+    <link th:href="@{css/square/grey.css}" rel="stylesheet">
+    <link th:href="@{css/jquery.switch.css}" rel="stylesheet">
+
+    <!-- Google web fonts -->
+    <link th:href="@{http://fonts.googleapis.com/css?family=Montserrat:400,700}" rel='stylesheet' type='text/css'>
+    <link th:href="@{http://fonts.googleapis.com/css?family=Gochi+Hand}" rel='stylesheet' type='text/css'>
+    <link th:href="@{http://fonts.googleapis.com/css?family=Lato:300,400}" rel='stylesheet' type='text/css'>
+
+
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/html5shiv.min.js"></script>
+    <script th:src="@{/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<!--[if lte IE 8]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a>.</p>
+<![endif]-->
+
+<div id="preloader">
+    <div class="sk-spinner sk-spinner-wave">
+        <div class="sk-rect1"></div>
+        <div class="sk-rect2"></div>
+        <div class="sk-rect3"></div>
+        <div class="sk-rect4"></div>
+        <div class="sk-rect5"></div>
+    </div>
+</div>
+<!-- End Preload -->
+
+<div class="layer"></div>
+<!-- Mobile menu overlay mask -->
+
+<!-- Header================================================== -->
+<header>
+    <div id="top_line">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6"></div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <ul id="top_links">
+                    </ul>
+                </div>
+            </div>
+            <!-- End row -->
+        </div>
+        <!-- End container-->
+    </div>
+    <!-- End top line-->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                <div id="logo">
+                    <a th:href="@{/}"><img th:src="@{/img/logo.png}" width="160" height="34" alt="QuickWolf - Home"
+                                           data-retina="true" class="logo_normal"></a>
+                    <a th:href="@{/}"><img th:src="@{/img/logo_sticky.png}" width="160" height="34"
+                                           alt="QuickWolf - Home" data-retina="true" class="logo_sticky"></a>
+                </div>
+            </div>
+            <nav class="col-md-9 col-sm-9 col-xs-9">
+                <!--<a class="cmn-toggle-switch cmn-toggle-switch__htx open_close" href="javascript:void(0);"><span>Menu mobile</span></a>
+                      -->
+                <!--          <div class="main-menu">
+                            <div id="header_menu">
+                              <img th:src="@{/img/logo_sticky.png}" width="160" height="34" alt="QuickWolf" data-retina="true">
+                            </div>
+                            <a href="#" class="open_close" id="close_in"><i class="icon_set_1_icon-77"></i></a>
+                            <ul>
+                              <li class="submenu">
+                                <a th:href="@{/}" class="show-submenu">Home</a>
+                              </li>
+                              <li class="submenu">
+                                <a href="javascript:void(0);" class="show-submenu">Tours</a>
+                              </li>
+                              <li class="submenu">
+                                <a href="javascript:void(0);" class="show-submenu">Hotels</a>
+                              </li>
+                              <li class="submenu">
+                                <a href="javascript:void(0);" class="show-submenu">Transfers</a>
+                              </li>
+                              <li class="submenu">
+                                <a href="javascript:void(0);" class="show-submenu">Restaurants</a>
+                              </li>
+                              <li class="submenu">
+                                <a href="javascript:void(0);" class="show-submenu">Bonus</a>
+                              </li>
+                            </ul>
+                          </div>-->
+                <!-- End main-menu -->
+                <ul id="top_tools">
+                    <li>
+                        <div class="dropdown dropdown-access">
+                            <form>
+                                <div sec:authorize="hasRole('ROLE_USER')">
+                                    <a th:href="@{/passengerProfile}"><i class="icon-user"></i></a><a
+                                        th:href="@{/passengerProfile}"
+                                        sec:authentication="name"></a>
+                                </div>
+                                <div sec:authorize="hasRole('ROLE_DRIVER')">
+                                    <a th:href="@{/driverProfile}"><i class="icon-user"></i></a><a
+                                        th:href="@{/driverProfile}"
+                                        sec:authentication="name"></a>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown dropdown-access">
+                            <form th:action="@{/logout}" method="post" id="logoutForm">
+                                <a href="#" onclick="document.forms['logoutForm'].submit()"><i
+                                        class="icon-logout-1"></i></a><a href="#"
+                                                                         onclick="document.forms['logoutForm'].submit()">Log
+                                out</a>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- container -->
+</header>
+<!-- End Header -->
+
+
+<section class="parallax-window" data-parallax="scroll" th:attr="data-image-src=@{/img/night.jpg}"
+         data-natural-width="1400" data-natural-height="470">
+    <div class="parallax-content-1">
+        <div class="animated fadeInDown">
+            <h1>Driver profile</h1>
+            <p>Check your trips or edit your details.</p>
+        </div>
+    </div>
+</section>
+
+<div class="margin_60 container">
+    <div id="tabs" class="tabs">
+        <nav>
+            <ul>
+                <li><a href="#section-1" class="icon-booking"><span>Added trips</span></a></li>
+                <li><a href="#section-3" class="icon-settings"><span>Settings</span></a></li>
+                <li><a href="#section-4" class="icon-profile"><span>Profile</span></a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <section id="section-1">
+                <div th:if="${#lists.isEmpty(driver.addedTrips)}">
+                    <div class="strip_booking">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <h2 style="color: indianred;">Ooops...No added trips yet?</h2>
+                                <h4>Try to add some <a th:href="@{/addTrip}">trips</a>?</h4>
+                            </div>
+                        </div><!-- End row -->
+                    </div>
+                </div><!-- End strip booking -->
+                <div th:if="${not #lists.isEmpty(driver.addedTrips)}">
+                    <div class="strip_booking" th:each="trip : ${driver.addedTrips}">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2">
+                                <div class="date">
+                                    <span class="month" style="margin-bottom: 15px;"
+                                          th:text="${#dates.monthName(trip.tripTime)}"></span>
+
+                                    <strong><span style="font-size: 2em; margin-bottom: 10px;"
+                                                  th:text="${#dates.format(trip.tripTime, 'dd')}"></span></strong>
+                                    <span class="day" th:text="${#dates.dayOfWeekNameShort(trip.tripTime)}">Sat</span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-5">
+                                <h3 style="padding-left: 0px;"
+                                    th:text="${trip.fromAddress + ' to ' + trip.destinationAddress}"></h3>
+                                <span th:text="${trip.fromAddress.street + ' to ' + trip.destinationAddress.street}"></span>
+                            </div>
+                            <div class="col-md-2 col-sm-3">
+                                <ul class="info_booking">
+                                    <li><strong>Depart :</strong><span
+                                            th:text="${#dates.format(trip.tripTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                    </li>
+                                    <li><strong>Arrive :</strong><span
+                                            th:text="${#dates.format(trip.arriveTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <div class="booking_buttons">
+                                    <strong>Seats booked</strong><br>
+                                    <strong><span style="font-size: 2em; margin-bottom: 10px;"
+                                                  th:text="${(driver.registeredTransport.numberOfSeats - trip.availableSeats) + ' out of ' + trip.driver.registeredTransport.numberOfSeats}"></span></strong>
+                                </div>
+                            </div>
+                        </div><!-- End row -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <a th:href="@{/addTrip}" class="btn_1 outline">Add a new trip</a>
+                    </div>
+                </div><!-- End strip booking -->
+            </section><!-- End section 1 -->
+
+            <section id="section-3">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 add_bottom_30">
+                        <h4>Change your password</h4>
+                        <div class="form-group">
+                            <label>Old password</label>
+                            <input class="form-control" name="old_password" id="old_password" type="password">
+                        </div>
+                        <div class="form-group">
+                            <label>New password</label>
+                            <input class="form-control" name="new_password" id="new_password" type="password">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm new password</label>
+                            <input class="form-control" name="confirm_new_password" id="confirm_new_password"
+                                   type="password">
+                        </div>
+                        <button type="submit" class="btn_1 green">Update Password</button>
+                    </div>
+                    <div class="col-md-6 col-sm-6 add_bottom_30">
+                        <h4>Change your email</h4>
+                        <div class="form-group">
+                            <label>Old email</label>
+                            <input class="form-control" name="old_password" id="old_password" type="password">
+                        </div>
+                        <div class="form-group">
+                            <label>New email</label>
+                            <input class="form-control" name="new_password" id="new_password" type="password">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm new email</label>
+                            <input class="form-control" name="confirm_new_password" id="confirm_new_password"
+                                   type="password">
+                        </div>
+                        <button type="submit" class="btn_1 green">Update Email</button>
+                    </div>
+                </div><!-- End row -->
+            </section><!-- End section 3 -->
+
+            <section id="section-4">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <h4>Your profile</h4>
+                        <ul id="profile_summary">
+                            <li>Username <span th:text="${driver.driverEmail}"></span></li>
+                            <li>First name <span th:text="${driver.firstName}">Clara</span></li>
+                            <li>Last name <span th:text="${driver.lastName}">Tomson</span></li>
+                            <li>Phone number <span th:text="${driver.telephoneNumber}">+00 032 42366</span></li>
+                        </ul>
+                        <h4>Your transport</h4>
+                        <ul id="profile_summary">
+                            <li>Name <span th:text="${driver.registeredTransport.name}">Clara</span></li>
+                            <li>Model <span th:text="${driver.registeredTransport.modelName}">Tomson</span></li>
+                            <li>Transport type <span th:text="${driver.registeredTransport.transportType}">Tomson</span>
+                            </li>
+                            <li>Body type <span th:text="${driver.registeredTransport.bodyType}">Tomson</span></li>
+                            <li>Date of registration <span th:text="${driver.registeredTransport.dateOfRegistration}">+00 032 42366</span>
+                            </li>
+                            <li>Color <span th:text="${driver.registeredTransport.color}">+00 032 42366</span></li>
+                            <li>Engine ID <span th:text="${driver.registeredTransport.engineId}">+00 032 42366</span>
+                            </li>
+                        </ul>
+                        <h4>Your current credit card</h4>
+                        <ul id="profile_summary">
+                            <li>First name <span th:text="${driver.creditCard.firstName}">Clara</span></li>
+                            <li>Last name <span th:text="${driver.creditCard.lastName}">Tomson</span></li>
+                            <li>Card number <span th:text="${driver.creditCard.cardNumber}">+00 032 42366</span></li>
+                            <li>Card expiration month <span
+                                    th:text="${driver.creditCard.expirationMonth}">+00 032 42366</span>
+                            </li>
+                            <li>Card expiration month <span
+                                    th:text="${driver.creditCard.expirationYear}">+00 032 42366</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <img th:src="@{img/driver250.png}" alt="Image"
+                             class="img-responsive styled profile_pic"/>
+                    </div>
+                </div><!-- End row -->
+
+                <div class="divider"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Edit profile</h4>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>First name</label>
+                            <input class="form-control" name="first_name" id="first_name" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Last name</label>
+                            <input class="form-control" name="last_name" id="last_name" type="text">
+                        </div>
+                    </div>
+                </div><!-- End row -->
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Phone number</label>
+                            <input class="form-control" name="email_2" id="email_2" type="text">
+                        </div>
+                    </div>
+                </div><!-- End row -->
+                <hr>
+                <h4>Upload profile photo</h4>
+                <div class="form-inline upload_1">
+                    <div class="form-group">
+                        <input type="file" name="files[]" id="js-upload-files" multiple>
+                    </div>
+                    <button type="submit" class="btn_1 green" id="js-upload-submit">Upload file</button>
+                </div>
+
+                <!-- Hidden on mobiles -->
+                <div class="hidden-xs">
+                    <!-- Drop Zone -->
+                    <h5>Or drag and drop files below</h5>
+                    <div class="upload-drop-zone" id="drop-zone">
+                        Just drag and drop files here
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn_1 green">Update Profile</button>
+                </div>
+            </section><!-- End section 4 -->
+
+        </div><!-- End content -->
+    </div><!-- End tabs -->
+</div><!-- end container -->
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-3">
+                <h3>Need help?</h3>
+                <a href="tel://0(69)-333-333" id="phone">0(69)-333-333</a>
+                <a href="mailto:help.quickwolf@gmail.com" id="email_footer">help.quickwolf@gmail.com</a>
+            </div>
+            <div align="right" class="col-md-3 col-sm-3">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                    <li><a href="#">Terms and conditions</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- End row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div id="social_footer">
+                    <ul>
+                        <li><a href="#"><i class="icon-facebook"></i></a></li>
+                        <li><a href="#"><i class="icon-twitter"></i></a></li>
+                        <li><a href="#"><i class="icon-google"></i></a></li>
+                        <li><a href="#"><i class="icon-instagram"></i></a></li>
+                        <li><a href="#"><i class="icon-pinterest"></i></a></li>
+                        <li><a href="#"><i class="icon-vimeo"></i></a></li>
+                        <li><a href="#"><i class="icon-youtube-play"></i></a></li>
+                        <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                    </ul>
+                    <p>© QuickWolf 2015</p>
+                </div>
+            </div>
+        </div>
+        <!-- End row -->
+    </div>
+    <!-- End container -->
+</footer>
+<!-- End footer -->
+
+<div id="toTop"></div>
+<!-- Back to top button -->
+
+<!-- Common scripts -->
+<script th:src="@{/js/jquery-1.11.2.min.js}"></script>
+<script th:src="@{/js/common_scripts_min.js}"></script>
+<script th:src="@{/js/functions.js}"></script>
+
+<!-- Specific scripts -->
+<script th:src="@{/js/tabs.js}"></script>
+<!-- Specific scripts -->
+<script>new CBPFWTabs(document.getElementById('tabs'));</script>
+<script>
+    $('.wishlist_close_admin').on('click', function (c) {
+        $(this).parent().parent().parent().fadeOut('slow', function (c) {
+        });
+    });
+</script>
+
+</body>
+</html>

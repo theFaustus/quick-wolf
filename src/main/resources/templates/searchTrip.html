@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>
+<html class="ie ie9"> <![endif]-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="QuickWolf - A quick`n`easy way to travel.">
+    <meta name="author" content="Faust">
+    <title>QuickWolf - Home</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" th:href="@{/img/apple-touch-icon-57x57-precomposed.png}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72"
+          th:href="@{/img/apple-touch-icon-72x72-precomposed.png}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114"
+          th:href="@{/img/apple-touch-icon-114x114-precomposed.png}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144"
+          th:href="@{/img/apple-touch-icon-144x144-precomposed.png}">
+
+    <!-- CSS -->
+    <link th:href="@{css/base.css}" rel="stylesheet">
+
+    <!-- SPECIFIC CSS -->
+    <link th:href="@{css/square/grey.css}" rel="stylesheet">
+    <link th:href="@{css/date_time_picker.css}" rel="stylesheet">
+
+    <!-- Google web fonts -->
+    <link th:href="@{http://fonts.googleapis.com/css?family=Montserrat:400,700}" rel='stylesheet' type='text/css'>
+    <link th:href="@{http://fonts.googleapis.com/css?family=Gochi+Hand}" rel='stylesheet' type='text/css'>
+    <link th:href="@{http://fonts.googleapis.com/css?family=Lato:300,400}" rel='stylesheet' type='text/css'>
+
+
+</head>
+
+<body>
+
+<!--[if lte IE 8]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a>.</p>
+<![endif]-->
+
+<div id="preloader">
+    <div class="sk-spinner sk-spinner-wave">
+        <div class="sk-rect1"></div>
+        <div class="sk-rect2"></div>
+        <div class="sk-rect3"></div>
+        <div class="sk-rect4"></div>
+        <div class="sk-rect5"></div>
+    </div>
+</div>
+<!-- End Preload -->
+
+<div class="layer"></div>
+<!-- Mobile menu overlay mask -->
+
+<!-- Header================================================== -->
+<header>
+    <div id="top_line">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6"></div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <ul id="top_links">
+                    </ul>
+                </div>
+            </div>
+            <!-- End row -->
+        </div>
+        <!-- End container-->
+    </div>
+    <!-- End top line-->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                <div id="logo_home">
+                    <h1><a th:href="@{/}" title="QuickWolf - Home">QuickWolf - Home</a></h1>
+                </div>
+            </div>
+            <nav class="col-md-9 col-sm-9 col-xs-9">
+                <!--<a class="cmn-toggle-switch cmn-toggle-switch__htx open_close" href="javascript:void(0);"><span>Menu mobile</span></a>
+                --><!--          <div class="main-menu">
+                      <div id="header_menu">
+                        <img th:src="@{/img/logo_sticky.png}" width="160" height="34" alt="QuickWolf" data-retina="true">
+                      </div>
+                      <a href="#" class="open_close" id="close_in"><i class="icon_set_1_icon-77"></i></a>
+                      <ul>
+                        <li class="submenu">
+                          <a th:href="@{/}" class="show-submenu">Home</a>
+                        </li>
+                        <li class="submenu">
+                          <a href="javascript:void(0);" class="show-submenu">Tours</a>
+                        </li>
+                        <li class="submenu">
+                          <a href="javascript:void(0);" class="show-submenu">Hotels</a>
+                        </li>
+                        <li class="submenu">
+                          <a href="javascript:void(0);" class="show-submenu">Transfers</a>
+                        </li>
+                        <li class="submenu">
+                          <a href="javascript:void(0);" class="show-submenu">Restaurants</a>
+                        </li>
+                        <li class="submenu">
+                          <a href="javascript:void(0);" class="show-submenu">Bonus</a>
+                        </li>
+                      </ul>
+                    </div>-->
+                <!-- End main-menu -->
+                <ul id="top_tools">
+                    <li>
+                        <div class="dropdown dropdown-access">
+                            <form>
+                                <div sec:authorize="hasRole('ROLE_USER')">
+                                    <a th:href="@{/passengerProfile}"><i class="icon-user"></i></a><a th:href="@{/passengerProfile}"
+                                                                                      sec:authentication="name"></a>
+                                </div>
+                                <div sec:authorize="hasRole('ROLE_DRIVER')">
+                                    <a th:href="@{/driverProfile}"><i class="icon-user"></i></a><a th:href="@{/driverProfile}"
+                                                                                                      sec:authentication="name"></a>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown dropdown-access">
+                            <form th:action="@{/logout}" method="post" id="logoutForm">
+                                <a href="#" onclick="document.forms['logoutForm'].submit()"><i
+                                        class="icon-logout-1"></i></a><a href="#"
+                                                                         onclick="document.forms['logoutForm'].submit()">Log
+                                out</a>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- container -->
+</header>
+<!-- End Header -->
+
+<section id="search_container">
+    <div id="search">
+        <div class="tab-content">
+            <div class="tab-pane active" id="trips">
+                <h3>Search Trips</h3>
+                <form action="#" method="post" th:action="@{/}" th:object="${tripFormBean}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>To country</label>
+                                <input type="text" class="form-control" th:field="*{toCountry}"
+                                       placeholder="Type to which country">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>To city</label>
+                                <input type="text" class="form-control" th:field="*{toCity}"
+                                       placeholder="Type to which city">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End row -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>From country</label>
+                                <input type="text" class="form-control" th:field="*{fromCountry}"
+                                       placeholder="Type from which country">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>From city</label>
+                                <input type="text" class="form-control" th:field="*{fromCity}"
+                                       placeholder="Type from which city">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End row -->
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label><i class="icon-calendar-7"></i> Date</label>
+                                <input class="date-pick form-control" data-date-format="m/d/yyyy" th:field="*{depart}"
+                                       type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End row -->
+                    <hr>
+
+                    <button type="submit" class="btn_1 green"><i class="icon-search"></i>Search now</button>
+                </form>
+            </div>
+            <!-- End rab -->
+        </div>
+
+    </div>
+</section>
+<!-- End hero -->
+<div class="white_bg">
+    <div class="container margin_60">
+        <div class="main_title">
+            <h2><span>Discover</span> Moldova</h2>
+            <p>
+                You may want to visit some locations that are listed below.
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-6 text-center">
+                <p>
+                    <a href="#"><img th:src="@{/img/visit_soroca.jpg}" alt="Pic" class="img-responsive"></a>
+                </p>
+                <h4><span>Visit</span> Soroca`s Fortress</h4>
+                <p>
+                    Soroca Fortress is a historic fort in the Republic of Moldova, in the modern-day city of Soroca.
+                </p>
+            </div>
+            <div class="col-md-3 col-sm-6 text-center">
+                <p>
+                    <a href="#"><img th:src="@{/img/visit_curchi.jpg}" alt="Pic" class="img-responsive"></a>
+                </p>
+                <h4><span>Visit</span> Curchi`s Monastery</h4>
+                <p>
+                    Curchi`s Monastery is a monastery located in the Republic of Moldova, being one of the most
+                    significat architectural monuments in the Republic of Moldova.
+                </p>
+            </div>
+            <div class="col-md-3 col-sm-6 text-center">
+                <p>
+                    <a href="#"><img th:src="@{/img/visit_purcari.jpg}" alt="Pic" class="img-responsive"></a>
+                </p>
+                <h4><span>Visit</span> Purcari`s Winery</h4>
+                <p>
+                    Purcari is a Moldovan wine producer from Purcari Wine Region, located in Ștefan Vodă District,
+                    Moldova. Through the years Vinaria Purcari won over 100 international medals.
+                </p>
+            </div>
+            <div class="col-md-3 col-sm-6 text-center">
+                <p>
+                    <a href="#"><img th:src="@{/img/visit_orhei.jpg}" alt="Pic" class="img-responsive"></a>
+                </p>
+                <h4><span>Visit</span> Old Orhei</h4>
+                <p>
+                    Old Orhei is a historical and archaeological complex, located in Trebujeni, at 60 kilometres (37 mi)
+                    north-east of Chişinău, on the Răut River, in Moldova.
+                </p>
+            </div>
+        </div>
+        <!-- End row -->
+    </div>
+    <!-- End container -->
+</div>
+<!-- End white_bg -->
+
+<div class="container margin_60">
+
+    <div class="main_title">
+        <h2>Some <span>good</span> reasons</h2>
+        <p>
+            Why go with us?
+        </p>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 wow zoomIn" data-wow-delay="0.2s">
+            <div class="feature_home">
+                <i class="icon_set_1_icon-41"></i>
+                <h3><span>A lot</span> of tours daily</h3>
+                <p>
+                    Drivers from Republic of Moldova are driving everyday through a lot of locations.
+                </p>
+                <a href="about.html" class="btn_1 outline">Read more</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 wow zoomIn" data-wow-delay="0.4s">
+            <div class="feature_home">
+                <i class="icon_set_1_icon-18"></i>
+                <h3><span>Strong</span> community</h3>
+                <p>
+                    Either if you`re a driver or a passenger, you`re rely on each other.
+                </p>
+                <a href="about.html" class="btn_1 outline">Read more</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 wow zoomIn" data-wow-delay="0.6s">
+            <div class="feature_home">
+                <i class="icon_set_1_icon-36"></i>
+                <h3><span>Online</span> payments</h3>
+                <p>
+                    Either if you`re a driver or a passenger, paying the tickets was never so easy for both of you.
+                </p>
+                <a href="about.html" class="btn_1 outline">Read more</a>
+            </div>
+        </div>
+
+    </div>
+    <!--End row -->
+
+    <hr>
+
+    <!-- End row -->
+
+</div>
+<!-- End container -->
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-3">
+                <h3>Need help?</h3>
+                <a href="tel://0(69)-333-333" id="phone">0(69)-333-333</a>
+                <a href="mailto:help.quickwolf@gmail.com" id="email_footer">help.quickwolf@gmail.com</a>
+            </div>
+            <div align="right" class="col-md-3 col-sm-3">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                    <li><a href="#">Terms and conditions</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- End row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div id="social_footer">
+                    <ul>
+                        <li><a href="#"><i class="icon-facebook"></i></a></li>
+                        <li><a href="#"><i class="icon-twitter"></i></a></li>
+                        <li><a href="#"><i class="icon-google"></i></a></li>
+                        <li><a href="#"><i class="icon-instagram"></i></a></li>
+                        <li><a href="#"><i class="icon-pinterest"></i></a></li>
+                        <li><a href="#"><i class="icon-vimeo"></i></a></li>
+                        <li><a href="#"><i class="icon-youtube-play"></i></a></li>
+                        <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                    </ul>
+                    <p>© QuickWolf 2015</p>
+                </div>
+            </div>
+        </div>
+        <!-- End row -->
+    </div>
+    <!-- End container -->
+</footer>
+<!-- End footer -->
+
+<div id="toTop"></div>
+<!-- Back to top button -->
+
+<!-- Common scripts -->
+<script th:src="@{/js/jquery-1.11.2.min.js}"></script>
+<script th:src="@{/js/common_scripts_min.js}"></script>
+<script th:src="@{/js/functions.js}"></script>
+
+<!-- Specific scripts -->
+<script th:src="@{/js/pw_strenght.js}"></script>
+<script th:src="@{/js/bootstrap-datepicker.js}"></script>
+<script th:src="@{/js/bootstrap-timepicker.js}"></script>
+<script th:src="@{/js/html5shiv.min.js}"></script>
+<script th:src="@{/js/respond.min.js}"></script>
+<script>
+    $('input.date-pick').datepicker('setDate', 'today');
+    $('input.time-pick').timepicker({
+        minuteStep: 15,
+        showInpunts: false
+    })
+</script>
+</body>
+
+</html>
