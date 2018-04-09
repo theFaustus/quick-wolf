@@ -1292,7 +1292,7 @@ ul#cat_nav i {
 .price_list {
 	display: table;
 	height: 220px;
-	font-size: 38px;
+	font-size: 2em;
 	color: #f1c40f;
 	width: 100%;
 	margin-left: -15px;

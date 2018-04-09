@@ -158,6 +158,22 @@ public class Transport extends AbstractEntity {
         this.driver = driver;
     }
 
+    @Override
+    public String toString() {
+        return "Transport{" +
+                "name='" + name + '\'' +
+                ", modelName='" + modelName + '\'' +
+                ", transportType='" + transportType + '\'' +
+                ", bodyType='" + bodyType + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
+                ", registrationNumber='" + registrationNumber + '\'' +
+                ", dateOfRegistration='" + dateOfRegistration + '\'' +
+                ", year='" + year + '\'' +
+                ", color='" + color + '\'' +
+                ", engineId='" + engineId + '\'' +
+                '}';
+    }
+
     public static TransportBuilder newBuilder() {
         return new TransportBuilder();
     }

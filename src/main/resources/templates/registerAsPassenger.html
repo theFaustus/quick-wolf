@@ -203,7 +203,7 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label>Password</label>
-                  <input type="text" class="form-control" id="password1" th:field="*{passengerPassword}" placeholder="Password">
+                  <input type="password" class="form-control" id="password1" th:field="*{passengerPassword}" placeholder="Password">
                   <div id="pass-info" class="clearfix" style="width: 100%;"></div>
                   <p class="alert alert-danger" th:if="${#fields.hasErrors('passengerPassword')}" th:errors="*{passengerPassword}"></p>
               </div>

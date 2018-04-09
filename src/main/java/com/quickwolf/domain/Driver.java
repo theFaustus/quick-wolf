@@ -108,9 +108,11 @@ public class Driver extends User {
     @Override
     public String toString() {
         return "Driver{" +
-                ", firstName='" + firstName + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", idnp='" + idnp + '\'' +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
                 '}';
     }
 

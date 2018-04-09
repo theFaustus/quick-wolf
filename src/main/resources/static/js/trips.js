@@ -4,15 +4,23 @@
 	document.getElementById("itineraryStepButton").onclick = function (e) {
 		e.preventDefault();
 		let container = document.getElementById("itineraryStepsContainer");
-		createItineraryElement("Step name: ", "name", container, "form-group col-md-4");
-		createItineraryDateTimeElement("Arrive date: ", "arrive", container, "form-group col-md-2", "date-pick");
-		createItineraryDateTimeElement("Arrive time: ", "arriveTime", container, "form-group col-md-2", "time-pick");
-		createItineraryDateTimeElement("Depart date: ", "depart", container, "form-group col-md-2", "date-pick");
-		createItineraryDateTimeElement("Depart time: ", "departTime", container, "form-group col-md-2", "time-pick");
-		createItineraryElement("Country: ", "country", container, "form-group col-md-4");
-		createItineraryElement("City: ", "city", container, "form-group col-md-4");
-		createItineraryElement("Street: ", "street", container, "form-group col-md-4");
-		container.appendChild(document.createElement("div").appendChild(document.createElement("hr")));
+        const itineraryStepDivId = "itineraryStep_" + itineraryStepCounter;
+        const itineraryStepDiv = $(`<div id="${itineraryStepDivId}" class="col-md-12">`);
+        const removeButton = $(`<button class="btn_full" style="background-color: red;">Remove step</button>`);
+        $(removeButton).click(function () {
+            $("#" + itineraryStepDivId).remove();
+        });
+        createItineraryElement("Step name: ", "name", itineraryStepDiv, "form-group col-md-4");
+        createItineraryDateTimeElement("Arrive date: ", "arrive", itineraryStepDiv, "form-group col-md-2", "date-pick");
+        createItineraryDateTimeElement("Arrive time: ", "arriveTime", itineraryStepDiv, "form-group col-md-2", "time-pick");
+        createItineraryDateTimeElement("Depart date: ", "depart", itineraryStepDiv, "form-group col-md-2", "date-pick");
+        createItineraryDateTimeElement("Depart time: ", "departTime", itineraryStepDiv, "form-group col-md-2", "time-pick");
+        createItineraryElement("Country: ", "country", itineraryStepDiv, "form-group col-md-4");
+        createItineraryElement("City: ", "city", itineraryStepDiv, "form-group col-md-4");
+        createItineraryElement("Street: ", "street", itineraryStepDiv, "form-group col-md-4");
+        itineraryStepDiv.append(removeButton);
+        itineraryStepDiv.append(document.createElement("hr"));
+		$(container).append(itineraryStepDiv);
 		$('input.date-pick').filter(function(){
 			return !($(this).attr('data-trip-master') == "true");
 		}).datepicker('setDate', 'today');
@@ -32,7 +40,7 @@
 		let stepWrapper = document.createElement("div");
 		let labelWrapper = document.createElement("label");
 		stepWrapper.className = howManyCols;
-		container.appendChild(stepWrapper);
+		container.append($(stepWrapper));
 		labelWrapper.appendChild(document.createTextNode(greeting));
 		stepWrapper.appendChild(labelWrapper);
 		stepWrapper.appendChild(createInputElement(getNamePrefix() + propertyName, stepWrapper));
@@ -42,7 +50,7 @@
 		let stepWrapper = document.createElement("div");
 		let labelWrapper = document.createElement("label");
 		stepWrapper.className = howManyCols;
-		container.appendChild(stepWrapper);
+		container.append($(stepWrapper));
 		labelWrapper.appendChild(document.createTextNode(greeting));
 		stepWrapper.appendChild(labelWrapper);
 		stepWrapper.appendChild(createInputDateTimeElement(getNamePrefix() + propertyName, stepWrapper, kind));

@@ -127,12 +127,14 @@
                         <div class="dropdown dropdown-access">
                             <form>
                                 <div sec:authorize="hasRole('ROLE_USER')">
-                                    <a th:href="@{/passengerProfile}"><i class="icon-user"></i></a><a th:href="@{/passengerProfile}"
-                                                                                                      sec:authentication="name"></a>
+                                    <a th:href="@{/passengerProfile}"><i class="icon-user"></i></a><a
+                                        th:href="@{/passengerProfile}"
+                                        sec:authentication="name"></a>
                                 </div>
                                 <div sec:authorize="hasRole('ROLE_DRIVER')">
-                                    <a th:href="@{/driverProfile}"><i class="icon-user"></i></a><a th:href="@{/driverProfile}"
-                                                                                                   sec:authentication="name"></a>
+                                    <a th:href="@{/driverProfile}"><i class="icon-user"></i></a><a
+                                        th:href="@{/driverProfile}"
+                                        sec:authentication="name"></a>
                                 </div>
                             </form>
                         </div>
@@ -171,16 +173,16 @@
     <div class="row">
         <div class="col-lg-12 col-md-12">
             <div th:if="${#lists.isEmpty(trips)}">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <h2 style="color: indianred;">Ooops...No trips were found.</h2>
-                            <h4>Try to search something <a th:href="@{/}">else</a>?</h4>
-                        </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h2 style="color: indianred;">Ooops...No trips were found.</h2>
+                        <h4>Try to search something <a th:href="@{/}">else</a>?</h4>
+                    </div>
                 </div>
             </div>
-            <div th:if="${not #lists.isEmpty(trips)}">
+            <div th:if="${not #lists.isEmpty(trips)}" th:each="trip : ${trips}">
                 <div class="strip_all_tour_list wow fadeIn" data-wow-delay="0.1s">
-                    <div class="row" th:each="trip : ${trips}">
+                    <div class="row">
                         <div class="col-lg-1 col-md-1 col-sm-1">
                         </div>
                         <div class="clearfix visible-xs-block"></div>
@@ -200,9 +202,9 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <h4>Schedule</h4>
                                         <strong>Depart : </strong><span
-                                            th:text="${#dates.format(trip.departTime, 'yyyy-MM-dd HH:mm:ss')}"></span><br>
+                                            th:text="${#dates.format(trip.departTime, 'yyyy-MM-dd HH:mm')}"></span><br>
                                         <strong>Arrive : </strong><span
-                                            th:text="${#dates.format(trip.arriveTime, 'yyyy-MM-dd  HH:mm:ss')}"></span><br>
+                                            th:text="${#dates.format(trip.arriveTime, 'yyyy-MM-dd  HH:mm')}"></span><br>
                                         <strong>Trip duration : </strong><span
                                             th:text="${trip.getTripDuration().toMinutes() + 'm'}"></span><br>
                                     </div>
@@ -229,8 +231,8 @@
                                         <h4>Itinerary</h4>
                                         <span th:each="step : ${trip?.itinerary?.steps}">
                     <span class="label label-warning" th:text="${step.name}"></span>
-                      <strong>Arrive : </strong><span th:text="${step.arrive}"></span>,
-                      <strong>Depart : </strong><span th:text="${step.depart}"></span>,
+                      <strong>Arrive : </strong><span th:text="${#dates.format(step.arrive, 'yyyy-MM-dd HH:mm')}"></span>,
+                      <strong>Depart : </strong><span th:text="${#dates.format(step.depart, 'yyyy-MM-dd HH:mm')}"></span>,
                       <strong>Address : </strong><span th:text="${step.address.state}">, </span><span
                                                 th:text="${step.address.city}"></span>, <span
                                                 th:text="${step.address.street}"></span><br>

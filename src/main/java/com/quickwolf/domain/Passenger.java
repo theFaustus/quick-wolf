@@ -78,8 +78,9 @@ public class Passenger extends User {
     @Override
     public String toString() {
         return "Passenger{" +
-                ", firstName='" + firstName + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
                 '}';
     }
 
