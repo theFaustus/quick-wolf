@@ -24,13 +24,13 @@ public class DriverServiceImpl implements DriverService {
         Driver driver = Driver.newBuilder()
                 .setFirstName(registerDriverFormBean.getFirstName())
                 .setLastName(registerDriverFormBean.getLastName())
-                .setEmail(registerDriverFormBean.getemail())
+                .setEmail(registerDriverFormBean.getEmail())
                 .setPassword(registerDriverFormBean.getDriverPassword())
                 .setTelephoneNumber(registerDriverFormBean.getTelephoneNumber())
                 .setIdnp(registerDriverFormBean.getHumanId())
                 .setDateOfBirth(registerDriverFormBean.getDateOfBirth())
                 .setCreditCard(registerDriverFormBean.getCreditCard())
-                .setTransport(registerDriverFormBean.gettransport())
+                .setTransport(registerDriverFormBean.getTransport())
                 .build();
         driverRepository.save(driver);
         return driver;

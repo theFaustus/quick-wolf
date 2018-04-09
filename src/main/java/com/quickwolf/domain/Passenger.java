@@ -67,6 +67,10 @@ public class Passenger extends User {
         return creditCard;
     }
 
+    public void addTrip(Trip trip) {
+        bookedTrips.add(trip);
+    }
+
     public void setCreditCard(CreditCard creditCard) {
         this.creditCard = creditCard;
     }

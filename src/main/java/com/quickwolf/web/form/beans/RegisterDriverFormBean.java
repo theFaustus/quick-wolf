@@ -13,29 +13,38 @@ import java.util.List;
  * Created by Faust on 4/20/2017.
  */
 public class RegisterDriverFormBean {
+
     @NotNull(message = "You have to fill this element")
     @Size(min = 2, max = 30, message = "First name should be between 2 - 30 characters long")
     private String firstName;
+
     @NotNull(message = "You have to fill this element")
     @Size(min = 2, max = 30, message = "Last name should be between 2 - 30 characters long")
     private String lastName;
+
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "^[_A-Za-z0-9-\\\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Something is wrong with your email")
     private String email;
+
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", message = "Password should contain upperCase, lowerCase, number/special char and min 8 characters")
     private String driverPassword;
+
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "0\\(\\d{2}\\)-\\d{3}-\\d{3}", message = "Here is a valid telephone number 0(69)-267-158")
     private String telephoneNumber;
+
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "\\d{13}", message = "Look into your passport for a valid 13 digit id")
     private String humanId;
+
     @NotNull(message = "You have to fill this element")
     @Pattern(regexp = "^([0-9]{4})-([1-9]|1[0-2])-([0-9]|1[0-9]|2[0-9]|3[0-1])$", message = "Enter the date of birth in form yyyy-mm-dd.")
     private String dateOfBirth;
+
     @Valid
     private CreditCard creditCard = CreditCard.newCreditCard().build();
+
     @Valid
     private Transport transport = Transport.newBuilder().build();
 
@@ -55,11 +64,11 @@ public class RegisterDriverFormBean {
         this.lastName = lastName;
     }
 
-    public String getemail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setemail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -79,14 +88,6 @@ public class RegisterDriverFormBean {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
-
-    public void setCreditCard(List<CreditCard> creditCards) {
-        this.creditCard = creditCard;
-    }
-
     public String getHumanId() {
         return humanId;
     }
@@ -103,15 +104,19 @@ public class RegisterDriverFormBean {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
     public void setCreditCard(CreditCard creditCard) {
         this.creditCard = creditCard;
     }
 
-    public Transport gettransport() {
+    public Transport getTransport() {
         return transport;
     }
 
-    public void settransport(Transport transport) {
+    public void setTransport(Transport transport) {
         this.transport = transport;
     }
 }

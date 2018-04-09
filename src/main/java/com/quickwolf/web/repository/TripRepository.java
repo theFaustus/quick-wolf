@@ -14,11 +14,11 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 
 	@Query("select t from Trip t where t.fromAddress.country = :fromCountry and t.fromAddress.city = :fromCity and " +
 		"t.destinationAddress.country = :toCountry and t.destinationAddress.city = :toCity and " +
-		"t.departTime = :departTime")
+		"t.departDate = :departDate")
 	List<Trip> findTripsBy(@Param("fromCountry") String fromCountry,
 						   @Param("fromCity") String fromCity,
 						   @Param("toCountry") String toCountry,
 						   @Param("toCity") String toCity,
-						   @Param("departTime") Date departTime);
+						   @Param("departDate") Date departDate);
 
 }

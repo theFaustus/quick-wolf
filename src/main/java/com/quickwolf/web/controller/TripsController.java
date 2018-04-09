@@ -17,7 +17,7 @@ import com.quickwolf.web.form.beans.AddTripFormBean;
 import com.quickwolf.web.service.TripService;
 
 @Controller
-@SessionAttributes("trips")
+//@SessionAttributes("trips")
 public class TripsController {
 	
 	@Autowired

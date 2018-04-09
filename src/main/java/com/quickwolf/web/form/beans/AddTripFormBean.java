@@ -33,38 +33,6 @@ public class AddTripFormBean {
 	private List<ItineraryStepFormBean> itinerarySteps = new ArrayList<>();
 	private BigDecimal price = BigDecimal.TEN;
 
-	public String getDepartTime() {
-		return departTime;
-	}
-
-	public void setDepartTime(String departTime) {
-		this.departTime = departTime;
-	}
-
-	public String getArriveTime() {
-		return arriveTime;
-	}
-
-	public void setArriveTime(String arriveTime) {
-		this.arriveTime = arriveTime;
-	}
-
-	public String getemail() {
-		return email;
-	}
-
-	public void setemail(String email) {
-		this.email = email;
-	}
-
-	public long getDriverId() {
-		return driverId;
-	}
-
-	public void setDriverId(long driverId) {
-		this.driverId = driverId;
-	}
-
 	public String getDepart() {
 		return depart;
 	}
@@ -73,12 +41,28 @@ public class AddTripFormBean {
 		this.depart = depart;
 	}
 
+	public String getDepartTime() {
+		return departTime;
+	}
+
+	public void setDepartTime(String departTime) {
+		this.departTime = departTime;
+	}
+
 	public String getArrive() {
 		return arrive;
 	}
 
 	public void setArrive(String arrive) {
 		this.arrive = arrive;
+	}
+
+	public String getArriveTime() {
+		return arriveTime;
+	}
+
+	public void setArriveTime(String arriveTime) {
+		this.arriveTime = arriveTime;
 	}
 
 	public String getFromCountry() {
@@ -129,6 +113,30 @@ public class AddTripFormBean {
 		this.toStreet = toStreet;
 	}
 
+	public long getDriverId() {
+		return driverId;
+	}
+
+	public void setDriverId(long driverId) {
+		this.driverId = driverId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public int getAvailableSeats() {
+		return availableSeats;
+	}
+
+	public void setAvailableSeats(int availableSeats) {
+		this.availableSeats = availableSeats;
+	}
+
 	public List<ItineraryStepFormBean> getItinerarySteps() {
 		return itinerarySteps;
 	}
@@ -145,14 +153,6 @@ public class AddTripFormBean {
 		this.price = price;
 	}
 
-	public int getAvailableSeats() {
-		return availableSeats;
-	}
-
-	public void setAvailableSeats(int availableSeats) {
-		this.availableSeats = availableSeats;
-	}
-
 	public Trip toTrip() {
 		try {
 			return tryConvertToTrip();
@@ -162,10 +162,11 @@ public class AddTripFormBean {
 	}
 
 	private Trip tryConvertToTrip() throws ParseException {
-		System.out.println("yay");
 		Trip trip = Trip.newBuilder()
 				.setDepartTime(dateFormat.get().parse(depart + " " + departTime))
+				.setDepartDate(dateFormat.get().parse(depart + " " + departTime))
 				.setArriveTime(dateFormat.get().parse(arrive + " " + arriveTime))
+				.setArriveDate(dateFormat.get().parse(arrive + " " + arriveTime))
 				.setFromAddress(Address.newBuilder()
 						.setCountry(fromCountry)
 						.setCity(fromCity)
@@ -199,6 +200,7 @@ public class AddTripFormBean {
 							.setCity(step.getCity())
 							.setStreet(step.getStreet())
 							.build())
+					.setItinerary(itinerary)
 					.build());
 		}
 		return itinerary;

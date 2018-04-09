@@ -35,7 +35,7 @@ public class ProfileController {
     private DriverService driverService;
 
     @RequestMapping(value = "/passengerProfile")
-    public String profilePage(Model model){
+    public String profilePage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Passenger p = passengerService.findPassengerBy(auth.getName());
         List<Trip> bookedTrips = passengerService.findBookedTrips(auth.getName());
@@ -46,7 +46,7 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/driverProfile")
-    public String driverPage(Model model){
+    public String driverPage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Driver d = driverService.findDriverBy(auth.getName());
         List<Trip> addedTrips = driverService.findAddedTrips(auth.getName());
@@ -57,14 +57,14 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/adminProfile")
-    public String adminPage(Model model){
+    public String adminPage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<Passenger> listOfPassengers = passengerService.findAllPassengers();
-        for(Passenger p : listOfPassengers){
+        for (Passenger p : listOfPassengers) {
             p.setBookedTrips(passengerService.findBookedTrips(p.getEmail()));
         }
         List<Driver> listOfDrivers = driverService.findAll();
-        for(Driver d : listOfDrivers){
+        for (Driver d : listOfDrivers) {
             d.setAddedTrips(driverService.findAddedTrips(d.getEmail()));
         }
         model.addAttribute("passengers", listOfPassengers);

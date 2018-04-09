@@ -189,7 +189,7 @@
                                 <div class="rating"></div>
                                 <br>
                                 <h3 style="color: indianred;"
-                                    th:if="${(trip.availableSeats lt 1) or (trip.tripTime.before(#dates.createNow()))}">
+                                    th:if="${(trip.availableSeats lt 1) or (trip.departTime.before(#dates.createNow()))}">
                                     <i class="icon-warning"></i> This trip is outdated or out of seats. <i
                                         class="icon-warning"></i></h3>
                                 <h3><span style="color: black;" th:text="${trip.fromAddress}"></span> <i
@@ -200,7 +200,7 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <h4>Schedule</h4>
                                         <strong>Depart : </strong><span
-                                            th:text="${#dates.format(trip.tripTime, 'yyyy-MM-dd HH:mm:ss')}"></span><br>
+                                            th:text="${#dates.format(trip.departTime, 'yyyy-MM-dd HH:mm:ss')}"></span><br>
                                         <strong>Arrive : </strong><span
                                             th:text="${#dates.format(trip.arriveTime, 'yyyy-MM-dd  HH:mm:ss')}"></span><br>
                                         <strong>Trip duration : </strong><span
@@ -249,9 +249,9 @@
                                         <input type="hidden" th:value="${#authentication.name}" name="email"
                                                id="email"/>
                                         <input type="submit" class="btn_1" value="Book"
-                                               th:if="${(trip.availableSeats gt 0) and (trip.tripTime.after(#dates.createNow()))}"/>
+                                               th:if="${(trip.availableSeats gt 0) and (trip.departTime.after(#dates.createNow()))}"/>
                                         <input type="submit" class="btn_1" value="Book" disabled
-                                               th:if="${(trip.availableSeats lt 1) or (trip.tripTime.before(#dates.createNow()))}"/>
+                                               th:if="${(trip.availableSeats lt 1) or (trip.departTime.before(#dates.createNow()))}"/>
                                         <br>
                                     </form>
                                 </div>

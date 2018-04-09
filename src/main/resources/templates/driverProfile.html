@@ -191,11 +191,11 @@
                             <div class="col-md-2 col-sm-2">
                                 <div class="date">
                                     <span class="month" style="margin-bottom: 15px;"
-                                          th:text="${#dates.monthName(trip.tripTime)}"></span>
+                                          th:text="${#dates.monthName(trip.departTime)}"></span>
 
                                     <strong><span style="font-size: 2em; margin-bottom: 10px;"
-                                                  th:text="${#dates.format(trip.tripTime, 'dd')}"></span></strong>
-                                    <span class="day" th:text="${#dates.dayOfWeekNameShort(trip.tripTime)}">Sat</span>
+                                                  th:text="${#dates.format(trip.departTime, 'dd')}"></span></strong>
+                                    <span class="day" th:text="${#dates.dayOfWeekNameShort(trip.departTime)}">Sat</span>
 
                                 </div>
                             </div>
@@ -207,10 +207,10 @@
                             <div class="col-md-2 col-sm-3">
                                 <ul class="info_booking">
                                     <li><strong>Depart :</strong><span
-                                            th:text="${#dates.format(trip.tripTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                            th:text="${#dates.format(trip.departTime, 'yyyy-MM-dd HH:mm')}"></span>
                                     </li>
                                     <li><strong>Arrive :</strong><span
-                                            th:text="${#dates.format(trip.arriveTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                            th:text="${#dates.format(trip.arriveTime, 'yyyy-MM-dd HH:mm')}"></span>
                                     </li>
                                 </ul>
                             </div>

@@ -7,10 +7,11 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User extends AbstractEntity {
 
+    @Column(name = "email", unique = true)
     private String email;
     private String password;
     private String role;
-    private int enabled;
+    private int enabled = 1;
 
     public String getEmail() {
         return email;

@@ -4,9 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 /**
  * Created by Faust on 4/20/2017.
@@ -37,7 +35,8 @@ public class Transport extends AbstractEntity {
 
     @Column(name = "number_of_seats")
     @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "\\d{1,3}", message = "Use a valid number of seats")
+    @Min(value = 2, message = "Use a valid number of seats")
+    @Max(value = 100, message = "Use a valid number of seats")
     private int numberOfSeats;
 
     @Column(name = "registration_number")

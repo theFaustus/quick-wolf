@@ -38,6 +38,7 @@ public class Driver extends User {
     private List<Trip> addedTrips = new ArrayList<>();
 
     public Driver() {
+        setRole(Constants.DEFAULT_DRIVER_ROLE);
     }
 
     public String getFirstName() {
@@ -118,105 +119,78 @@ public class Driver extends User {
     }
 
     public static final class DriverBuilder {
-        private String email;
-        private String password;
-        private String role;
-        private String firstName;
-        private int enabled = 1;
-        private Long id;
-        private String lastName;
-        private String dateOfBirth;
-        private String idnp;
-        private String telephoneNumber;
-        private CreditCard creditCard;
-        private Transport transport;
-
-        private List<Trip> addedTrips = new ArrayList<>();
+        private Driver driver = new Driver();
 
         private DriverBuilder() {
         }
 
         public DriverBuilder setEmail(String email) {
-            this.email = email;
+            driver.setEmail(email);
             return this;
         }
 
         public DriverBuilder setPassword(String password) {
-            this.password = password;
+            driver.setPassword(password);
             return this;
         }
 
         public DriverBuilder setRole(String role) {
-            this.role = role;
+            driver.setRole(role);
             return this;
         }
 
         public DriverBuilder setFirstName(String firstName) {
-            this.firstName = firstName;
+            driver.firstName = firstName;
             return this;
         }
 
         public DriverBuilder setEnabled(int enabled) {
-            this.enabled = enabled;
+            driver.setEnabled(enabled);
             return this;
         }
 
         public DriverBuilder setId(Long id) {
-            this.id = id;
+            driver.setId(id);
             return this;
         }
 
         public DriverBuilder setLastName(String lastName) {
-            this.lastName = lastName;
+            driver.lastName = lastName;
             return this;
         }
 
         public DriverBuilder setDateOfBirth(String dateOfBirth) {
-            this.dateOfBirth = dateOfBirth;
+            driver.dateOfBirth = dateOfBirth;
             return this;
         }
 
         public DriverBuilder setIdnp(String idnp) {
-            this.idnp = idnp;
+            driver.idnp = idnp;
             return this;
         }
 
         public DriverBuilder setTelephoneNumber(String telephoneNumber) {
-            this.telephoneNumber = telephoneNumber;
+            driver.telephoneNumber = telephoneNumber;
             return this;
         }
 
         public DriverBuilder setCreditCard(CreditCard creditCard) {
-            this.creditCard = creditCard;
+            driver.creditCard = creditCard;
             return this;
         }
 
         public DriverBuilder setTransport(Transport transport) {
-            this.transport = transport;
+            driver.transport = transport;
+            transport.setDriver(driver);
             return this;
         }
 
         public DriverBuilder setAddedTrips(List<Trip> addedTrips) {
-            this.addedTrips = addedTrips;
+            driver.addedTrips = addedTrips;
             return this;
         }
 
         public Driver build() {
-            Driver driver = new Driver();
-            driver.setEmail(email);
-            driver.setPassword(password);
-            driver.setRole(role);
-            driver.setFirstName(firstName);
-            driver.setEnabled(enabled);
-            driver.setId(id);
-            driver.setLastName(lastName);
-            driver.setDateOfBirth(dateOfBirth);
-            driver.setIdnp(idnp);
-            driver.setTelephoneNumber(telephoneNumber);
-            driver.setCreditCard(creditCard);
-            driver.setTransport(transport);
-            driver.setAddedTrips(addedTrips);
-            driver.setRole(Constants.DEFAULT_DRIVER_ROLE);
             return driver;
         }
     }

@@ -1,5 +1,7 @@
 package com.quickwolf.domain;
 
+import com.quickwolf.exception.NotEnoughFreeSeatsException;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -37,9 +39,17 @@ public class Trip extends AbstractEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date arriveTime;
 
+    @Column(name = "arrive_date")
+    @Temporal(TemporalType.DATE)
+    private Date arriveDate;
+
     @Column(name = "depart_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date departTime;
+
+    @Column(name = "depart_date")
+    @Temporal(TemporalType.DATE)
+    private Date departDate;
 
     @Column(name = "trip_price")
     private BigDecimal price = BigDecimal.ZERO;
@@ -53,10 +63,20 @@ public class Trip extends AbstractEntity {
     @Column(name = "available_seats")
     private int availableSeats;
 
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.MERGE,CascadeType.REFRESH })
     private List<Passenger> passengers = new ArrayList<>();
 
     public Trip() {
+    }
+
+    public void addPassenger(Passenger passenger) {
+        if (availableSeats > 0) {
+            --availableSeats;
+            passengers.add(passenger);
+            passenger.addTrip(this);
+        }
+        else
+            throw new NotEnoughFreeSeatsException();
     }
 
     public Address getFromAddress() {
@@ -139,6 +159,22 @@ public class Trip extends AbstractEntity {
         this.passengers = passengers;
     }
 
+    public Date getArriveDate() {
+        return arriveDate;
+    }
+
+    public void setArriveDate(Date arriveDate) {
+        this.arriveDate = arriveDate;
+    }
+
+    public Date getDepartDate() {
+        return departDate;
+    }
+
+    public void setDepartDate(Date departDate) {
+        this.departDate = departDate;
+    }
+
     public Duration getTripDuration() {
         return Duration.between(departTime.toInstant(), arriveTime.toInstant());
     }
@@ -160,13 +196,14 @@ public class Trip extends AbstractEntity {
     }
 
     public static final class TripBuilder {
-
         private Long id;
         private Address fromAddress;
         private Address destinationAddress;
         private Date tripTime;
         private Date arriveTime;
+        private Date arriveDate;
         private Date departTime;
+        private Date departDate;
         private BigDecimal price = BigDecimal.ZERO;
         private Itinerary itinerary;
         private Driver driver;
@@ -201,8 +238,18 @@ public class Trip extends AbstractEntity {
             return this;
         }
 
+        public TripBuilder setArriveDate(Date arriveDate) {
+            this.arriveDate = arriveDate;
+            return this;
+        }
+
         public TripBuilder setDepartTime(Date departTime) {
             this.departTime = departTime;
+            return this;
+        }
+
+        public TripBuilder setDepartDate(Date departDate) {
+            this.departDate = departDate;
             return this;
         }
 
@@ -233,7 +280,9 @@ public class Trip extends AbstractEntity {
             trip.setDestinationAddress(destinationAddress);
             trip.setTripTime(tripTime);
             trip.setArriveTime(arriveTime);
+            trip.setArriveDate(arriveDate);
             trip.setDepartTime(departTime);
+            trip.setDepartDate(departDate);
             trip.setPrice(price);
             trip.setItinerary(itinerary);
             trip.setDriver(driver);
