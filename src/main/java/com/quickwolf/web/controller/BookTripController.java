@@ -4,6 +4,7 @@ import com.quickwolf.domain.MailSender;
 import com.quickwolf.domain.Passenger;
 import com.quickwolf.web.service.PassengerService;
 import com.quickwolf.web.service.TripService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import com.quickwolf.web.form.beans.BookTripFormBean;
 @Controller
 @SessionAttributes({"bookedTrip", "tripId"})
 public class BookTripController {
+    private static final Logger LOGGER = Logger.getLogger(BookTripController.class);
 
     @Autowired
     private TripService tripService;
@@ -34,7 +36,7 @@ public class BookTripController {
     public String bookConfirmed(@ModelAttribute("tripId") long tripId) {
         if (tripId == 0)
             return "redirect:/error";
-        System.out.println(tripId);
+        LOGGER.info(tripId);
         return "bookingConfirmed";
     }
 
@@ -49,7 +51,7 @@ public class BookTripController {
         } catch (Exception e) {
             return "redirect:/error";
         }
-        System.out.println("good");
+        LOGGER.info("good");
         flashAttributes.addFlashAttribute("tripId", bookTripFormBean.getTripId());
         return "redirect:/bookingConfirmed";
     }
@@ -57,7 +59,7 @@ public class BookTripController {
     @RequestMapping(value = "/cancelTrip", method = RequestMethod.POST)
     public String cancelTrip(@RequestParam long tripId, @RequestParam String email) {
         tripService.cancelTrip(email, tripId);
-        System.out.println("good");
+        LOGGER.info("good");
         return "redirect:/passengerProfile";
     }
 

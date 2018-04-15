@@ -8,6 +8,7 @@ import com.quickwolf.web.repository.DriverRepository;
 import com.quickwolf.web.service.DriverService;
 import com.quickwolf.web.service.PassengerService;
 import com.quickwolf.web.service.TripService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 @Controller
 public class ProfileController {
+    private static final Logger LOGGER = Logger.getLogger(ProfileController.class);
 
     @Autowired
     private PassengerService passengerService;
@@ -39,7 +41,7 @@ public class ProfileController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Passenger p = passengerService.findPassengerBy(auth.getName());
         List<Trip> bookedTrips = passengerService.findBookedTrips(auth.getName());
-        System.out.println(bookedTrips);
+        LOGGER.info(bookedTrips);
         p.setBookedTrips(bookedTrips);
         model.addAttribute("passenger", p);
         return "passengerProfile";
@@ -50,7 +52,7 @@ public class ProfileController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Driver d = driverService.findDriverBy(auth.getName());
         List<Trip> addedTrips = driverService.findAddedTrips(auth.getName());
-        System.out.println(addedTrips);
+        LOGGER.info(addedTrips);
         d.setAddedTrips(addedTrips);
         model.addAttribute("driver", d);
         return "driverProfile";
