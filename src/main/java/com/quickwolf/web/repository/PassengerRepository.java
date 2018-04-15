@@ -21,7 +21,4 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
 
     @Query("update Passenger p set p.enabled = :enabledValue where p.email = :email")
     void updateEnabledValue(@Param("email") String email, @Param("enabledValue") int value);
-
-//    void bookTrip(String email, long tripId);
-//    void cancelTrip(String email, long tripId);
 }

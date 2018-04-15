@@ -1,5 +1,6 @@
 package com.quickwolf.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quickwolf.util.Constants;
 
 import javax.persistence.*;
@@ -29,11 +30,13 @@ public class Driver extends User {
     private String telephoneNumber;
 
     @Embedded
+    @JsonIgnore
     private CreditCard creditCard;
 
     @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
     private Transport transport;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "driver")
     private List<Trip> addedTrips = new ArrayList<>();
 

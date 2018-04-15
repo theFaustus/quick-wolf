@@ -1,5 +1,7 @@
 package com.quickwolf.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -29,6 +31,7 @@ public class ItineraryStep extends AbstractEntity {
 	private Address address;
 
 	@ManyToOne
+	@JsonIgnore
 	private Itinerary itinerary;
 
 	public ItineraryStep() {

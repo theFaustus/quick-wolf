@@ -1,5 +1,7 @@
 package com.quickwolf.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -65,6 +67,7 @@ public class Transport extends AbstractEntity {
     private String engineId;
 
     @OneToOne
+    @JsonIgnore
     private Driver driver;
 
     public Transport() {

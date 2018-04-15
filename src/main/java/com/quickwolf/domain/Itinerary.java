@@ -1,5 +1,7 @@
 package com.quickwolf.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ public class Itinerary extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "itinerary")
 	private List<ItineraryStep> steps = new ArrayList<>();
 
+	@JsonIgnore
 	@OneToOne
 	private Trip trip;
 
