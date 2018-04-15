@@ -14,32 +14,32 @@ import java.util.List;
  */
 public class RegisterDriverFormBean {
 
-    @NotNull(message = "You have to fill this element")
-    @Size(min = 2, max = 30, message = "First name should be between 2 - 30 characters long")
+    @NotNull
+    @Size(min = 2, max = 30)
     private String firstName;
 
-    @NotNull(message = "You have to fill this element")
-    @Size(min = 2, max = 30, message = "Last name should be between 2 - 30 characters long")
+    @NotNull
+    @Size(min = 2, max = 30)
     private String lastName;
 
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "^[_A-Za-z0-9-\\\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Something is wrong with your email")
+    @NotNull
+    @Pattern(regexp = "^[_A-Za-z0-9-\\\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
 
     @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", message = "Password should contain upperCase, lowerCase, number/special char and min 8 characters")
+    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$")
     private String driverPassword;
 
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "0\\(\\d{2}\\)-\\d{3}-\\d{3}", message = "Here is a valid telephone number 0(69)-267-158")
+    @NotNull
+    @Pattern(regexp = "0\\(\\d{2}\\)-\\d{3}-\\d{3}")
     private String telephoneNumber;
 
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "\\d{13}", message = "Look into your passport for a valid 13 digit id")
+    @NotNull
+    @Pattern(regexp = "\\d{13}")
     private String humanId;
 
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "^([0-9]{4})-([1-9]|1[0-2])-([0-9]|1[0-9]|2[0-9]|3[0-1])$", message = "Enter the date of birth in form yyyy-mm-dd.")
+    @NotNull
+    @Pattern(regexp = "^([0-9]{4})-([1-9]|1[0-2])-([0-9]|1[0-9]|2[0-9]|3[0-1])$")
     private String dateOfBirth;
 
     @Valid

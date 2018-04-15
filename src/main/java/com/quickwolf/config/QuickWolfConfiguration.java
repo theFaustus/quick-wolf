@@ -1,5 +1,6 @@
 package com.quickwolf.config;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -8,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 @EnableWebSecurity
@@ -71,5 +74,12 @@ public class QuickWolfConfiguration extends WebSecurityConfigurerAdapter {
         dataSource.setPassword("");
         dataSource.setDriverClassName("org.postgresql.Driver");
         return dataSource;
+    }
+
+    @Bean
+    public Validator validator(MessageSource messageSource) {
+        LocalValidatorFactoryBean factory = new LocalValidatorFactoryBean();
+        factory.setValidationMessageSource(messageSource);
+        return factory;
     }
 }

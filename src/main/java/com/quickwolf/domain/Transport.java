@@ -14,54 +14,54 @@ import javax.validation.constraints.*;
 public class Transport extends AbstractEntity {
 
     @Column(name = "transport_name")
-    @NotNull(message = "You have to fill this element")
-    @Size(min = 2, max = 30, message = "Name of your car should be between 2 - 30 characters long")
+    @NotNull
+    @Size(min = 2, max = 30)
     private String name;
 
     @Column(name = "model_name")
-    @NotNull(message = "You have to fill this element")
-    @Size(min = 2, max = 30, message = "Model of your car should be between 2 - 30 characters long")
+    @NotNull
+    @Size(min = 2, max = 30)
     private String modelName;
 
     @Column(name = "transport_type")
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "(car|bus)", message = "You`re allowed to use a bus or a car")
+    @NotNull
+    @Pattern(regexp = "(car|bus)")
     private String transportType;
 
     @Column(name = "body_type")
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "(suv|truck|sedan|van|coupe|wagon|convertible|sports|diesel|crossover|luxury|hybrid|hatchback|microbus|autobus|bus)", message = "Allowed types for car : suv, truck, sedan, van, coupe, wagon, convertible, sports, diesel, crossover, luxury, hybrid, hatchback and for bus : microbus, autobus, bus")
+    @NotNull
+    @Pattern(regexp = "(suv|truck|sedan|van|coupe|wagon|convertible|sports|diesel|crossover|luxury|hybrid|hatchback|microbus|autobus|bus)")
     private String bodyType;
 
     @Column(name = "number_of_seats")
-    @NotNull(message = "You have to fill this element")
-    @Min(value = 2, message = "Use a valid number of seats")
-    @Max(value = 100, message = "Use a valid number of seats")
+    @NotNull
+    @Min(value = 2)
+    @Max(value = 100)
     private int numberOfSeats;
 
     @Column(name = "registration_number")
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "\\w{1,3}\\d{1,3}", message = "Use a valid registration number")
+    @NotNull
+    @Pattern(regexp = "\\w{1,3}\\d{1,3}")
     private String registrationNumber;
 
     @Column(name = "date_of_registration")
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "^([0-9]{4})-([1-9]|1[0-2])-([0-9]|1[0-9]|2[0-9]|3[0-1])$", message = "Enter the date of birth in form yyyy-mm-dd.")
+    @NotNull
+    @Pattern(regexp = "^([0-9]{4})-([1-9]|1[0-2])-([0-9]|1[0-9]|2[0-9]|3[0-1])$")
     private String dateOfRegistration;
 
     @Column(name = "transport_year")
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "\\d{4}", message = "Use a valid year of car")
+    @NotNull
+    @Pattern(regexp = "\\d{4}")
     private String year;
 
     @Column(name = "transport_color")
-    @NotNull(message = "You have to fill this element")
-    @Size(min = 3, max = 30, message = "Color should be 3 - 30 characters long")
+    @NotNull
+    @Size(min = 3, max = 30)
     private String color;
 
     @Column(name = "engine_id")
-    @NotNull(message = "You have to fill this element")
-    @Size(min = 14, max = 14, message = "Engine id should be 14 characters long according to your registration certificate")
+    @NotNull
+    @Size(min = 14, max = 14)
     private String engineId;
 
     @OneToOne
