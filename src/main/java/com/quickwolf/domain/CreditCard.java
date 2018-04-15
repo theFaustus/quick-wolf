@@ -12,33 +12,33 @@ import javax.validation.constraints.Size;
 @Embeddable
 public class CreditCard {
     @Column(name = "cc_first_name")
-    @NotNull(message = "You have to fill this element")
-    @Size(min = 2, max = 30, message = "First name should be between 2 - 30 characters long")
+    @NotNull
+    @Size(min = 2, max = 30)
     private String firstName;
 
     @Column(name = "cc_last_name")
-    @NotNull(message = "You have to fill this element")
-    @Size(min = 2, max = 30, message = "Last name should be between 2 - 30 characters long")
+    @NotNull
+    @Size(min = 2, max = 30)
     private String lastName;
 
     @Column(name = "cc_number")
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\\d{3})\\d{11}",message = "Enter please a valid credit card, e support : Visa, Mastercard, Amex, Discover.")
+    @NotNull
+    @Pattern(regexp = "4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\\d{3})\\d{11}")
     private String cardNumber;
 
     @Column(name = "cc_expiration_month")
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "(0[1-9]|1[0-2])",message = "Enter please a valid expiration month.")
+    @NotNull
+    @Pattern(regexp = "(0[1-9]|1[0-2])")
     private String expirationMonth;
 
     @Column(name = "cc_expiration_year")
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "[0-9]{2}",message = "Enter please a valid expiration year.")
+    @NotNull
+    @Pattern(regexp = "[0-9]{2}")
     private String expirationYear;
 
     @Column(name = "cc_security_code")
     @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "[0-9]{3,4}",message = "Enter please a valid cvv.")
+    @Pattern(regexp = "[0-9]{3,4}")
     private String securityCode;
 
     public CreditCard() {

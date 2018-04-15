@@ -26,7 +26,7 @@ public class PassengerServiceImpl implements PassengerService {
         Passenger passenger = Passenger.newBuilder()
                 .setFirstName(registerPassengerFormBean.getFirstName())
                 .setLastName(registerPassengerFormBean.getLastName())
-                .setEmail(registerPassengerFormBean.getemail())
+                .setEmail(registerPassengerFormBean.getEmail())
                 .setPassword(registerPassengerFormBean.getPassengerPassword())
                 .setTelephoneNumber(registerPassengerFormBean.getTelephoneNumber())
                 .setCreditCard(registerPassengerFormBean.getCreditCard())
@@ -41,8 +41,8 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public List<Trip> findBookedTrips(String email) {
-        return passengerRepository.findBookedTrips(email);
+    public List<Trip> findBookedTrips(String passengerEmail) {
+        return passengerRepository.findBookedTrips(passengerEmail);
     }
 
     @Override

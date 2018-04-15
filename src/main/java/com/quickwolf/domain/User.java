@@ -1,5 +1,7 @@
 package com.quickwolf.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,8 +11,14 @@ public abstract class User extends AbstractEntity {
 
     @Column(name = "email", unique = true)
     private String email;
+
+    @JsonIgnore
     private String password;
+
+    @JsonIgnore
     private String role;
+
+    @JsonIgnore
     private int enabled = 1;
 
     public String getEmail() {

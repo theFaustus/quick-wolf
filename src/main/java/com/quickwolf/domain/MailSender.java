@@ -1,5 +1,7 @@
 package com.quickwolf.domain;
 
+import org.apache.log4j.Logger;
+
 import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
@@ -14,6 +16,8 @@ import javax.mail.internet.MimeMessage;
  * Created by Faust on 5/17/2017.
  */
 public class MailSender {
+    private static final Logger LOGGER = Logger.getLogger(MailSender.class);
+
     private String destination;
     private final String from = "help.quickwolf@gmail.com";
     private final String username = "help.quickwolf@gmail.com";
@@ -48,7 +52,7 @@ public class MailSender {
             message.setContent("<h3> Dear " + mail + ", your account was suspended due to too many reports on your account.</h3>", "text/html");
             Transport.send(message);
 
-            System.out.println("Sent message successfully....");
+            LOGGER.info("Sent message successfully....");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +68,7 @@ public class MailSender {
             message.setContent("<h3> Dear Mr./Mrs." + mail + ", your account was unlocked successfully.</h3>", "text/html");
             Transport.send(message);
 
-            System.out.println("Sent message successfully....");
+            LOGGER.info("Sent message successfully....");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -204,7 +208,7 @@ public class MailSender {
 
             Transport.send(message);
 
-            System.out.println("Sent message successfully....");
+            LOGGER.info("Sent message successfully....");
         } catch (Exception e) {
             e.printStackTrace();
         }

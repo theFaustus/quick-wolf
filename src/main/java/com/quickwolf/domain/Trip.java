@@ -1,5 +1,6 @@
 package com.quickwolf.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quickwolf.exception.NotEnoughFreeSeatsException;
 
 import javax.persistence.*;
@@ -33,6 +34,7 @@ public class Trip extends AbstractEntity {
 
     @Column(name = "trip_time")
     @Temporal(TemporalType.TIME)
+    @JsonIgnore
     private Date tripTime;
 
     @Column(name = "arrive_time")
@@ -41,6 +43,7 @@ public class Trip extends AbstractEntity {
 
     @Column(name = "arrive_date")
     @Temporal(TemporalType.DATE)
+    @JsonIgnore
     private Date arriveDate;
 
     @Column(name = "depart_time")
@@ -49,6 +52,7 @@ public class Trip extends AbstractEntity {
 
     @Column(name = "depart_date")
     @Temporal(TemporalType.DATE)
+    @JsonIgnore
     private Date departDate;
 
     @Column(name = "trip_price")
@@ -64,6 +68,7 @@ public class Trip extends AbstractEntity {
     private int availableSeats;
 
     @ManyToMany(cascade = { CascadeType.MERGE,CascadeType.REFRESH })
+    @JsonIgnore
     private List<Passenger> passengers = new ArrayList<>();
 
     public Trip() {

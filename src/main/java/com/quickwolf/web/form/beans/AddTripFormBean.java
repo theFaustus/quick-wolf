@@ -190,7 +190,6 @@ public class AddTripFormBean {
 	private Itinerary getItinerary() throws ParseException{
 		Itinerary itinerary = new Itinerary();
 		for (ItineraryStepFormBean step : itinerarySteps) {
-			System.out.println(step.getDepart() + " " + step.getDepartTime());
 			itinerary.addItineraryStep(ItineraryStep.newBuilder()
 					.setDepart(dateFormat.get().parse(step.getDepart() + " " + step.getDepartTime()))
 					.setArrive(dateFormat.get().parse(step.getArrive() + " " + step.getArriveTime()))

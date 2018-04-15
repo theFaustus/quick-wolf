@@ -1,5 +1,6 @@
 package com.quickwolf.web.form.beans;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.quickwolf.domain.CreditCard;
 import com.quickwolf.domain.Trip;
 
@@ -15,20 +16,26 @@ import java.util.List;
 public class RegisterPassengerFormBean {
 
     @NotNull(message = "You have to fill this element")
-    @Size(min = 2, max = 30, message = "First name should be between 2 - 30 characters long")
+    @Size(min = 2, max = 30)
     private String firstName;
-    @NotNull(message = "You have to fill this element")
-    @Size(min = 2, max = 30, message = "Last name should be between 2 - 30 characters long")
+
+    @NotNull
+    @Size(min = 2, max = 30)
     private String lastName;
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "^[_A-Za-z0-9-\\\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Something is wrong with your email")
+
+    @NotNull
+    @Pattern(regexp = "^[_A-Za-z0-9-\\\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", message = "Password should contain upperCase, lowerCase, number/special char and min 8 characters")
+
+    @NotNull
+    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$")
     private String passengerPassword;
-    @NotNull(message = "You have to fill this element")
-    @Pattern(regexp = "0\\(\\d{2}\\)-\\d{3}-\\d{3}", message = "Here is a valid telephone number 0(69)-267-158")
+
+    @NotNull
+    @Pattern(regexp = "0\\(\\d{2}\\)-\\d{3}-\\d{3}")
     private String telephoneNumber;
+
+    @JsonProperty("creditCard")
     @Valid
     private CreditCard creditCard = CreditCard.newCreditCard().build();
 
@@ -48,11 +55,11 @@ public class RegisterPassengerFormBean {
         this.lastName = lastName;
     }
 
-    public String getemail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setemail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

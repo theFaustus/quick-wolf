@@ -1,5 +1,6 @@
 package com.quickwolf.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quickwolf.util.Constants;
 
 import javax.persistence.*;
@@ -23,9 +24,11 @@ public class Passenger extends User {
     private String telephoneNumber;
 
     @ManyToMany
+    @JsonIgnore
     private List<Trip> bookedTrips = new ArrayList<>();
 
     @Embedded
+    @JsonIgnore
     private CreditCard creditCard;
 
     public Passenger() {
