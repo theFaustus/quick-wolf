@@ -3,7 +3,9 @@ package com.quickwolf.web.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.quickwolf.domain.Order;
 import com.quickwolf.domain.Passenger;
+import com.quickwolf.web.repository.OrderRepository;
 import com.quickwolf.web.service.DriverService;
 import com.quickwolf.web.service.PassengerService;
 import org.hibernate.Hibernate;
@@ -28,6 +30,9 @@ public class TripServiceImpl implements TripService {
 
 	@Autowired
 	private PassengerService passengerService;
+
+	@Autowired
+	private OrderRepository orderRepository;
 
 	@Transactional(readOnly = true)
 	@Override
@@ -68,5 +73,10 @@ public class TripServiceImpl implements TripService {
 	@Override
 	public void cancelTrip(String email, long tripId) {
 
+	}
+
+	@Override
+	public Order saveOrder(Order o) {
+		return orderRepository.save(o);
 	}
 }

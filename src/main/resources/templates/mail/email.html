@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Reservation info</title>
+</head>
+<body>
+<p>Hey, welcome aboard on QuickWolf! You just made a reservation, below are some important details and a printable copy of your ticket.</p>
+
+<h3>Personal details.</h3>
+
+<p>Name: <span th:text="${order.ticket.user.firstName}">Roșca</span> <span th:text="${order.ticket.user.lastName}">Roșca</span></p>
+<p>Phone: <span th:text="${order.ticket.user.telephoneNumber}">69952044</span></p>
+
+<p>Notes: -</p>
+
+<h3>Rezervation details</h3>
+
+<p>Rezervation ID: <span th:text="${order.id}">128820</span></p>
+<p>From address: <span th:text="${order.ticket.trip.fromAddress.country}">Moldova</span>, <span th:text="${order.ticket.trip.fromAddress.city}">Chisinau</span>, <span th:text="${order.ticket.trip.fromAddress.street}">str.Unirii</span></p>
+<p>Destination address: <span th:text="${order.ticket.trip.destinationAddress.country}">Moldova</span>, <span th:text="${order.ticket.trip.destinationAddress.city}">Chisinau</span>, <span th:text="${order.ticket.trip.destinationAddress.street}">str.Unirii</span></p>
+<p>Depart time: <span th:text="${#dates.format(order.ticket.trip.departTime, 'yyyy-MM-dd HH:mm')}">2018-12-01 13:54</span></p>
+<p>Arrive time: <span th:text="${#dates.format(order.ticket.trip.arriveTime, 'yyyy-MM-dd HH:mm')}">2018-12-01 13:54</span></p>
+<p>Itinerary</p>
+<ul th:each="step : ${order.ticket.trip.itinerary.steps}">
+    <li>Stop (<span th:text="${step.name}"></span>) : <span th:text="${step.address.country}"></span>, <span th:text="${step.address.city}"></span>, <span th:text="${step.address.street}"></span>. Arrive at <span th:text="${#dates.format(step.arrive, 'yyyy-MM-dd HH:mm')}">2018-12-01 13:54</span>. Depart at <span th:text="${#dates.format(step.depart, 'yyyy-MM-dd HH:mm')}">2018-12-01 13:54</span></li>
+</ul>
+
+<p>Price: <span th:text="${order.ticket.trip.price}">1000.00</span></p>
+
+<h3>Driver details</h3>
+<p>Name: <span th:text="${order.ticket.trip.driver.firstName}">Roșca</span> <span th:text="${order.ticket.trip.driver.lastName}">Roșca</span></p>
+<p>Phone: <span th:text="${order.ticket.trip.driver.telephoneNumber}">69952044</span></p>
+<p>Transport: <span th:text="${order.ticket.trip.driver.transport.color}">Black</span> <span th:text="${order.ticket.trip.driver.transport.name}">BMW</span> <span th:text="${order.ticket.trip.driver.transport.modelName}">X5</span>, <span th:text="${order.ticket.trip.driver.transport.registrationNumber}">789</span></p>
+
+
+</body>
+</html>
