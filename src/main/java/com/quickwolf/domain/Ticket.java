@@ -14,7 +14,7 @@ public class Ticket extends AbstractEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ticket_status")
-    private TicketStatus ticketStatus;
+    private TicketStatus ticketStatus = TicketStatus.NOT_USED;
 
     @ManyToOne
     private User user;
