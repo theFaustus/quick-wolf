@@ -63,10 +63,10 @@ public class BookTripController {
             Trip t = tripService.findById(bookTripFormBean.getTripId());
             Passenger p = passengerService.findPassengerBy(bookTripFormBean.getemail());
             tripService.bookTrip(bookTripFormBean.getemail(), bookTripFormBean.getTripId());
-            Ticket ticket = Ticket.newTicket()
-                    .ticketType(TicketType.SIMPLE)
-                    .trip(t)
-                    .user(p)
+            Ticket ticket = Ticket.newBuilder()
+                    .setTicketType(TicketType.SIMPLE)
+                    .setTrip(t)
+                    .setUser(p)
                     .build();
             Order o = Order.newBuilder().setTicket(ticket).build();
             tripService.saveOrder(o);

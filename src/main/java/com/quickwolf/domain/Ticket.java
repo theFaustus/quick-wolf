@@ -1,109 +1,101 @@
 package com.quickwolf.domain;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-public class Ticket {
+public class Ticket extends AbstractEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  private Long id;
-
-  @ManyToOne
-  private Trip trip;
+    @ManyToOne
+    private Trip trip;
 
     @Enumerated(EnumType.STRING)
-  private TicketType ticketType;
-
-  @ManyToOne
-  private User user;
-
-  private Ticket(Builder builder) {
-    this.id = builder.id;
-    this.trip = builder.trip;
-    this.ticketType = builder.ticketType;
-    this.user = builder.user;
-  }
-
-  public static Builder newTicket() {
-    return new Builder();
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Trip getTrip() {
-    return trip;
-  }
-
-  public void setTrip(Trip trip) {
-    this.trip = trip;
-  }
-
-  public TicketType getTicketType() {
-    return ticketType;
-  }
-
-  public void setTicketType(TicketType ticketType) {
-    this.ticketType = ticketType;
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-
-  public static final class Builder {
-    private Long id;
-    private Trip trip;
+    @Column(name = "ticket_type")
     private TicketType ticketType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ticket_status")
+    private TicketStatus ticketStatus;
+
+    @ManyToOne
     private User user;
 
-    private Builder() {
+    public Ticket() {
     }
 
-    public Ticket build() {
-      return new Ticket(this);
+    public Trip getTrip() {
+        return trip;
     }
 
-    public Builder id(Long id) {
-      this.id = id;
-      return this;
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 
-    public Builder trip(Trip trip) {
-      this.trip = trip;
-      return this;
+    public TicketType getTicketType() {
+        return ticketType;
     }
 
-    public Builder ticketType(TicketType ticketType) {
-      this.ticketType = ticketType;
-      return this;
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 
-    public Builder user(User user) {
-      this.user = user;
-      return this;
+    public TicketStatus getTicketStatus() {
+        return ticketStatus;
     }
-  }
 
-  @Override
-  public String toString() {
-    return "Ticket{" +
-            "id=" + id +
-            ", trip=" + trip +
-            ", ticketType=" + ticketType +
-            ", user=" + user +
-            '}';
-  }
+    public void setTicketStatus(TicketStatus ticketStatus) {
+        this.ticketStatus = ticketStatus;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + getId() +
+                ", trip=" + trip +
+                ", ticketType=" + ticketType +
+                ", user=" + user +
+                '}';
+    }
+
+    public static TicketBuilder newBuilder() {
+        return new TicketBuilder();
+    }
+
+    public static final class TicketBuilder {
+        private Ticket ticket = new Ticket();
+
+        private TicketBuilder() {
+        }
+
+        public TicketBuilder setTrip(Trip trip) {
+            ticket.trip = trip;
+            return this;
+        }
+
+        public TicketBuilder setTicketType(TicketType ticketType) {
+            ticket.ticketType = ticketType;
+            return this;
+        }
+
+        public TicketBuilder setTicketStatus(TicketStatus ticketStatus) {
+            ticket.ticketStatus = ticketStatus;
+            return this;
+        }
+
+        public TicketBuilder setUser(User user) {
+            ticket.user = user;
+            return this;
+        }
+
+        public Ticket build() {
+            return ticket;
+        }
+    }
 }

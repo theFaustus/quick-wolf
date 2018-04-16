@@ -4,7 +4,6 @@ import com.quickwolf.domain.Driver;
 import com.quickwolf.domain.MailSender;
 import com.quickwolf.domain.Passenger;
 import com.quickwolf.domain.Trip;
-import com.quickwolf.web.repository.DriverRepository;
 import com.quickwolf.web.service.DriverService;
 import com.quickwolf.web.service.PassengerService;
 import com.quickwolf.web.service.TripService;
@@ -14,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,15 +74,13 @@ public class ProfileController {
         return "adminProfile";
     }
 
-    @RequestMapping(value = "/disableDriver", method = RequestMethod.POST)
-    public String disableDriver(@RequestParam int enabledDriver, @RequestParam String email) {
-        driverService.updateEnabledValue(email, enabledDriver);
-        MailSender mailSender = new MailSender(email);
-        mailSender.sendBlockingWarning(email);
+    @PostMapping("/disableDriver")
+    public String disableDriver(@RequestParam int enabledDriver, @RequestParam("email") String driverEmail) {
+        driverService.disableDriver(driverEmail);
         return "redirect:/adminProfile";
     }
 
-    @RequestMapping(value = "/disablePassenger", method = RequestMethod.POST)
+    @PostMapping("/disablePassenger")
     public String disablePassenger(@RequestParam int enabledPassenger, @RequestParam String email) {
         passengerService.updateEnabledValue(email, enabledPassenger);
         MailSender mailSender = new MailSender(email);
@@ -90,15 +88,13 @@ public class ProfileController {
         return "redirect:/adminProfile";
     }
 
-    @RequestMapping(value = "/enableDriver", method = RequestMethod.POST)
-    public String enableDriver(@RequestParam int enabledDriver, @RequestParam String email) {
-        driverService.updateEnabledValue(email, enabledDriver);
-        MailSender mailSender = new MailSender(email);
-        mailSender.sendUnblockingWarning(email);
+    @PostMapping("/enableDriver")
+    public String enableDriver(@RequestParam int enabledDriver, @RequestParam("email") String driverEmail) {
+        driverService.enableDriver(driverEmail);
         return "redirect:/adminProfile";
     }
 
-    @RequestMapping(value = "/enablePassenger", method = RequestMethod.POST)
+    @PostMapping("/enablePassenger")
     public String enablePassenger(@RequestParam int enabledPassenger, @RequestParam String email) {
         passengerService.updateEnabledValue(email, enabledPassenger);
         MailSender mailSender = new MailSender(email);
