@@ -37,7 +37,53 @@
     <script th:src="@{/js/html5shiv.min.js}"></script>
     <script th:src="@{/js/respond.min.js}"></script>
     <![endif]-->
+    <script>
+        function initMap(currentId) {
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+            var maps = new google.maps.Map(document.getElementById('map-' + currentId), {
+                zoom: 8,
+                center: {lat: 47.0105, lng: 28.8638}
+            });
+            console.log(maps)
+            directionsDisplay.setMap(maps);
+            directionsDisplay.setOptions({ preserveViewport: true });
 
+            calculateAndDisplayRoute(directionsService, directionsDisplay, currentId);
+
+        }
+
+
+        function calculateAndDisplayRoute(directionsService, directionsDisplay, currentId) {
+//                            var waypts = [];
+//                            var checkboxArray = document.getElementById('waypoints');
+//                            for (var i = 0; i < checkboxArray.length; i++) {
+//                                if (checkboxArray.options[i].selected) {
+//                                    waypts.push({
+//                                        location: checkboxArray[i].value,
+//                                        stopover: true
+//                                    });
+//                                }
+//                            }
+
+            directionsService.route({
+                origin: document.getElementById('start-' + currentId).value,
+                destination: document.getElementById('end-' + currentId).value,
+                //waypoints: waypts,
+                optimizeWaypoints: true,
+                travelMode: 'DRIVING'
+            }, function (response, status) {
+                if (status === 'OK') {
+                    directionsDisplay.setDirections(response);
+                    var route = response.routes[0];
+                } else {
+                }
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRaQqEonwPYYVlfHB8acw-bOyCDTZJsY8">
+    </script>
 </head>
 
 <body>
@@ -185,6 +231,26 @@
                 </div><!-- End strip booking -->
                 <div th:if="${not #lists.isEmpty(passenger.bookedTrips)}">
                     <div class="strip_booking" th:each="trip : ${passenger.bookedTrips}">
+                        <div class="modal fade" th:id="'mapOfTrip-' + ${trip.id}" tabindex="-1" role="dialog"
+                             aria-labelledby="Login" aria-hidden="true">
+                            <div class="modal-dialog modal-sm-2">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h5 class="modal-title">Route</h5>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <!-- The form is placed inside the body of modal -->
+                                        <div style="width: 550px; height: 400px; margin: 0 auto;" th:id="'map-' + ${trip.id}"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-2">
                                 <div class="date">
@@ -215,10 +281,23 @@
                                 <div class="booking_buttons">
                                     <form method="post" th:action="@{/cancelTrip}">
                                         <input type="hidden" th:value="${trip.id}" name="tripId" id="tripId"/>
+                                        <input type="hidden"
+                                               th:value="${trip.fromAddress.countryCode} + ', ' + ${trip.fromAddress.city}"
+                                               name="start" th:id="'start-' + ${trip.id}"/>
+                                        <input type="hidden"
+                                               th:value="${trip.destinationAddress.countryCode}  + ', ' + ${trip.destinationAddress.city}"
+                                               name="end" th:id="'end-' + ${trip.id}"/>
                                         <input type="hidden" th:value="${#authentication.name}" name="email"
                                                id="email"/>
                                         <input type="submit" class="btn_2" value="Cancel"/>
                                     </form>
+                                    <button type="button"
+                                            class="btn_1 outline"
+                                            data-toggle="modal" th:id="${trip.id}"
+                                            th:attr="data-target='#mapOfTrip-' + ${trip.id}"
+                                            th:onclick="${'javascript:initMap(' + trip.id +');'}"
+                                    >Map
+                                    </button>
                                 </div>
                             </div>
                         </div><!-- End row -->

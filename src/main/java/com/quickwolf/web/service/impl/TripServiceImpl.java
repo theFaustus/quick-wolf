@@ -3,8 +3,8 @@ package com.quickwolf.web.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import com.quickwolf.domain.Order;
-import com.quickwolf.domain.Passenger;
+import com.quickwolf.domain.*;
+import com.quickwolf.web.repository.CountryRepository;
 import com.quickwolf.web.repository.OrderRepository;
 import com.quickwolf.web.service.DriverService;
 import com.quickwolf.web.service.PassengerService;
@@ -12,7 +12,6 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.quickwolf.domain.Trip;
 import com.quickwolf.web.form.beans.AddTripFormBean;
 import com.quickwolf.web.form.beans.TripFormBean;
 import com.quickwolf.web.repository.TripRepository;
@@ -34,6 +33,9 @@ public class TripServiceImpl implements TripService {
 	@Autowired
 	private OrderRepository orderRepository;
 
+	@Autowired
+	private CountryRepository countryRepository;
+
 	@Transactional(readOnly = true)
 	@Override
 	public List<Trip> findTripsBy(TripFormBean t) {
@@ -48,7 +50,15 @@ public class TripServiceImpl implements TripService {
 	@Transactional
 	@Override
 	public Trip createTrip(AddTripFormBean trip, String driverEmail) {
+		Country fromCountry = countryRepository.findByValue(trip.getFromCountry());
+		Country destinationCountry = countryRepository.findByValue(trip.getToCountry());
 		Trip t = trip.toTrip();
+		t.getFromAddress().setCountryCode(fromCountry.getId());
+		t.getDestinationAddress().setCountryCode(destinationCountry.getId());
+		List<ItineraryStep> steps = t.getItinerary().getSteps();
+		for(ItineraryStep s : steps){
+			s.getAddress().setCountryCode(countryRepository.findByValue(s.getAddress().getCountry()).getId());
+		}
 		t.setDriver(driverService.findDriverBy(driverEmail));
 		return tripRepository.save(t);
 	}
