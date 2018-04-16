@@ -7,6 +7,7 @@ import com.quickwolf.web.repository.PassengerRepository;
 import com.quickwolf.web.service.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class PassengerServiceImpl implements PassengerService {
     @Autowired
     private PassengerRepository passengerRepository;
 
+    @Transactional
     @Override
     public Passenger savePassenger(RegisterPassengerFormBean registerPassengerFormBean) {
         Passenger passenger = Passenger.newBuilder()
@@ -50,6 +52,7 @@ public class PassengerServiceImpl implements PassengerService {
         return passengerRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void updateEnabledValue(String email, int enabledPassenger) {
         passengerRepository.updateEnabledValue(email, enabledPassenger);

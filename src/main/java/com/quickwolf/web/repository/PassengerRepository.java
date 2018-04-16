@@ -3,6 +3,7 @@ package com.quickwolf.web.repository;
 import com.quickwolf.domain.Passenger;
 import com.quickwolf.domain.Trip;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -20,5 +21,6 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
     List<Trip> findBookedTrips(@Param("email") String email);
 
     @Query("update Passenger p set p.enabled = :enabledValue where p.email = :email")
+    @Modifying
     void updateEnabledValue(@Param("email") String email, @Param("enabledValue") int value);
 }

@@ -1,19 +1,12 @@
 package com.quickwolf.domain;
 
 
-import com.quickwolf.domain.Ticket;
-
-import java.util.Date;
-
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "orders")
-public class Order {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+public class Order extends AbstractEntity {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "order_date")
@@ -24,10 +17,6 @@ public class Order {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Ticket ticket;
 
-    public Long getId() {
-        return id;
-    }
-
     public Date getOrderDate() {
         return orderDate;
     }
@@ -35,7 +24,6 @@ public class Order {
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
-
 
     public Ticket getTicket() {
         return ticket;
@@ -46,7 +34,7 @@ public class Order {
     }
 
     public String toString() {
-        return String.format("Order{id=%d}", id);
+        return String.format("Order{id=%d}", getId());
     }
 
     public static OrderBuilder newBuilder() {
@@ -57,7 +45,7 @@ public class Order {
         private Order order = new Order();
 
         public OrderBuilder setId(Long id) {
-            order.id = id;
+            order.setId(id);
             return this;
         }
 

@@ -19,4 +19,8 @@ public interface DriverService {
     List<Driver> findAll();
 
     void updateEnabledValue(String email, int enabledDriver);
+
+    Driver disableDriver(String driverEmail);
+
+    void enableDriver(String driverEmail);
 }
