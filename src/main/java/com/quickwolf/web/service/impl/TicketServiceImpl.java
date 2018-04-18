@@ -3,12 +3,11 @@ package com.quickwolf.web.service.impl;
 
 
 import com.quickwolf.domain.Order;
-import com.quickwolf.domain.TicketType;
 import com.quickwolf.web.service.BlowfishCryptoService;
 import com.quickwolf.web.service.PdfService;
 import com.quickwolf.web.service.QrService;
 import com.quickwolf.web.service.TicketService;
-import com.quickwolf.web.util.FileUtil;
+import com.quickwolf.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
