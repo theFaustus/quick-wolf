@@ -57,4 +57,14 @@ public class PassengerServiceImpl implements PassengerService {
     public void updateEnabledValue(String email, int enabledPassenger) {
         passengerRepository.updateEnabledValue(email, enabledPassenger);
     }
+
+    @Override
+    public Passenger findPassengerByEmailWithFetchedTrips(String email) {
+        return passengerRepository.findPassengerByEmailWithFetchedTrips(email);
+    }
+
+    @Override
+    public List<Passenger> findAllPassengersWithFetchedBookedTrips() {
+        return passengerRepository.findAllPassengersWithFetchedBookedTrips();
+    }
 }

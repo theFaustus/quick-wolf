@@ -39,17 +39,17 @@ public class DriverServiceImpl implements DriverService {
 
     @Transactional
     @Override
-    public Driver saveDriver(RegisterDriverFormBean registerDriverFormBean) {
+    public Driver saveDriver(RegisterDriverFormBean bean) {
         Driver driver = Driver.newBuilder()
-                .setFirstName(registerDriverFormBean.getFirstName())
-                .setLastName(registerDriverFormBean.getLastName())
-                .setEmail(registerDriverFormBean.getEmail())
-                .setPassword(registerDriverFormBean.getDriverPassword())
-                .setTelephoneNumber(registerDriverFormBean.getTelephoneNumber())
-                .setIdnp(registerDriverFormBean.getHumanId())
-                .setDateOfBirth(registerDriverFormBean.getDateOfBirth())
-                .setCreditCard(registerDriverFormBean.getCreditCard())
-                .setTransport(registerDriverFormBean.getTransport())
+                .setFirstName(bean.getFirstName())
+                .setLastName(bean.getLastName())
+                .setEmail(bean.getEmail())
+                .setPassword(bean.getDriverPassword())
+                .setTelephoneNumber(bean.getTelephoneNumber())
+                .setIdnp(bean.getHumanId())
+                .setDateOfBirth(bean.getDateOfBirth())
+                .setCreditCard(bean.getCreditCard())
+                .setTransport(bean.getTransport())
                 .build();
         driverRepository.save(driver);
         return driver;
@@ -91,6 +91,16 @@ public class DriverServiceImpl implements DriverService {
         updateEnabledValue(driverEmail, DRIVER_ENABLED_STATUS);
         Driver driver = findDriverBy(driverEmail);
         sendAccountEnableNotification(driver);
+    }
+
+    @Override
+    public Driver findDriverByEmailWithFetchedAddedTrips(String email) {
+        return driverRepository.findDriverByEmailWithFetchedAddedTrips(email);
+    }
+
+    @Override
+    public List<Driver> findAllDriversWithFetchedAddedTrips() {
+        return driverRepository.findAllDriversWithFetchedAddedTrips();
     }
 
     private void sendAccountEnableNotification(Driver driver) {

@@ -19,4 +19,8 @@ public interface PassengerService {
     List<Passenger> findAllPassengers();
 
     void updateEnabledValue(String email, int enabledPassenger);
+
+    Passenger findPassengerByEmailWithFetchedTrips(String email);
+
+    List<Passenger> findAllPassengersWithFetchedBookedTrips();
 }

@@ -1,24 +1,18 @@
 package com.quickwolf.web.controller;
 
-import com.quickwolf.domain.Driver;
 import com.quickwolf.domain.MailSender;
-import com.quickwolf.domain.Passenger;
-import com.quickwolf.domain.Trip;
 import com.quickwolf.web.service.DriverService;
 import com.quickwolf.web.service.PassengerService;
-import com.quickwolf.web.service.TripService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 /**
  * Created by Faust on 5/17/2017.
@@ -31,46 +25,26 @@ public class ProfileController {
     private PassengerService passengerService;
 
     @Autowired
-    private TripService tripService;
-
-    @Autowired
     private DriverService driverService;
 
-    @RequestMapping(value = "/passengerProfile")
-    public String profilePage(Model model) {
+    @GetMapping("/passengerProfile")
+    public String showPassengerProfilePage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Passenger p = passengerService.findPassengerBy(auth.getName());
-        List<Trip> bookedTrips = passengerService.findBookedTrips(auth.getName());
-        LOGGER.info(bookedTrips);
-        p.setBookedTrips(bookedTrips);
-        model.addAttribute("passenger", p);
+        model.addAttribute("passenger", passengerService.findPassengerByEmailWithFetchedTrips(auth.getName()));
         return "passengerProfile";
     }
 
     @RequestMapping(value = "/driverProfile")
-    public String driverPage(Model model) {
+    public String showDriverProfilePage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Driver d = driverService.findDriverBy(auth.getName());
-        List<Trip> addedTrips = driverService.findAddedTrips(auth.getName());
-        LOGGER.info(addedTrips);
-        d.setAddedTrips(addedTrips);
-        model.addAttribute("driver", d);
+        model.addAttribute("driver", driverService.findDriverByEmailWithFetchedAddedTrips(auth.getName()));
         return "driverProfile";
     }
 
-    @RequestMapping(value = "/adminProfile")
-    public String adminPage(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<Passenger> listOfPassengers = passengerService.findAllPassengers();
-        for (Passenger p : listOfPassengers) {
-            p.setBookedTrips(passengerService.findBookedTrips(p.getEmail()));
-        }
-        List<Driver> listOfDrivers = driverService.findAll();
-        for (Driver d : listOfDrivers) {
-            d.setAddedTrips(driverService.findAddedTrips(d.getEmail()));
-        }
-        model.addAttribute("passengers", listOfPassengers);
-        model.addAttribute("drivers", listOfDrivers);
+    @GetMapping("/adminProfile")
+    public String showAdminPage(Model model) {
+        model.addAttribute("passengers", passengerService.findAllPassengersWithFetchedBookedTrips());
+        model.addAttribute("drivers", driverService.findAllDriversWithFetchedAddedTrips());
         return "adminProfile";
     }
 
@@ -95,10 +69,10 @@ public class ProfileController {
     }
 
     @PostMapping("/enablePassenger")
-    public String enablePassenger(@RequestParam int enabledPassenger, @RequestParam String email) {
-        passengerService.updateEnabledValue(email, enabledPassenger);
-        MailSender mailSender = new MailSender(email);
-        mailSender.sendUnblockingWarning(email);
+    public String enablePassenger(@RequestParam int enabledPassenger, @RequestParam("email") String passengerEmail) {
+        passengerService.updateEnabledValue(passengerEmail, enabledPassenger);
+        MailSender mailSender = new MailSender(passengerEmail);
+        mailSender.sendUnblockingWarning(passengerEmail);
         return "redirect:/adminProfile";
     }
 }

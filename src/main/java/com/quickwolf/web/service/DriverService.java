@@ -23,4 +23,8 @@ public interface DriverService {
     Driver disableDriver(String driverEmail);
 
     void enableDriver(String driverEmail);
+
+    Driver findDriverByEmailWithFetchedAddedTrips(String email);
+
+    List<Driver> findAllDriversWithFetchedAddedTrips();
 }

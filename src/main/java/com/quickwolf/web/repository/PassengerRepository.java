@@ -23,4 +23,10 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
     @Query("update Passenger p set p.enabled = :enabledValue where p.email = :email")
     @Modifying
     void updateEnabledValue(@Param("email") String email, @Param("enabledValue") int value);
+
+    @Query("select distinct p from Passenger p join fetch p.bookedTrips where p.email = :email")
+    Passenger findPassengerByEmailWithFetchedTrips(@Param("email") String email);
+
+    @Query("select distinct p from Passenger p join fetch p.bookedTrips")
+    List<Passenger> findAllPassengersWithFetchedBookedTrips();
 }

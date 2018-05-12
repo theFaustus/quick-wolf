@@ -23,4 +23,10 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     @Modifying
     @Query("update Driver d set d.enabled = :enabledValue where d.email = :email")
     void updateEnabledValue(@Param("email") String email, @Param("enabledValue") int value);
+
+    @Query("select distinct d from Driver d join fetch d.addedTrips where d.email = :email")
+    Driver findDriverByEmailWithFetchedAddedTrips(@Param("email") String email);
+
+    @Query("select distinct d from Driver d join fetch d.addedTrips")
+    List<Driver> findAllDriversWithFetchedAddedTrips();
 }
