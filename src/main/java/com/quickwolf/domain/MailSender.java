@@ -152,7 +152,7 @@ public class MailSender {
                     "            <td align=\"right\">\n" +
                     "                <address>\n" +
                     "    \t\t\t\t\t<strong>Payment Method:</strong><br>\n" +
-                    "    \t\t\t\t\tCard ending " + p.getCreditCard().getCardNumber().substring(p.getCreditCard().getCardNumber().length() - 4, p.getCreditCard().getCardNumber().length()) + "<br>\n" +
+                    "    \t\t\t\t\tCard ending 89897878<br>\n" +
                     "    \t\t\t\t\t" + p.getEmail() + "\n" +
                     "    \t\t\t\t</address>\n" +
                     "\n" +

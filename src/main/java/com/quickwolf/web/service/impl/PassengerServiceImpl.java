@@ -1,17 +1,16 @@
 package com.quickwolf.web.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.quickwolf.domain.Passenger;
 import com.quickwolf.domain.Trip;
 import com.quickwolf.web.form.beans.RegisterPassengerFormBean;
 import com.quickwolf.web.repository.PassengerRepository;
 import com.quickwolf.web.service.PassengerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Faust on 4/19/2017.
@@ -31,7 +30,6 @@ public class PassengerServiceImpl implements PassengerService {
                 .setEmail(registerPassengerFormBean.getEmail())
                 .setPassword(registerPassengerFormBean.getPassengerPassword())
                 .setTelephoneNumber(registerPassengerFormBean.getTelephoneNumber())
-                .setCreditCard(registerPassengerFormBean.getCreditCard())
                 .build();
         passengerRepository.save(passenger);
         return passenger;

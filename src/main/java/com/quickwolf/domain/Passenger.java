@@ -1,11 +1,15 @@
 package com.quickwolf.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.quickwolf.util.Constants;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.quickwolf.util.Constants;
 
 /**
  * Created by Faust on 4/19/2017.
@@ -26,10 +30,6 @@ public class Passenger extends User {
     @ManyToMany
     @JsonIgnore
     private List<Trip> bookedTrips = new ArrayList<>();
-
-    @Embedded
-    @JsonIgnore
-    private CreditCard creditCard;
 
     public Passenger() {
     }
@@ -66,16 +66,8 @@ public class Passenger extends User {
         this.bookedTrips = bookedTrips;
     }
 
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
-
     public void addTrip(Trip trip) {
         bookedTrips.add(trip);
-    }
-
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
     }
 
     @Override
@@ -101,8 +93,6 @@ public class Passenger extends User {
         private String lastName;
         private String telephoneNumber;
         private List<Trip> bookedTrips = new ArrayList<>();
-
-        private CreditCard creditCard;
 
         private PassengerBuilder() {
         }
@@ -152,11 +142,6 @@ public class Passenger extends User {
             return this;
         }
 
-        public PassengerBuilder setCreditCard(CreditCard creditCard) {
-            this.creditCard = creditCard;
-            return this;
-        }
-
         public Passenger build() {
             Passenger passenger = new Passenger();
             passenger.setEmail(email);
@@ -168,7 +153,6 @@ public class Passenger extends User {
             passenger.setLastName(lastName);
             passenger.setTelephoneNumber(telephoneNumber);
             passenger.setBookedTrips(bookedTrips);
-            passenger.setCreditCard(creditCard);
             passenger.setRole(Constants.DEFAULT_PASSENGER_ROLE);
             return passenger;
         }

@@ -208,46 +208,6 @@
                   <p class="alert alert-danger" th:if="${#fields.hasErrors('passengerPassword')}" th:errors="*{passengerPassword}"></p>
               </div>
             </div>
-            <div class="form_title">
-              <h3><strong>2</strong>Credit card details</h3>
-              <p>
-                Take your credit card to fill these fields.
-              </p>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-6">
-                <label>First name</label>
-                <input type="text" class="form-control" th:field="*{creditCard.firstName}" placeholder="Type in your first name">
-				<p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.firstName')}" th:errors="*{creditCard.firstName}"></p>
-			  </div>
-              <div class="form-group col-md-6">
-                <label>Last name</label>
-                <input type="text" class="form-control" th:field="*{creditCard.lastName}" placeholder="Type in your last name">
-				<p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.lastName')}" th:errors="*{creditCard.lastName}"></p>
-			  </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-6">
-                <label>Credit card number</label>
-                <input type="text" class="form-control" th:field="*{creditCard.cardNumber}" placeholder="Type in your credit card`s number">
-				<p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.cardNumber')}" th:errors="*{creditCard.cardNumber}"></p>
-			  </div>
-              <div class="form-group col-md-2">
-                <label>Expiration month</label>
-                <input type="text" class="form-control" th:field="*{creditCard.expirationMonth}" placeholder="mm">
-                <p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.expirationMonth')}" th:errors="*{creditCard.expirationMonth}"></p>
-              </div>
-              <div class="form-group col-md-2">
-                <label>Expiration year</label>
-                <input type="text" class="form-control" th:field="*{creditCard.expirationYear}" placeholder="yy">
-                <p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.expirationYear')}" th:errors="*{creditCard.expirationYear}"></p>
-              </div>
-              <div class="form-group col-md-2">
-                <label>CVV</label>
-                <input type="text" class="form-control" th:field="*{creditCard.securityCode}" placeholder="Type in CVV">
-                <p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.securityCode')}" th:errors="*{creditCard.securityCode}"></p>
-              </div>
-            </div>
             <button type="submit" class="btn_full">Create an account</button>
           </form>
         </div>

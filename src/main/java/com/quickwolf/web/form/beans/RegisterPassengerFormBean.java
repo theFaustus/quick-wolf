@@ -1,14 +1,8 @@
 package com.quickwolf.web.form.beans;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.quickwolf.domain.CreditCard;
-import com.quickwolf.domain.Trip;
-
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 /**
  * Created by Faust on 4/19/2017.
@@ -34,10 +28,6 @@ public class RegisterPassengerFormBean {
     @NotNull
     @Pattern(regexp = "0\\(\\d{2}\\)-\\d{3}-\\d{3}")
     private String telephoneNumber;
-
-    @JsonProperty("creditCard")
-    @Valid
-    private CreditCard creditCard = CreditCard.newCreditCard().build();
 
     public String getFirstName() {
         return firstName;
@@ -77,13 +67,5 @@ public class RegisterPassengerFormBean {
 
     public void setTelephoneNumber(String telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
-    }
-
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
-
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
     }
 }
