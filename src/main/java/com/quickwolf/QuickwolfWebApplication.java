@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.quickwolf.web", "com.quickwolf.bouncer" })
+@ComponentScan(basePackages = { "com.quickwolf.web", "com.quickwolf.bouncer", "com.quickwolf.util" })
 @Import({ QuickWolfConfiguration.class })
 public class QuickwolfWebApplication {
 

@@ -1,4 +1,4 @@
-package com.quickwolf.web.util;
+package com.quickwolf.util;
 
 import org.springframework.stereotype.Component;
 

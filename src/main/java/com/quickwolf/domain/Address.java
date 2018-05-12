@@ -9,6 +9,7 @@ public class Address {
 	private String state;
 	private String city;
 	private String street;
+	private String countryCode;
 
 	@Column(name = "zip_code")
 	private String zipCode;
@@ -61,6 +62,14 @@ public class Address {
 		return new AddressBuilder();
 	}
 
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("%s, %s", city, country);
@@ -91,6 +100,12 @@ public class Address {
 
 		public AddressBuilder setZipCode(String zipCode) {
 			address.zipCode = zipCode;
+			return this;
+		}
+
+
+		public AddressBuilder setCountryCode(String countryCode) {
+			address.countryCode = countryCode;
 			return this;
 		}
 

@@ -16,6 +16,7 @@ public class Trip extends AbstractEntity {
 
     @AttributeOverrides({
             @AttributeOverride(name = "country", column = @Column(name = "from_country")),
+            @AttributeOverride(name = "countryCode", column = @Column(name = "from_country_code")),
             @AttributeOverride(name = "state", column = @Column(name = "from_state")),
             @AttributeOverride(name = "city", column = @Column(name = "from_city")),
             @AttributeOverride(name = "street", column = @Column(name = "from_street")),
@@ -25,6 +26,7 @@ public class Trip extends AbstractEntity {
 
     @AttributeOverrides({
             @AttributeOverride(name = "country", column = @Column(name = "destination_country")),
+            @AttributeOverride(name = "countryCode", column = @Column(name = "destination_country_code")),
             @AttributeOverride(name = "state", column = @Column(name = "destination_state")),
             @AttributeOverride(name = "city", column = @Column(name = "destination_city")),
             @AttributeOverride(name = "street", column = @Column(name = "destination_street")),

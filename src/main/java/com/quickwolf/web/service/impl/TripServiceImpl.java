@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 import com.quickwolf.domain.*;
+import com.quickwolf.web.repository.CountryRepository;
 import com.quickwolf.web.repository.OrderRepository;
 import com.quickwolf.web.service.*;
 import org.apache.log4j.Logger;
@@ -48,6 +49,9 @@ public class TripServiceImpl implements TripService {
     @Autowired
     private TicketService ticketService;
 
+    @Autowired
+	private CountryRepository countryRepository;
+
 	@Transactional(readOnly = true)
 	@Override
 	public List<Trip> findTripsBy(TripFormBean t) {
@@ -62,7 +66,15 @@ public class TripServiceImpl implements TripService {
 	@Transactional
 	@Override
 	public Trip createTrip(AddTripFormBean trip, String driverEmail) {
+		Country fromCountry = countryRepository.findByValue(trip.getFromCountry());
+		Country destinationCountry = countryRepository.findByValue(trip.getToCountry());
 		Trip t = trip.toTrip();
+		t.getFromAddress().setCountryCode(fromCountry.getId());
+		t.getDestinationAddress().setCountryCode(destinationCountry.getId());
+		List<ItineraryStep> steps = t.getItinerary().getSteps();
+		for(ItineraryStep s : steps){
+			s.getAddress().setCountryCode(countryRepository.findByValue(s.getAddress().getCountry()).getId());
+		}
 		t.setDriver(driverService.findDriverBy(driverEmail));
 		return tripRepository.save(t);
 	}
