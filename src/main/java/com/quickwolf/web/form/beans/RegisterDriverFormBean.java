@@ -1,13 +1,11 @@
 package com.quickwolf.web.form.beans;
 
-import com.quickwolf.domain.Transport;
-import com.quickwolf.domain.CreditCard;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.List;
+
+import com.quickwolf.domain.Transport;
 
 /**
  * Created by Faust on 4/20/2017.
@@ -41,9 +39,6 @@ public class RegisterDriverFormBean {
     @NotNull
     @Pattern(regexp = "^([0-9]{4})-([1-9]|1[0-2])-([0-9]|1[0-9]|2[0-9]|3[0-1])$")
     private String dateOfBirth;
-
-    @Valid
-    private CreditCard creditCard = CreditCard.newCreditCard().build();
 
     @Valid
     private Transport transport = Transport.newBuilder().build();
@@ -102,14 +97,6 @@ public class RegisterDriverFormBean {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
-
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
     }
 
     public Transport getTransport() {

@@ -1,11 +1,17 @@
 package com.quickwolf.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.quickwolf.util.Constants;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.quickwolf.util.Constants;
 
 /**
  * Created by Faust on 4/20/2017.
@@ -28,10 +34,6 @@ public class Driver extends User {
 
     @Column(name = "telephone_number")
     private String telephoneNumber;
-
-    @Embedded
-    @JsonIgnore
-    private CreditCard creditCard;
 
     @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
     private Transport transport;
@@ -82,14 +84,6 @@ public class Driver extends User {
 
     public void setTelephoneNumber(String telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
-    }
-
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
-
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
     }
 
     public Transport getTransport() {
@@ -176,11 +170,6 @@ public class Driver extends User {
 
         public DriverBuilder setTelephoneNumber(String telephoneNumber) {
             driver.telephoneNumber = telephoneNumber;
-            return this;
-        }
-
-        public DriverBuilder setCreditCard(CreditCard creditCard) {
-            driver.creditCard = creditCard;
             return this;
         }
 

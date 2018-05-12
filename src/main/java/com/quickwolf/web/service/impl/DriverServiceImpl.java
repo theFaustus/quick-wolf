@@ -1,5 +1,16 @@
 package com.quickwolf.web.service.impl;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Properties;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
 import com.quickwolf.domain.Driver;
 import com.quickwolf.domain.Email;
 import com.quickwolf.domain.Trip;
@@ -8,16 +19,6 @@ import com.quickwolf.web.form.beans.RegisterDriverFormBean;
 import com.quickwolf.web.repository.DriverRepository;
 import com.quickwolf.web.service.DriverService;
 import com.quickwolf.web.service.EmailService;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Properties;
 
 /**
  * Created by Faust on 4/20/2017.
@@ -48,7 +49,6 @@ public class DriverServiceImpl implements DriverService {
                 .setTelephoneNumber(bean.getTelephoneNumber())
                 .setIdnp(bean.getHumanId())
                 .setDateOfBirth(bean.getDateOfBirth())
-                .setCreditCard(bean.getCreditCard())
                 .setTransport(bean.getTransport())
                 .build();
         driverRepository.save(driver);

@@ -74,7 +74,6 @@ public class QuickWolfConfiguration extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/")
-                .failureUrl("/")
                 .permitAll()
                 .and()
                 .logout()
