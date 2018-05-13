@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.quickwolf.domain.Passenger;
 import com.quickwolf.domain.Trip;
 import com.quickwolf.web.form.beans.RegisterPassengerFormBean;
+import com.quickwolf.web.form.beans.UpdatePasswordFormBean;
+import com.quickwolf.web.form.beans.UpdateProfileFormBean;
 import com.quickwolf.web.repository.PassengerRepository;
 import com.quickwolf.web.service.PassengerService;
 
@@ -64,5 +66,21 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public List<Passenger> findAllPassengersWithFetchedBookedTrips() {
         return passengerRepository.findAllPassengersWithFetchedBookedTrips();
+    }
+
+    @Transactional
+    @Override
+    public void updatePassword(final String userEmail, final UpdatePasswordFormBean formBean) {
+        passengerRepository.updatePassword(userEmail, formBean.getNewPassword());
+    }
+
+    @Transactional
+    @Override
+    public void updateProfile(final String email, final UpdateProfileFormBean formBean) {
+        Passenger passenger = passengerRepository.findPassengerBy(email);
+        passenger.setFirstName(formBean.getFirstName());
+        passenger.setLastName(formBean.getLastName());
+        passenger.setTelephoneNumber(formBean.getPhoneNumber());
+        passengerRepository.save(passenger);
     }
 }

@@ -20,20 +20,11 @@ import com.quickwolf.util.Constants;
 @Table(name = "_driver", schema = "wolf")
 public class Driver extends User {
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
-
     @Column(name = "date_of_birth")
     private String dateOfBirth;
 
     @Column(name = "driver_idnp")
     private String idnp;
-
-    @Column(name = "telephone_number")
-    private String telephoneNumber;
 
     @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
     private Transport transport;
@@ -44,22 +35,6 @@ public class Driver extends User {
 
     public Driver() {
         setRole(Constants.DEFAULT_DRIVER_ROLE);
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getDateOfBirth() {
@@ -76,14 +51,6 @@ public class Driver extends User {
 
     public void setIdnp(String idnp) {
         this.idnp = idnp;
-    }
-
-    public String getTelephoneNumber() {
-        return telephoneNumber;
-    }
-
-    public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
     }
 
     public Transport getTransport() {
@@ -105,11 +72,8 @@ public class Driver extends User {
     @Override
     public String toString() {
         return "Driver{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
                 ", idnp='" + idnp + '\'' +
-                ", telephoneNumber='" + telephoneNumber + '\'' +
                 '}';
     }
 
@@ -139,7 +103,7 @@ public class Driver extends User {
         }
 
         public DriverBuilder setFirstName(String firstName) {
-            driver.firstName = firstName;
+            driver.setFirstName(firstName);
             return this;
         }
 
@@ -154,7 +118,7 @@ public class Driver extends User {
         }
 
         public DriverBuilder setLastName(String lastName) {
-            driver.lastName = lastName;
+            driver.setLastName(lastName);
             return this;
         }
 
@@ -169,7 +133,7 @@ public class Driver extends User {
         }
 
         public DriverBuilder setTelephoneNumber(String telephoneNumber) {
-            driver.telephoneNumber = telephoneNumber;
+            driver.setTelephoneNumber(telephoneNumber);
             return this;
         }
 

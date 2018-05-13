@@ -386,51 +386,37 @@
 
                 <div class="divider"></div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>Edit profile</h4>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                            <label>First name</label>
-                            <input class="form-control" name="first_name" id="first_name" type="text">
+                <form th:action="@{/updateDriverProfile}" th:object="${updateProfileFormBean}" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Edit profile</h4>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                            <label>Last name</label>
-                            <input class="form-control" name="last_name" id="last_name" type="text">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label>First name</label>
+                                <input class="form-control" name="firstName" id="firstName" th:field="*{firstName}" type="text">
+                            </div>
                         </div>
-                    </div>
-                </div><!-- End row -->
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label>Last name</label>
+                                <input class="form-control" name="lastName" id="lastName" th:field="*{lastName}"
+                                       type="text">
+                            </div>
+                        </div>
+                    </div><!-- End row -->
 
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                            <label>Phone number</label>
-                            <input class="form-control" name="email_2" id="email_2" type="text">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label>Phone number</label>
+                                <input class="form-control" name="phoneNumber" id="phoneNumber" th:field="*{phoneNumber}"
+                                       type="text">
+                            </div>
                         </div>
-                    </div>
-                </div><!-- End row -->
-                <hr>
-                <h4>Upload profile photo</h4>
-                <div class="form-inline upload_1">
-                    <div class="form-group">
-                        <input type="file" name="files[]" id="js-upload-files" multiple>
-                    </div>
-                    <button type="submit" class="btn_1 green" id="js-upload-submit">Upload file</button>
-                </div>
-
-                <!-- Hidden on mobiles -->
-                <div class="hidden-xs">
-                    <!-- Drop Zone -->
-                    <h5>Or drag and drop files below</h5>
-                    <div class="upload-drop-zone" id="drop-zone">
-                        Just drag and drop files here
-                    </div>
-                    <hr>
+                    </div><!-- End row -->
                     <button type="submit" class="btn_1 green">Update Profile</button>
-                </div>
+                </form>
             </section><!-- End section 4 -->
 
         </div><!-- End content -->

@@ -37,8 +37,12 @@ public class DriverRestEndpoint {
         if(bindingResult.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
         else {
-            Driver driver = driverService.saveDriver(registerDriverFormBean);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            try {
+                Driver driver = driverService.saveDriver(registerDriverFormBean);
+                return ResponseEntity.status(HttpStatus.CREATED).body(driver);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
         }
     }
 

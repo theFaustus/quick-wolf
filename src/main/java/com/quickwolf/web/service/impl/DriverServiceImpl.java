@@ -16,6 +16,7 @@ import com.quickwolf.domain.Email;
 import com.quickwolf.domain.Trip;
 import com.quickwolf.util.Constants;
 import com.quickwolf.web.form.beans.RegisterDriverFormBean;
+import com.quickwolf.web.form.beans.UpdateProfileFormBean;
 import com.quickwolf.web.repository.DriverRepository;
 import com.quickwolf.web.service.DriverService;
 import com.quickwolf.web.service.EmailService;
@@ -101,6 +102,16 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public List<Driver> findAllDriversWithFetchedAddedTrips() {
         return driverRepository.findAllDriversWithFetchedAddedTrips();
+    }
+
+    @Transactional
+    @Override
+    public void updateProfile(final String email, final UpdateProfileFormBean formBean) {
+        Driver driver = driverRepository.findDriverBy(email);
+        driver.setFirstName(formBean.getFirstName());
+        driver.setLastName(formBean.getLastName());
+        driver.setTelephoneNumber(formBean.getPhoneNumber());
+        driverRepository.save(driver);
     }
 
     private void sendAccountEnableNotification(Driver driver) {

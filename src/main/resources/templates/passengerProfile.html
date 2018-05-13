@@ -307,39 +307,48 @@
 
             <section id="section-3">
                 <div class="row">
-                    <div class="col-md-6 col-sm-6 add_bottom_30">
-                        <h4>Change your password</h4>
-                        <div class="form-group">
-                            <label>Old password</label>
-                            <input class="form-control" name="old_password" id="old_password" type="password">
-                        </div>
-                        <div class="form-group">
-                            <label>New password</label>
-                            <input class="form-control" name="new_password" id="new_password" type="password">
-                        </div>
-                        <div class="form-group">
-                            <label>Confirm new password</label>
-                            <input class="form-control" name="confirm_new_password" id="confirm_new_password"
-                                   type="password">
-                        </div>
-                        <button type="submit" class="btn_1 green">Update Password</button>
+                    <div class="col-md-6 col-sm-6 add_bottom_30" style="margin: 0 auto">
+                        <form th:action="@{/updatePassword}" th:object="${updatePasswordFormBean}" method="post">
+                            <h4>Change your password</h4>
+                            <div class="form-group">
+                                <label>Old password</label>
+                                <input class="form-control" name="oldPassword" id="oldPassword" th:field="*{oldPassword}"
+                                       type="password">
+                                <p th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>New password</label>
+                                <input class="form-control" name="newPassword" id="newPassword" th:field="*{newPassword}"
+                                       type="password">
+                                <p th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm new password</label>
+                                <input class="form-control" name="confirmedNewPassword" th:field="*{confirmedNewPassword}"
+                                       id="confirmedNewPassword"
+                                       type="password">
+                                <p th:if="${#fields.hasErrors('confirmedNewPassword')}" th:errors="*{confirmedNewPassword}"></p>
+                            </div>
+                            <button type="submit" class="btn_1 green">Update Password</button>
+                        </form>
                     </div>
-                    <div class="col-md-6 col-sm-6 add_bottom_30">
-                        <h4>Change your email</h4>
-                        <div class="form-group">
-                            <label>Old email</label>
-                            <input class="form-control" name="old_password" id="old_password" type="password">
-                        </div>
-                        <div class="form-group">
-                            <label>New email</label>
-                            <input class="form-control" name="new_password" id="new_password" type="password">
-                        </div>
-                        <div class="form-group">
-                            <label>Confirm new email</label>
-                            <input class="form-control" name="confirm_new_password" id="confirm_new_password"
-                                   type="password">
-                        </div>
-                        <button type="submit" class="btn_1 green">Update Email</button>
+                    <div class="col-md-6 col-sm-6 add_bottom_30" style="margin: 0 auto">
+                        <form>
+                            <h4>Change your email</h4>
+                            <div class="form-group">
+                                <label>Old email</label>
+                                <input class="form-control" name="oldEmail" id="oldEmail">
+                            </div>
+                            <div class="form-group">
+                                <label>New email</label>
+                                <input class="form-control" name="newEmail" id="newEmail">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm new email</label>
+                                <input class="form-control" name="confirmedNewEmail" id="confirmedNewEmail">
+                            </div>
+                            <button type="submit" class="btn_1 green">Update email</button>
+                        </form>
                     </div>
                 </div><!-- End row -->
             </section><!-- End section 3 -->
@@ -363,51 +372,39 @@
 
                 <div class="divider"></div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>Edit profile</h4>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                            <label>First name</label>
-                            <input class="form-control" name="first_name" id="first_name" type="text">
+                <form method="post" th:action="@{/updateProfile}" th:object="${updateProfileFormBean}"
+                      enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Edit profile</h4>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                            <label>Last name</label>
-                            <input class="form-control" name="last_name" id="last_name" type="text">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label>First name</label>
+                                <input class="form-control" name="firstName" id="firstName" th:field="*{firstName}"
+                                       type="text">
+                            </div>
                         </div>
-                    </div>
-                </div><!-- End row -->
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label>Last name</label>
+                                <input class="form-control" name="lastName" id="lastName" th:field="*{lastName}"
+                                       type="text">
+                            </div>
+                        </div>
+                    </div><!-- End row -->
 
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                            <label>Phone number</label>
-                            <input class="form-control" name="email_2" id="email_2" type="text">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label>Phone number</label>
+                                <input class="form-control" name="phoneNumber" id="phoneNumber"
+                                       th:field="*{phoneNumber}" type="text">
+                            </div>
                         </div>
-                    </div>
-                </div><!-- End row -->
-                <hr>
-                <h4>Upload profile photo</h4>
-                <div class="form-inline upload_1">
-                    <div class="form-group">
-                        <input type="file" name="files[]" id="js-upload-files" multiple>
-                    </div>
-                    <button type="submit" class="btn_1 green" id="js-upload-submit">Upload file</button>
-                </div>
-
-                <!-- Hidden on mobiles -->
-                <div class="hidden-xs">
-                    <!-- Drop Zone -->
-                    <h5>Or drag and drop files below</h5>
-                    <div class="upload-drop-zone" id="drop-zone">
-                        Just drag and drop files here
-                    </div>
-                    <hr>
+                    </div><!-- End row -->
                     <button type="submit" class="btn_1 green">Update Profile</button>
-                </div>
+                </form>
             </section><!-- End section 4 -->
 
         </div><!-- End content -->

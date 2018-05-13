@@ -2,6 +2,8 @@ package com.quickwolf.web.repository;
 
 import com.quickwolf.domain.Passenger;
 import com.quickwolf.domain.Trip;
+import com.quickwolf.web.form.beans.UpdatePasswordFormBean;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,9 +26,13 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
     @Modifying
     void updateEnabledValue(@Param("email") String email, @Param("enabledValue") int value);
 
-    @Query("select distinct p from Passenger p join fetch p.bookedTrips where p.email = :email")
+    @Query("select distinct p from Passenger p left join fetch p.bookedTrips where p.email = :email")
     Passenger findPassengerByEmailWithFetchedTrips(@Param("email") String email);
 
-    @Query("select distinct p from Passenger p join fetch p.bookedTrips")
+    @Query("select distinct p from Passenger p left join fetch p.bookedTrips")
     List<Passenger> findAllPassengersWithFetchedBookedTrips();
+
+    @Modifying
+    @Query("update Passenger p set p.password = :newPassword where p.email = :email")
+    void updatePassword(@Param("email") String email, @Param("newPassword") String newPassword);
 }

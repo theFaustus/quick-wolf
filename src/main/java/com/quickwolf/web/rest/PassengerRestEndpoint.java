@@ -41,8 +41,12 @@ public class PassengerRestEndpoint {
         if(bindingResult.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
         else {
-            Passenger passenger = passengerService.savePassenger(registerPassengerFormBean);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+           try {
+               Passenger passenger = passengerService.savePassenger(registerPassengerFormBean);
+               return ResponseEntity.status(HttpStatus.CREATED).body(passenger);
+           } catch (Exception e) {
+               return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+           }
         }
     }
 }
