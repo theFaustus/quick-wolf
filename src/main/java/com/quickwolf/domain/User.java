@@ -15,7 +15,6 @@ public abstract class User extends AbstractEntity {
     @JsonIgnore
     private String password;
 
-    @JsonIgnore
     private String role;
 
     @JsonIgnore

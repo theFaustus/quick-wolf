@@ -1,6 +1,10 @@
 package com.quickwolf.bouncer.service;
 
+import java.util.Optional;
+
+import com.quickwolf.domain.User;
+
 public interface AuthenticationService {
 
-    boolean authenticate(String email, String password);
+    Optional<User> authenticate(String email, String password);
 }

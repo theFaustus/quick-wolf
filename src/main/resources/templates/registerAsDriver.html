@@ -203,10 +203,10 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label>Passport ID</label>
-                            <input type="text" class=" form-control" th:field="*{humanId}"
+                            <input type="text" class=" form-control" th:field="*{idnp}"
                                    placeholder="Type in your passport ID">
-                            <p class="alert alert-danger" th:if="${#fields.hasErrors('humanId')}"
-                               th:errors="*{humanId}"></p>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('idnp')}"
+                               th:errors="*{idnp}"></p>
                         </div>
                         <div class="form-group col-md-6">
                             <label><i class="icon-calendar-7"></i> Date of birth</label>

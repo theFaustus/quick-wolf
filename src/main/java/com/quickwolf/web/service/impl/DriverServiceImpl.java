@@ -48,7 +48,7 @@ public class DriverServiceImpl implements DriverService {
                 .setEmail(bean.getEmail())
                 .setPassword(bean.getDriverPassword())
                 .setTelephoneNumber(bean.getTelephoneNumber())
-                .setIdnp(bean.getHumanId())
+                .setIdnp(bean.getIdnp())
                 .setDateOfBirth(bean.getDateOfBirth())
                 .setTransport(bean.getTransport())
                 .build();

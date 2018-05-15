@@ -34,10 +34,10 @@ public class RegisterDriverFormBean {
 
     @NotNull
     @Pattern(regexp = "\\d{13}")
-    private String humanId;
+    private String idnp;
 
     @NotNull
-    @Pattern(regexp = "^([0-9]{4})-([1-9]|1[0-2])-([0-9]|1[0-9]|2[0-9]|3[0-1])$")
+    @Pattern(regexp = "^([0-9]{4})-(0?[1-9]|1[0-2])-([0-9]|1[0-9]|2[0-9]|3[0-1])$")
     private String dateOfBirth;
 
     @Valid
@@ -83,12 +83,12 @@ public class RegisterDriverFormBean {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public String getHumanId() {
-        return humanId;
+    public String getIdnp() {
+        return idnp;
     }
 
-    public void setHumanId(String humanId) {
-        this.humanId = humanId;
+    public void setIdnp(String idnp) {
+        this.idnp = idnp;
     }
 
     public String getDateOfBirth() {

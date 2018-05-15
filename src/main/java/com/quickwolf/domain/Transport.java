@@ -48,7 +48,7 @@ public class Transport extends AbstractEntity {
 
     @Column(name = "date_of_registration")
     @NotNull
-    @Pattern(regexp = "^([0-9]{4})-([1-9]|1[0-2])-([0-9]|1[0-9]|2[0-9]|3[0-1])$")
+    @Pattern(regexp = "^([0-9]{4})-(0?[1-9]|1[0-2])-([0-9]|1[0-9]|2[0-9]|3[0-1])$")
     private String dateOfRegistration;
 
     @Column(name = "transport_year")
