@@ -201,16 +201,16 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-md-2 col-sm-3">
-                                <ul class="info_booking">
-                                    <li><strong>Card number</strong><span
-                                            th:text="${p.creditCard.cardNumber}"></span>
-                                    </li>
-                                    <li><strong>Card exp.</strong><span
-                                            th:text="${p.creditCard.expirationMonth + '/' + p.creditCard.expirationYear}"></span>
-                                    </li>
-                                </ul>
-                            </div>
+                            <!--<div class="col-md-2 col-sm-3">-->
+                                <!--<ul class="info_booking">-->
+                                    <!--<li><strong>Card number</strong><span-->
+                                            <!--th:text="${p.creditCard.cardNumber}"></span>-->
+                                    <!--</li>-->
+                                    <!--<li><strong>Card exp.</strong><span-->
+                                            <!--th:text="${p.creditCard.expirationMonth + '/' + p.creditCard.expirationYear}"></span>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
                             <div class="col-md-2 col-sm-2">
                                 <div class="booking_buttons">
                                     <form th:if="${p.enabled == 1}" method="post" th:action="@{/disablePassenger}">

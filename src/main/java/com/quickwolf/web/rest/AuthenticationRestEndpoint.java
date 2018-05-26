@@ -1,19 +1,18 @@
 package com.quickwolf.web.rest;
 
-        import java.util.Optional;
+import java.util.Optional;
 
-        import org.apache.log4j.Logger;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.http.HttpStatus;
-        import org.springframework.http.ResponseEntity;
-        import org.springframework.web.bind.annotation.PostMapping;
-        import org.springframework.web.bind.annotation.RequestBody;
-        import org.springframework.web.bind.annotation.RequestParam;
-        import org.springframework.web.bind.annotation.RestController;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-        import com.quickwolf.bouncer.service.AuthenticationService;
-        import com.quickwolf.domain.User;
-        import com.quickwolf.web.form.beans.LoginUserFormBean;
+import com.quickwolf.bouncer.service.AuthenticationService;
+import com.quickwolf.domain.User;
+import com.quickwolf.web.form.beans.LoginUserFormBean;
 
 @RestController
 public class AuthenticationRestEndpoint {
