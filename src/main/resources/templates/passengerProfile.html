@@ -497,6 +497,7 @@
                 data: JSON.stringify({ratingOrdinal : value, tripId : tripId}),
                 success: function (data) {
                     console.log("Successfully reviewed driver");
+                    location.reload();
                 },
                 contentType : "application/json; charset=utf-8"
             });

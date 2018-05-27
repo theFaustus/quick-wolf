@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,5 +51,10 @@ public class DriverRestEndpoint {
     public ResponseEntity createNewTrip(@Valid AddTripFormBean trip, @PathVariable String driverEmail) {
         tripService.createTrip(trip, driverEmail);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/rest/drivers/{driverEmail}")
+    public Driver getDriver(@PathVariable("driverEmail") String driverEmail) {
+        return driverService.findDriverBy(driverEmail);
     }
 }
