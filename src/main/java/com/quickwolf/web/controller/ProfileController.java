@@ -2,8 +2,6 @@ package com.quickwolf.web.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +14,7 @@ import com.quickwolf.domain.Driver;
 import com.quickwolf.domain.MailSender;
 import com.quickwolf.domain.Passenger;
 import com.quickwolf.domain.User;
+import com.quickwolf.web.WebUtil;
 import com.quickwolf.web.form.beans.UpdatePasswordFormBean;
 import com.quickwolf.web.form.beans.UpdateProfileFormBean;
 import com.quickwolf.web.service.DriverService;
@@ -27,6 +26,7 @@ import com.quickwolf.web.validator.PasswordUpdateValidator;
  */
 @Controller
 public class ProfileController {
+
     private static final Logger LOGGER = Logger.getLogger(ProfileController.class);
 
     @Autowired
@@ -38,6 +38,9 @@ public class ProfileController {
     @Autowired
     private PasswordUpdateValidator passwordUpdateValidator;
 
+    @Autowired
+    private WebUtil webUtil;
+
     @GetMapping("/passengerProfile")
     public String showPassengerProfilePage(Model model) {
         populatePassengerProfileModel(model);
@@ -45,8 +48,7 @@ public class ProfileController {
     }
 
     private void populatePassengerProfileModel(final Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Passenger passenger = passengerService.findPassengerByEmailWithFetchedTrips(auth.getName());
+        Passenger passenger = passengerService.findPassengerByEmailWithFetchedTrips(webUtil.getLoggedUserEmail());
         model.addAttribute("passenger", passenger);
         model.addAttribute("updatePasswordFormBean", new UpdatePasswordFormBean());
         model.addAttribute("updateProfileFormBean", makeUpdateProfileFormBean(passenger));
@@ -71,29 +73,25 @@ public class ProfileController {
         if (result.hasErrors()) {
             return targetViewName;
         }
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        passengerService.updatePassword(auth.getName(), formBean);
+        passengerService.updatePassword(webUtil.getLoggedUserEmail(), formBean);
         return "redirect:/" + targetViewName;
     }
 
     @PostMapping("/updateProfile")
     public String updateProfile(UpdateProfileFormBean formBean) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        passengerService.updateProfile(auth.getName(), formBean);
+        passengerService.updateProfile(webUtil.getLoggedUserEmail(), formBean);
         return "redirect:/passengerProfile";
     }
 
     @PostMapping("/updateDriverProfile")
     public String updateDriverProfile(UpdateProfileFormBean formBean) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        driverService.updateProfile(auth.getName(), formBean);
+        driverService.updateProfile(webUtil.getLoggedUserEmail(), formBean);
         return "redirect:/driverProfile";
     }
 
     @RequestMapping(value = "/driverProfile")
     public String showDriverProfilePage(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Driver driver = driverService.findDriverByEmailWithFetchedAddedTrips(auth.getName());
+        Driver driver = driverService.findDriverByEmailWithFetchedAddedTrips(webUtil.getLoggedUserEmail());
         model.addAttribute("driver", driver);
         model.addAttribute("updateProfileFormBean", makeUpdateProfileFormBean(driver));
         return "driverProfile";

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Faust on 4/20/2017.
@@ -29,4 +30,7 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
 
     @Query("select distinct d from Driver d left join fetch d.addedTrips")
     List<Driver> findAllDriversWithFetchedAddedTrips();
+
+    @Query("select d from Driver d left join fetch d.reviews where d.id = :driverId")
+    Optional<Driver> findDriverByIdWithFetchedReviews(@Param("driverId") long driverId);
 }

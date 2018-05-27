@@ -4,6 +4,7 @@ import com.quickwolf.domain.Rating;
 
 public class DriverReviewFormBean {
     private int ratingOrdinal;
+    private long tripId;
 
     public int getRatingOrdinal() {
         return ratingOrdinal;
@@ -11,6 +12,14 @@ public class DriverReviewFormBean {
 
     public void setRatingOrdinal(final int ratingOrdinal) {
         this.ratingOrdinal = ratingOrdinal;
+    }
+
+    public long getTripId() {
+        return tripId;
+    }
+
+    public void setTripId(final long tripId) {
+        this.tripId = tripId;
     }
 
     public Rating getRating() {

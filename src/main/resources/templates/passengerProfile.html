@@ -270,7 +270,7 @@
                                     th:text="${trip.fromAddress + ' to ' + trip.destinationAddress}"></h3>
                                 <span th:text="${trip.fromAddress.street + ' to ' + trip.destinationAddress.street}"></span>
                                 <input type="text" class="rating starRating"
-                                       th:attr="data-driver-id=${trip.driver.id}, data-overall-review=${trip.driver.overallRating.ordinal()}">
+                                       th:attr="data-driver-id=${trip.driver.id}, data-overall-review=${trip.driver.overallRating.ordinal()}, data-trip-id=${trip.id}">
                             </div>
 
                             <div class="col-md-2 col-sm-3">
@@ -485,16 +485,16 @@
 <script>
     // $(".starRating")[0].dataset.driverId;
     $(".starRating").each(function (index, ratingElement) {
-        console.log(ratingElement);
         const overallRating = parseInt(ratingElement.dataset.overallReview);
-        $(ratingElement).rating({step : 1, size : 'xs'});
+        const tripId = parseInt(ratingElement.dataset.tripId);
+        $(ratingElement).rating({step : 1, size : 'xs', showClear : false});
         $(ratingElement).rating('update', overallRating);
         $(ratingElement).on('rating:change', function(event, value, caption) {
             const driverId = parseInt(event.target.attributes['data-driver-id'].nodeValue);
             $.ajax({
                 type: "POST",
                 url: `${location.origin}/rest/drivers/${driverId}/reviews`,
-                data: JSON.stringify({ratingOrdinal : value}),
+                data: JSON.stringify({ratingOrdinal : value, tripId : tripId}),
                 success: function (data) {
                     console.log("Successfully reviewed driver");
                 },
