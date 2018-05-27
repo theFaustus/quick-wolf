@@ -32,6 +32,9 @@
     <link th:href="@{http://fonts.googleapis.com/css?family=Gochi+Hand}" rel='stylesheet' type='text/css'>
     <link th:href="@{http://fonts.googleapis.com/css?family=Lato:300,400}" rel='stylesheet' type='text/css'>
 
+    <!-- star rating -->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+    <link th:href="@{css/starrating/star-rating.css}" media="all" rel="stylesheet" type="text/css" />
 
     <!--[if lt IE 9]>
     <script th:src="@{/js/html5shiv.min.js}"></script>
@@ -266,7 +269,10 @@
                                 <h3 style="padding-left: 0px;"
                                     th:text="${trip.fromAddress + ' to ' + trip.destinationAddress}"></h3>
                                 <span th:text="${trip.fromAddress.street + ' to ' + trip.destinationAddress.street}"></span>
+                                <input type="text" class="rating starRating"
+                                       th:attr="data-driver-id=${trip.driver.id}, data-overall-review=${trip.driver.overallRating.ordinal()}">
                             </div>
+
                             <div class="col-md-2 col-sm-3">
                                 <ul class="info_booking">
                                     <li><strong>Depart :</strong><span
@@ -470,6 +476,30 @@
 <script>
     $('.wishlist_close_admin').on('click', function (c) {
         $(this).parent().parent().parent().fadeOut('slow', function (c) {
+        });
+    });
+</script>
+
+<!-- Star rating -->
+<script th:src="@{js/starrating/star-rating.js}" type="text/javascript"></script>
+<script>
+    // $(".starRating")[0].dataset.driverId;
+    $(".starRating").each(function (index, ratingElement) {
+        console.log(ratingElement);
+        const overallRating = parseInt(ratingElement.dataset.overallReview);
+        $(ratingElement).rating({step : 1, size : 'xs'});
+        $(ratingElement).rating('update', overallRating);
+        $(ratingElement).on('rating:change', function(event, value, caption) {
+            const driverId = parseInt(event.target.attributes['data-driver-id'].nodeValue);
+            $.ajax({
+                type: "POST",
+                url: `${location.origin}/rest/drivers/${driverId}/reviews`,
+                data: JSON.stringify({ratingOrdinal : value}),
+                success: function (data) {
+                    console.log("Successfully reviewed driver");
+                },
+                contentType : "application/json; charset=utf-8"
+            });
         });
     });
 </script>

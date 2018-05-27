@@ -2,6 +2,7 @@ package com.quickwolf.web.service;
 
 import com.quickwolf.domain.Driver;
 import com.quickwolf.domain.Trip;
+import com.quickwolf.web.form.beans.DriverReviewFormBean;
 import com.quickwolf.web.form.beans.RegisterDriverFormBean;
 import com.quickwolf.web.form.beans.UpdateProfileFormBean;
 
@@ -30,4 +31,6 @@ public interface DriverService {
     List<Driver> findAllDriversWithFetchedAddedTrips();
 
     void updateProfile(String email, UpdateProfileFormBean formBean);
+
+    void addDriverReview(final long driverId, DriverReviewFormBean formBean);
 }

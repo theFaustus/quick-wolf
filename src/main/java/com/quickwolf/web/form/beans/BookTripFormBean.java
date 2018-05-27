@@ -14,11 +14,11 @@ public class BookTripFormBean implements Serializable {
 	public BookTripFormBean() {
 	}
 
-	public String getemail() {
+	public String getEmail() {
 		return email;
 	}
 
-	public void setemail(String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 

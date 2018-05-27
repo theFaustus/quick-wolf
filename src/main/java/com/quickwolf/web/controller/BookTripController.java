@@ -3,7 +3,6 @@ package com.quickwolf.web.controller;
 import com.quickwolf.domain.Passenger;
 import com.quickwolf.domain.Trip;
 import com.quickwolf.web.form.beans.BookTripFormBean;
-import com.quickwolf.web.service.EmailService;
 import com.quickwolf.web.service.PassengerService;
 import com.quickwolf.web.service.TicketService;
 import com.quickwolf.web.service.TripService;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.TemplateEngine;
 
 /**
  * Created by Faust on 4/23/2017.
@@ -42,7 +40,7 @@ public class BookTripController {
 
     @RequestMapping(value = "/bookTrip", method = RequestMethod.POST)
     public String bookConfirmed(@ModelAttribute("bookedTrip") BookTripFormBean bookTripFormBean, RedirectAttributes flashAttributes) {
-        tripService.bookTrip(bookTripFormBean.getemail(), bookTripFormBean.getTripId());
+        tripService.bookTrip(bookTripFormBean.getEmail(), bookTripFormBean.getTripId());
         flashAttributes.addFlashAttribute("tripId", bookTripFormBean.getTripId());
         return "redirect:/bookingConfirmed";
     }
@@ -58,7 +56,7 @@ public class BookTripController {
     public String book(Model model,
                        @ModelAttribute("bookedTrip") BookTripFormBean bookTripFormBean) {
         Trip t = tripService.findById(bookTripFormBean.getTripId());
-        Passenger p = passengerService.findPassengerBy(bookTripFormBean.getemail());
+        Passenger p = passengerService.findPassengerBy(bookTripFormBean.getEmail());
         model.addAttribute("trip", t);
         model.addAttribute("passenger", p);
         return "confirmTripBooking";

@@ -59,6 +59,8 @@ public class TripServiceImpl implements TripService {
 				t.getToCity(), t.getDepartTime());
 		for (Trip trip : trips) {
 			Hibernate.initialize(trip.getItinerary().getSteps());
+			Hibernate.initialize(trip.getDriver().getReviews());
+			LOGGER.info("Driver rating: " + trip.getDriver().getOverallRating());
 		}
 		return trips;
 	}

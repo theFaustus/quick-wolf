@@ -2,6 +2,7 @@ package com.quickwolf.web.service.impl;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -13,8 +14,10 @@ import org.thymeleaf.context.Context;
 
 import com.quickwolf.domain.Driver;
 import com.quickwolf.domain.Email;
+import com.quickwolf.domain.Review;
 import com.quickwolf.domain.Trip;
 import com.quickwolf.util.Constants;
+import com.quickwolf.web.form.beans.DriverReviewFormBean;
 import com.quickwolf.web.form.beans.RegisterDriverFormBean;
 import com.quickwolf.web.form.beans.UpdateProfileFormBean;
 import com.quickwolf.web.repository.DriverRepository;
@@ -112,6 +115,17 @@ public class DriverServiceImpl implements DriverService {
         driver.setLastName(formBean.getLastName());
         driver.setTelephoneNumber(formBean.getPhoneNumber());
         driverRepository.save(driver);
+    }
+
+    @Override
+    public void addDriverReview(final long driverId, final DriverReviewFormBean formBean) {
+        LOGGER.info("Trying to add review for: " + driverId);
+        Optional<Driver> driver = driverRepository.findById(driverId);
+        driver.ifPresent(d -> {
+            d.addReview(new Review(formBean.getRating()));
+            driverRepository.save(d);
+            LOGGER.info("Successfully added driver rating: " + formBean.getRating());
+        });
     }
 
     private void sendAccountEnableNotification(Driver driver) {

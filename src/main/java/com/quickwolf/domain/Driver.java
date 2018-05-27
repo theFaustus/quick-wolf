@@ -6,9 +6,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quickwolf.util.Constants;
@@ -32,6 +35,9 @@ public class Driver extends User {
     @JsonIgnore
     @OneToMany(mappedBy = "driver")
     private List<Trip> addedTrips = new ArrayList<>();
+
+    @OneToMany(mappedBy = "driver", cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Review> reviews = new ArrayList<>();
 
     public Driver() {
         setRole(Constants.DEFAULT_DRIVER_ROLE);
@@ -69,12 +75,42 @@ public class Driver extends User {
         this.addedTrips = addedTrips;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(final List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Rating getOverallRating() {
+        if (driverHasReviews()) {
+            int ratingSum = reviews.stream()
+              .map(Review::getRating)
+              .map(Rating::getRatingAmount)
+              .mapToInt(Integer::valueOf)
+              .sum();
+            int ratingOrdinal = ratingSum / reviews.size();
+            return (ratingOrdinal < Rating.values().length) ? Rating.values()[ratingOrdinal] : Rating.NONE;
+        }
+        return Rating.NONE;
+    }
+
+    private boolean driverHasReviews() {
+        return !CollectionUtils.isEmpty(reviews);
+    }
+
     @Override
     public String toString() {
         return "Driver{" +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
                 ", idnp='" + idnp + '\'' +
                 '}';
+    }
+
+    public void addReview(final Review review) {
+        review.setDriver(this);
+        reviews.add(review);
     }
 
     public static DriverBuilder newBuilder() {

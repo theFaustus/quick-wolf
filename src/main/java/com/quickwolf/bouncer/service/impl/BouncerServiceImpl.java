@@ -12,6 +12,8 @@ import com.quickwolf.domain.TicketStatus;
 import com.quickwolf.web.repository.OrderRepository;
 import com.quickwolf.web.repository.TicketRepository;
 import com.quickwolf.web.service.BlowfishCryptoService;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,7 @@ import java.util.regex.Pattern;
 
 @Service
 public class BouncerServiceImpl implements BouncerService {
+    private static final Logger LOGGER = Logger.getLogger(BouncerServiceImpl.class);
 
     @Autowired
     private OrderRepository orderRepository;
@@ -39,6 +42,7 @@ public class BouncerServiceImpl implements BouncerService {
     @Override
     public BouncerVerdict isAttenderAllowedIn(TripAttendRequest request) {
         String decryptedOrderId = cryptoService.dencrypt(request.getEncryptedOrderId());
+        LOGGER.info("Attending trip with order id: " + decryptedOrderId);
         if (!decryptedOrderIdIsNumeric(decryptedOrderId))
             return new BouncerVerdict(false, request.getEncryptedOrderId());
         return getBouncerVerdict(Long.valueOf(decryptedOrderId), request.getEncryptedOrderId());
