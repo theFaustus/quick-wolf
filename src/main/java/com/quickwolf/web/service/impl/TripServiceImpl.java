@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import com.quickwolf.domain.*;
 import com.quickwolf.web.repository.CountryRepository;
@@ -56,13 +58,23 @@ public class TripServiceImpl implements TripService {
 	@Override
 	public List<Trip> findTripsBy(TripFormBean t) {
 		List<Trip> trips = tripRepository.findTripsBy(t.getFromCountry(), t.getFromCity(), t.getToCountry(),
-				t.getToCity(), t.getDepartTime());
+				t.getToCity(), t.getDepartDate());
 		for (Trip trip : trips) {
 			Hibernate.initialize(trip.getItinerary().getSteps());
 			Hibernate.initialize(trip.getDriver().getReviews());
-			LOGGER.info("Driver rating: " + trip.getDriver().getOverallRating());
 		}
-		return trips;
+		return sortTripsByDriverRatingDesc(trips);
+	}
+
+	private List<Trip> sortTripsByDriverRatingDesc(final List<Trip> trips) {
+		return trips.stream()
+				.sorted(this::compareTripsByDriverRatingDesc)
+				.collect(Collectors.toList());
+	}
+
+	private int compareTripsByDriverRatingDesc(Trip firstTrip, Trip secondTrip) {
+		return Rating.RATING_AMOUNT_COMPARATOR.reversed()
+				.compare(firstTrip.getDriver().getOverallRating(), secondTrip.getDriver().getOverallRating());
 	}
 
 	@Transactional

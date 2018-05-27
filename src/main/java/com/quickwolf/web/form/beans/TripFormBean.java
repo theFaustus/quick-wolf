@@ -1,5 +1,7 @@
 package com.quickwolf.web.form.beans;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TripFormBean {
@@ -8,8 +10,9 @@ public class TripFormBean {
 	private String fromCity;
 	private String toCountry;
 	private String toCity;
-	private Date departTime;
+	private String departTime;
 	private String driverId;
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 	public String getDriverId() {
 		return driverId;
@@ -51,11 +54,19 @@ public class TripFormBean {
 		this.toCity = toCity;
 	}
 
-	public Date getDepartTime() {
+	public String getDepartTime() {
 		return departTime;
 	}
 
-	public void setDepartTime(Date departTime) {
+	public void setDepartTime(String departTime) {
 		this.departTime = departTime;
+	}
+
+	public Date getDepartDate() {
+		try {
+			return dateFormat.parse(getDepartTime());
+		} catch (ParseException e) {
+		}
+		return null;
 	}
 }
