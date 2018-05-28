@@ -13,9 +13,11 @@ public interface TripService {
 
     Trip findById(long tripId);
 
-	void bookTrip(String email, long tripId);
+	boolean bookTrip(String email, long tripId);
 
 	void cancelTrip(String email, long tripId);
 
 	Order saveOrder(Order o);
+
+	List<Trip> findValidTripsBy(TripFormBean trip);
 }

@@ -12,8 +12,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface TripRepository extends JpaRepository<Trip, Long> {
 
-	@Query("select t from Trip t where t.fromAddress.country = :fromCountry and t.fromAddress.city = :fromCity and " +
-		"t.destinationAddress.country = :toCountry and t.destinationAddress.city = :toCity and " +
+	@Query("select t from Trip t where lower(t.fromAddress.country) = :fromCountry and lower(t.fromAddress.city) = :fromCity and " +
+		"lower(t.destinationAddress.country) = :toCountry and lower(t.destinationAddress.city) = :toCity and " +
 		"t.departDate = :departDate")
 	List<Trip> findTripsBy(@Param("fromCountry") String fromCountry,
 						   @Param("fromCity") String fromCity,

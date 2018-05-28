@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class TripFormBean {
 
 	private String fromCountry;
@@ -13,6 +15,18 @@ public class TripFormBean {
 	private String departTime;
 	private String driverId;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+	public TripFormBean() {
+	}
+
+	private TripFormBean(final TripFormBean bean) {
+		this.fromCity = bean.fromCity;
+		this.fromCountry = bean.fromCountry;
+		this.toCity = bean.toCity;
+		this.toCountry = bean.toCountry;
+		this.departTime = bean.departTime;
+		this.driverId = bean.driverId;
+	}
 
 	public String getDriverId() {
 		return driverId;
@@ -80,5 +94,14 @@ public class TripFormBean {
 				", departTime='" + departTime + '\'' +
 				", driverId='" + driverId + '\'' +
 				'}';
+	}
+
+	public TripFormBean trimAndLowercaseFields() {
+		TripFormBean bean = new TripFormBean(this);
+		bean.toCountry = StringUtils.trim(StringUtils.lowerCase(bean.toCountry));
+		bean.fromCountry = StringUtils.trim(StringUtils.lowerCase(bean.fromCountry));
+		bean.toCity = StringUtils.trim(StringUtils.lowerCase(bean.toCity));
+		bean.fromCity = StringUtils.trim(StringUtils.lowerCase(bean.fromCity));
+		return bean;
 	}
 }

@@ -3,8 +3,10 @@ package com.quickwolf.web.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
@@ -15,7 +17,6 @@ import com.quickwolf.web.repository.CountryRepository;
 import com.quickwolf.web.repository.OrderRepository;
 import com.quickwolf.web.service.*;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +60,10 @@ public class TripServiceImpl implements TripService {
 	@Transactional(readOnly = true)
 	@Override
 	public List<Trip> findTripsBy(TripFormBean t) {
-		List<Trip> trips = tripRepository.findTripsBy(StringUtils.trim(t.getFromCountry()), StringUtils.trim(t.getFromCity()), StringUtils.trim(t.getToCountry()),
-				StringUtils.trim(t.getToCity()), t.getDepartDate());
+	    t = t.trimAndLowercaseFields();
+		List<Trip> trips = tripRepository.findTripsBy(t.getFromCountry(),
+                t.getFromCity(), t.getToCountry(),
+				t.getToCity(), t.getDepartDate());
 		for (Trip trip : trips) {
 			Hibernate.initialize(trip.getItinerary().getSteps());
 			Hibernate.initialize(trip.getDriver().getReviews());
@@ -105,30 +108,36 @@ public class TripServiceImpl implements TripService {
 
 	@Transactional
 	@Override
-	public void bookTrip(String passengerEmail, long tripId) {
+	public boolean bookTrip(String passengerEmail, long tripId) {
+	    LOGGER.info("Trying to book trip: " + tripId + " by passenger: " + passengerEmail);
         Passenger passenger = passengerService.findPassengerBy(passengerEmail);
-        Optional<Trip> trip = tripRepository.findById(tripId);
-        trip.ifPresent(t -> makeTicketAndSendItViaEmail(passengerEmail, passenger, t));
+        return tripRepository.findById(tripId).map(t -> makeTicketAndSendItViaEmail(passenger, t)).orElse(false);
 	}
 
-    private void makeTicketAndSendItViaEmail(String passengerEmail, Passenger passenger, Trip trip) {
+    private boolean makeTicketAndSendItViaEmail(Passenger passenger, Trip trip) {
 	    try {
-            trip.addPassenger(passenger);
-            tripRepository.save(trip);
-            Ticket ticket = Ticket.newBuilder()
-                    .setTicketType(TicketType.SIMPLE)
-                    .setTrip(trip)
-                    .setUser(passenger)
-                    .build();
-            Order order = Order.newBuilder().setTicket(ticket).build();
-            saveOrder(order);
-            File ticketFile = ticketService.createTicket(order, "mail/ticket");
-            Email email = buildEmail(ticketFile, renderEmailBody(order), passengerEmail);
-            emailService.sendEmail(email);
-            Files.delete(ticketFile.toPath());
+            return tryMakeTicketAndSendItViaEmail(passenger, trip);
         } catch (Exception e) {
-            LOGGER.error("Error while deleting the ticket file.", e);
+            LOGGER.error("Error while booking trip.", e);
         }
+        return false;
+    }
+
+    private boolean tryMakeTicketAndSendItViaEmail(Passenger passenger, Trip trip) throws Exception {
+        trip.addPassenger(passenger);
+        tripRepository.save(trip);
+        Ticket ticket = Ticket.newBuilder()
+                .setTicketType(TicketType.SIMPLE)
+                .setTrip(trip)
+                .setUser(passenger)
+                .build();
+        Order order = Order.newBuilder().setTicket(ticket).build();
+        saveOrder(order);
+        File ticketFile = ticketService.createTicket(order, "mail/ticket");
+        emailService.sendEmail(buildEmail(ticketFile, renderEmailBody(order), passenger.getEmail()));
+        Files.delete(ticketFile.toPath());
+        LOGGER.info("Trip successfully booked.");
+        return true;
     }
 
     private Email buildEmail(File ticket, String emailBody, String email) {
@@ -166,4 +175,13 @@ public class TripServiceImpl implements TripService {
 	public Order saveOrder(Order o) {
 		return orderRepository.save(o);
 	}
+
+    @Override
+    public List<Trip> findValidTripsBy(final TripFormBean trip) {
+	    final Date today = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        return findTripsBy(trip).stream()
+                .filter(t -> t.getAvailableSeats() > 0)
+                .filter(t -> t.getDepartTime().after(today))
+                .collect(Collectors.toList());
+    }
 }

@@ -176,39 +176,101 @@
           <div class="text-center"><img th:src="@{/img/card.png}" alt="Image" data-retina="true"></div>
           <hr>
           <div class="row">
+            <!--<div class="form_title">-->
+              <!--<h3><strong>1</strong>Passenger details</h3>-->
+              <!--<p>-->
+                <!--Details related to you.-->
+              <!--</p>-->
+            <!--</div>-->
+            <!--<div class="step">-->
+              <!--<div class="row">-->
+                <!--<div class="col-md-3 col-sm-3">-->
+                  <!--<div class="form-group">-->
+                    <!--<label>First name</label>-->
+                    <!--<p th:text="${passenger.firstName}">Mike</p>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-3 col-sm-3">-->
+                  <!--<div class="form-group">-->
+                    <!--<label>Last name</label>-->
+                    <!--<p th:text="${passenger.lastName}">Spike</p>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-3 col-sm-3">-->
+                  <!--<div class="form-group">-->
+                    <!--<label>Email</label>-->
+                    <!--<p th:text="${passenger.email}">mike@gmail.com</p>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-3 col-sm-3">-->
+                  <!--<div class="form-group">-->
+                    <!--<label>Telephone</label>-->
+                    <!--<p th:text="${passenger.telephoneNumber}">0(69)-333-333</p>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
             <div class="form_title">
-              <h3><strong>1</strong>Passenger details</h3>
+              <h3><strong>1</strong>Credit card details</h3>
               <p>
-                Details related to you.
+                Take your credit card to fill these fields.
               </p>
             </div>
-            <div class="step">
-              <div class="row">
-                <div class="col-md-3 col-sm-3">
-                  <div class="form-group">
-                    <label>First name</label>
-                    <p th:text="${passenger.firstName}">Mike</p>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-3">
-                  <div class="form-group">
-                    <label>Last name</label>
-                    <p th:text="${passenger.lastName}">Spike</p>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-3">
-                  <div class="form-group">
-                    <label>Email</label>
-                    <p th:text="${passenger.email}">mike@gmail.com</p>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-3">
-                  <div class="form-group">
-                    <label>Telephone</label>
-                    <p th:text="${passenger.telephoneNumber}">0(69)-333-333</p>
-                  </div>
-                </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>First name</label>
+                <input type="text" class="form-control" name="firstName"
+                       placeholder="Type in your first name">
+                <!--<p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.firstName')}"-->
+                   <!--th:errors="*{creditCard.firstName}"></p>-->
               </div>
+              <div class="form-group col-md-6">
+                <label>Last name</label>
+                <input type="text" class="form-control"
+                       placeholder="Type in your last name" name="lastName">
+                <!--<p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.lastName')}"-->
+                   <!--th:errors="*{creditCard.lastName}"></p>-->
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Credit card number</label>
+                <input type="text" class="form-control" name="cardNumber"
+                       placeholder="Type in your credit card`s number">
+                <!--<p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.cardNumber')}"-->
+                   <!--th:errors="*{creditCard.cardNumber}"></p>-->
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-2">
+                <label>Expiration month</label>
+                <input type="text" class="form-control" name="expirationMonth"
+                       placeholder="mm">
+                <!--<p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.expirationMonth')}"-->
+                   <!--th:errors="*{creditCard.expirationMonth}"></p>-->
+              </div>
+              <div class="form-group col-md-2">
+                <label>Expiration year</label>
+                <input type="text" class="form-control" name="expirationYear"
+                       placeholder="yy">
+                <!--<p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.expirationYear')}"-->
+                   <!--th:errors="*{creditCard.expirationYear}"></p>-->
+              </div>
+              <div class="form-group col-md-2">
+                <label>CVV</label>
+                <input type="text" class="form-control" name="securityCode"
+                       placeholder="Type in CVV">
+                <!--<p class="alert alert-danger" th:if="${#fields.hasErrors('creditCard.securityCode')}"-->
+                   <!--th:errors="*{creditCard.securityCode}"></p>-->
+              </div>
+            </div>
+            <div>
+              <h4 href="#">Cancellation policy</h4>
+              <div class="form-group">
+                <label><input type="checkbox" name="policyTermsAccepted" id="policyTermsAccepted">I accept terms and
+                  conditions and general policy.</label>
+              </div>
+              <input class="btn_1 green medium" type="submit" value="Confirm Now">
             </div>
             <!--End step -->
             <!--<div class="form_title">-->
@@ -241,50 +303,42 @@
               <!--End row -->
             </div>
             <!--End step -->
-            <div class="form_title">
-              <h3><strong>3</strong>Trip details</h3>
-              <p>
-                Details related to booked trip.
-              </p>
-            </div>
-            <div class="step">
-              <div class="row">
-                <div class="col-md-3 col-sm-3">
-                  <div class="form-group">
-                    <label>Duration</label>
-                    <p th:text="${trip.getTripDuration().toMinutes() + 'm'}">2h 55m</p>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-3">
-                  <div class="form-group">
-                    <label>Depart time</label>
-                    <p th:text="${#dates.format(trip.departTime, 'HH:mm')}">9:30</p>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-3">
-                  <div class="form-group">
-                    <label>Arrive time</label>
-                    <p th:text="${#dates.format(trip.arriveTime, 'HH:mm')}">11:30</p>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-3">
-                  <div class="form-group">
-                    <label>Price</label>
-                    <p th:text="${trip.price}">55</p>
-                  </div>
-                </div>
-              </div>
-              <!--End row -->
-            </div>
-            <!--End step -->
-
-            <div id="policy">
-              <h4 href="#">Cancellation policy</h4>
-              <div class="form-group">
-                <label><input type="checkbox" name="policy_terms" id="policy_terms">I accept terms and conditions and general policy.</label>
-              </div>
-              <input class="btn_1 green medium" type="submit" value="Confirm Now">
-            </div>
+            <!--<div class="form_title">-->
+              <!--<h3><strong>3</strong>Trip details</h3>-->
+              <!--<p>-->
+                <!--Details related to booked trip.-->
+              <!--</p>-->
+            <!--</div>-->
+            <!--<div class="step">-->
+              <!--<div class="row">-->
+                <!--<div class="col-md-3 col-sm-3">-->
+                  <!--<div class="form-group">-->
+                    <!--<label>Duration</label>-->
+                    <!--<p th:text="${trip.getTripDuration()}">2h 55m</p>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-3 col-sm-3">-->
+                  <!--<div class="form-group">-->
+                    <!--<label>Depart time</label>-->
+                    <!--<p th:text="${#dates.format(trip.departTime, 'HH:mm')}">9:30</p>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-3 col-sm-3">-->
+                  <!--<div class="form-group">-->
+                    <!--<label>Arrive time</label>-->
+                    <!--<p th:text="${#dates.format(trip.arriveTime, 'HH:mm')}">11:30</p>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-3 col-sm-3">-->
+                  <!--<div class="form-group">-->
+                    <!--<label>Price</label>-->
+                    <!--<p th:text="${trip.price}">55</p>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--&lt;!&ndash;End row &ndash;&gt;-->
+            <!--</div>-->
+            <!--&lt;!&ndash;End step &ndash;&gt;-->
           </div>
           <!--End row -->
         </div>
