@@ -69,4 +69,16 @@ public class TripFormBean {
 		}
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return "TripFormBean{" +
+				"fromCountry='" + fromCountry + '\'' +
+				", fromCity='" + fromCity + '\'' +
+				", toCountry='" + toCountry + '\'' +
+				", toCity='" + toCity + '\'' +
+				", departTime='" + departTime + '\'' +
+				", driverId='" + driverId + '\'' +
+				'}';
+	}
 }

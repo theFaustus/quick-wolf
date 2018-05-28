@@ -272,8 +272,8 @@
                                             th:text="${#dates.format(trip.departTime, 'yyyy-MM-dd HH:mm')}"></span><br>
                                         <strong>Arrive : </strong><span
                                             th:text="${#dates.format(trip.arriveTime, 'yyyy-MM-dd  HH:mm')}"></span><br>
-                                        <strong>Trip duration : </strong><span
-                                            th:text="${trip.getTripDuration().toMinutes() + 'm'}"></span><br>
+                                        <strong>ET : </strong><span
+                                            th:text="${trip.getTripDuration()}"></span><br>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <h4>Driver</h4>

@@ -36,6 +36,7 @@ public class Driver extends User {
     @OneToMany(mappedBy = "driver")
     private List<Trip> addedTrips = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "driver", cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Review> reviews = new ArrayList<>();
 
@@ -83,6 +84,7 @@ public class Driver extends User {
         this.reviews = reviews;
     }
 
+    @JsonIgnore
     public Rating getOverallRating() {
         if (driverHasReviews()) {
             int ratingSum = reviews.stream()

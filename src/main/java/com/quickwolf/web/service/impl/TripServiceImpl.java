@@ -14,6 +14,8 @@ import com.quickwolf.domain.*;
 import com.quickwolf.web.repository.CountryRepository;
 import com.quickwolf.web.repository.OrderRepository;
 import com.quickwolf.web.service.*;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,12 +59,14 @@ public class TripServiceImpl implements TripService {
 	@Transactional(readOnly = true)
 	@Override
 	public List<Trip> findTripsBy(TripFormBean t) {
-		List<Trip> trips = tripRepository.findTripsBy(t.getFromCountry(), t.getFromCity(), t.getToCountry(),
-				t.getToCity(), t.getDepartDate());
+		List<Trip> trips = tripRepository.findTripsBy(StringUtils.trim(t.getFromCountry()), StringUtils.trim(t.getFromCity()), StringUtils.trim(t.getToCountry()),
+				StringUtils.trim(t.getToCity()), t.getDepartDate());
 		for (Trip trip : trips) {
 			Hibernate.initialize(trip.getItinerary().getSteps());
 			Hibernate.initialize(trip.getDriver().getReviews());
 		}
+		LOGGER.info("Searching by criteria: " + t);
+		LOGGER.info("Found trips: " + trips);
 		return sortTripsByDriverRatingDesc(trips);
 	}
 

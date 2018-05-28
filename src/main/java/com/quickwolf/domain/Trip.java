@@ -1,14 +1,28 @@
 package com.quickwolf.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.quickwolf.exception.NotEnoughFreeSeatsException;
-
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.quickwolf.exception.NotEnoughFreeSeatsException;
 
 @Entity
 @Table(name = "_trip", schema = "wolf")
@@ -39,6 +53,7 @@ public class Trip extends AbstractEntity {
     @JsonIgnore
     private Date tripTime;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
     @Column(name = "arrive_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date arriveTime;
@@ -48,6 +63,7 @@ public class Trip extends AbstractEntity {
     @JsonIgnore
     private Date arriveDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
     @Column(name = "depart_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date departTime;
@@ -63,13 +79,13 @@ public class Trip extends AbstractEntity {
     @OneToOne(mappedBy = "trip", cascade = CascadeType.ALL)
     private Itinerary itinerary;
 
-    @ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE })
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
     private Driver driver;
 
     @Column(name = "available_seats")
     private int availableSeats;
 
-    @ManyToMany(cascade = { CascadeType.MERGE,CascadeType.REFRESH })
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JsonIgnore
     private List<Passenger> passengers = new ArrayList<>();
 
@@ -81,9 +97,9 @@ public class Trip extends AbstractEntity {
             --availableSeats;
             passengers.add(passenger);
             passenger.addTrip(this);
-        }
-        else
+        } else {
             throw new NotEnoughFreeSeatsException();
+        }
     }
 
     public Address getFromAddress() {
@@ -182,8 +198,39 @@ public class Trip extends AbstractEntity {
         this.departDate = departDate;
     }
 
-    public Duration getTripDuration() {
-        return Duration.between(departTime.toInstant(), arriveTime.toInstant());
+    public String getTripDuration() {
+        return getDurationAsString(Duration.between(departTime.toInstant(), arriveTime.toInstant()));
+    }
+
+    private String getDurationAsString(Duration duration) {
+        StringBuilder durationString = new StringBuilder();
+        if (duration.toDays() > 0) {
+            String postfix = duration.toDays() == 1 ? "" : "s";
+            durationString.append(duration.toDays() + " day");
+            durationString.append(postfix);
+        }
+
+        duration = duration.minusDays(duration.toDays());
+        long hours = duration.toHours();
+        if (hours > 0) {
+            String prefix = StringUtils.isEmpty(durationString.toString()) ? "" : ", ";
+            String postfix = hours == 1 ? "" : "s";
+            durationString.append(prefix);
+            durationString.append(hours + " hour");
+            durationString.append(postfix);
+        }
+
+        duration = duration.minusHours(duration.toHours());
+        long minutes = duration.toMinutes();
+        if (minutes > 0) {
+            String prefix = StringUtils.isEmpty(durationString.toString()) ? "" : ", ";
+            String postfix = minutes == 1 ? "" : "s";
+            durationString.append(prefix);
+            durationString.append(minutes + " minute");
+            durationString.append(postfix);
+        }
+
+        return durationString.toString();
     }
 
     @Override
@@ -203,16 +250,27 @@ public class Trip extends AbstractEntity {
     }
 
     public static final class TripBuilder {
+
         private Long id;
+
         private Address fromAddress;
+
         private Address destinationAddress;
+
         private Date tripTime;
+
         private Date arriveTime;
+
         private Date arriveDate;
+
         private Date departTime;
+
         private Date departDate;
+
         private BigDecimal price = BigDecimal.ZERO;
+
         private Itinerary itinerary;
+
         private Driver driver;
 
         private int availableSeats;
