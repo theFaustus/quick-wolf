@@ -48,7 +48,7 @@ public class DriverRestEndpoint {
     }
 
     @PostMapping(value = "/rest/drivers/{driverEmail}/trips")
-    public ResponseEntity createNewTrip(@Valid AddTripFormBean trip, @PathVariable String driverEmail) {
+    public ResponseEntity createNewTrip(@Valid @RequestBody AddTripFormBean trip, @PathVariable String driverEmail) {
         tripService.createTrip(trip, driverEmail);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

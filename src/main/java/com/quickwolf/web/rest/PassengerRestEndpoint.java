@@ -28,7 +28,7 @@ public class PassengerRestEndpoint {
     }
 
     @GetMapping(value = "/rest/passengers/{passengerEmail}/", produces = { "application/json" })
-    public Passenger getPassenger(String passengerEmail) {
+    public Passenger getPassenger(@PathVariable("passengerEmail") String passengerEmail) {
         return passengerService.findPassengerBy(passengerEmail);
     }
 
